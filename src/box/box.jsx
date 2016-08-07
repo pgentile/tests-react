@@ -15,9 +15,7 @@ class Box extends React.Component {
   }
 
   onRemoveBox() {
-    if (this.props.onRemoveBox) {
-      this.props.onRemoveBox();
-    }
+    this.props.onRemoveBox();
   }
 
   render() {
@@ -31,6 +29,11 @@ class Box extends React.Component {
   }
 
 }
+
+Box.propTypes = {
+  onRemoveBox: React.PropTypes.func.isRequired,
+  children: React.PropTypes.string.isRequired
+};
 
 
 class AddBoxComponent extends React.Component {
@@ -49,7 +52,7 @@ class AddBoxComponent extends React.Component {
   }
 
   addBox() {
-    if (this.props.onAddBox && this.state.value) {
+    if (this.state.value) {
       this.props.onAddBox(this.state.value);
       this.setState({
         value: ''
@@ -75,13 +78,17 @@ class AddBoxComponent extends React.Component {
 
 }
 
+AddBoxComponent.propTypes = {
+  onAddBox: React.PropTypes.func.isRequired
+};
+
 
 class BoxList extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      list: props.list
+      list: props.list.slice()
     };
   }
 
@@ -117,6 +124,10 @@ class BoxList extends React.Component {
   }
 
 }
+
+BoxList.propTypes = {
+  list: React.PropTypes.array.isRequired
+};
 
 BoxList.defaultProps = {
   list: ['A', 'B', 'C']
