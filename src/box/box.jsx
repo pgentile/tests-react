@@ -6,10 +6,26 @@ class Box extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    console.log(`Component ${this} mounted`);
+  }
+
+  componentWillUnmount() {
+    console.log(`Component ${this} unmounted`);
+  }
+
+  onRemoveBox() {
+    if (this.props.onRemoveBox) {
+      this.props.onRemoveBox();
+    }
+  }
+
   render() {
+    let onRemoveBox = () => this.onRemoveBox();
     return (
       <p className="box">
-        <b>Current box:</b> {this.props.content || 'No content'}
+        <b>Current box:</b> {this.props.children.toString() }
+        <button onClick={onRemoveBox}>Remove</button>
       </p>
     );
   }
@@ -75,11 +91,15 @@ class BoxList extends React.Component {
     });
   }
 
+  removeBox(removeIndex) {
+    this.state.list.splice(removeIndex, 1);
+    this.forceUpdate();
+  }
+
   render() {
-    let key = 0;
-    let boxeNodes = this.state.list.map(item => {
-      key++;
-      return <Box key={key} content={item}/>;
+    let boxeNodes = this.state.list.map((item, index) => {
+      let removeBox = () => this.removeBox(index);
+      return <Box key={index} onRemoveBox={removeBox}>{item}</Box>;
     });
 
     let addBox = value => this.addBox(value);
@@ -101,5 +121,6 @@ class BoxList extends React.Component {
 BoxList.defaultProps = {
   list: ['A', 'B', 'C']
 };
+
 
 export default BoxList;
