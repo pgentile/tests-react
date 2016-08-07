@@ -11,7 +11,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     preLoaders: [
       {
@@ -40,10 +40,16 @@ module.exports = {
     ]
   },
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    //   sourceMap: false,
-    //   mangle: false
-    // })
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      mangle: true
+    }),
+    new webpack.optimize.DedupePlugin(),
     new webpack.ProvidePlugin({
       _: 'lodash'
     })

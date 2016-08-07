@@ -5,7 +5,8 @@
   "description": "Tests avec React",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline -d"
+    "dev": "webpack-dev-server --inline --debug --progress",
+     "build": "webpack --progress --profile --colors"
   },
   "author": "Pierre Gentile",
   "license": "MIT",
