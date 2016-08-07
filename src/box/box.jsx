@@ -22,7 +22,7 @@ class Box extends React.Component {
     let onRemoveBox = () => this.onRemoveBox();
     return (
       <p className="box">
-        <b>Current box:</b> {this.props.children.toString() }
+        <b>Current box:</b> {this.props.children }
         <button onClick={onRemoveBox}>Remove</button>
       </p>
     );
