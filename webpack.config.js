@@ -2,10 +2,10 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-      'babel-polyfill',
-      './src/main.jsx'
-  ],
+  entry: {
+      app: './src/main.jsx',
+      vendor: ['babel-polyfill', 'react', 'react-dom'],
+  },
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
@@ -45,6 +45,7 @@ module.exports = {
         NODE_ENV: JSON.stringify("production")
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       mangle: true
