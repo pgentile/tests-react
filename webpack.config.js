@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: [
       'babel-polyfill',
-      './src/main.js'
+      './src/main.jsx'
   ],
   output: {
     path: path.join(__dirname, 'build'),
@@ -13,6 +13,13 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['jshint'],
+        include: 'src'
+      }
+    ],
     loaders: [
       {
           test: /\.js$/,
@@ -37,5 +44,8 @@ module.exports = {
     //   sourceMap: false,
     //   mangle: false
     // })
+    new webpack.ProvidePlugin({
+      _: 'lodash'
+    })
   ]
 };
