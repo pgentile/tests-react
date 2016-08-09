@@ -1,9 +1,12 @@
 import React from 'react';
+import { Form, FormGroup, FormControl, Button, ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
+
 
 class Box extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onRemoveBox = this.onRemoveBox.bind(this);
   }
 
   componentDidMount() {
@@ -19,12 +22,19 @@ class Box extends React.Component {
   }
 
   render() {
-    let onRemoveBox = () => this.onRemoveBox();
     return (
-      <p className="box">
+      <ListGroupItem>
         <b>Current box:</b> {this.props.children }
-        <button onClick={onRemoveBox}>Remove</button>
-      </p>
+        {' '}
+        <Button
+            onClick={this.onRemoveBox}
+            bsSize="xsmall"
+            className="pull-right">
+          <Glyphicon glyph="remove" />
+          {' '}
+          Remove
+        </Button>
+      </ListGroupItem>
     );
   }
 
@@ -43,15 +53,19 @@ class AddBoxComponent extends React.Component {
     this.state = {
       value: ''
     };
+    this.changeNewBoxValue = this.changeNewBoxValue.bind(this);
+    this.addBox = this.addBox.bind(this);
   }
 
-  valueChanged(event) {
+  changeNewBoxValue(event) {
+    event.preventDefault();
     this.setState({
       value: event.target.value
     });
   }
 
-  addBox() {
+  addBox(event) {
+    event.preventDefault();
     if (this.state.value) {
       this.props.onAddBox(this.state.value);
       this.setState({
@@ -61,18 +75,24 @@ class AddBoxComponent extends React.Component {
   }
 
   render() {
-    let valueChanged = event => this.valueChanged(event);
-    let addBox = event => this.addBox();
-
     return (
-      <span>
-        <input placeholder="Entrez votre texte ici"
-                value={this.state.value}
-                onChange={valueChanged}/>
-        <button onClick={addBox} disabled={!this.state.value}>
-          Add new box
-        </button>
-      </span>
+      <Form inline style={{marginBottom: '10px'}} onSubmit={this.addBox}>
+        <FormGroup>
+          <FormControl
+              type="text"
+              value={this.state.value}
+              placeholder="Enter your text here"
+              onChange={this.changeNewBoxValue}
+            />
+          {' '}
+          <Button
+              type="submit"
+              bsStyle="primary"
+              disabled={!this.state.value}>
+            Add new box
+          </Button>
+        </FormGroup>
+      </Form>
     )
   }
 
@@ -90,6 +110,8 @@ class BoxList extends React.Component {
     this.state = {
       list: props.list.slice()
     };
+    this.addBox = this.addBox.bind(this);
+    this.removeBox = this.removeBox.bind(this);
   }
 
   addBox(value) {
@@ -105,20 +127,20 @@ class BoxList extends React.Component {
 
   render() {
     let boxeNodes = this.state.list.map((item, index) => {
-      let removeBox = () => this.removeBox(index);
-      return <Box key={index} onRemoveBox={removeBox}>{item}</Box>;
+      let removeBoxByIndex = () => this.removeBox(index);
+      return (
+        <Box key={index} onRemoveBox={removeBoxByIndex}>
+          {item}
+        </Box>
+      );
     });
-
-    let addBox = value => this.addBox(value);
 
     return (
       <div>
-        <p>
-          <AddBoxComponent onAddBox={addBox}/>
-        </p>
-        <div className="box-list">
+        <AddBoxComponent onAddBox={this.addBox}/>
+        <ListGroup>
           {boxeNodes}
-        </div>
+        </ListGroup>
       </div>
     );
   }

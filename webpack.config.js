@@ -4,7 +4,14 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
       app: './src/main.jsx',
-      vendor: ['babel-polyfill', 'react', 'react-dom'],
+      vendor: [
+        'babel-polyfill',
+        'react',
+        'react-dom',
+        'react-bootstrap',
+        'lodash',
+        'jquery',
+      ],
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -40,11 +47,13 @@ module.exports = {
     ]
   },
   plugins: [
+    /*
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("production")
       }
     }),
+    */
     new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
@@ -52,7 +61,9 @@ module.exports = {
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.ProvidePlugin({
-      _: 'lodash'
-    })
+      '_': 'lodash',
+      '$': 'jquery',
+      'jQuery': 'jquery',
+    }),
   ]
 };

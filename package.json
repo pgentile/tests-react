@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --debug --progress",
-     "build": "webpack --progress --profile --colors"
+    "build": "webpack --progress --profile --colors"
   },
   "author": "Pierre Gentile",
   "license": "MIT",
@@ -22,9 +22,12 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0",
     "lodash": "^4.14.1",
     "moment": "^2.14.1",
     "react": "^15.3.0",
+    "react-bootstrap": "^0.30.2",
     "react-dom": "^15.3.0"
   }
 }
