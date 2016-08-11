@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -11,6 +12,7 @@ module.exports = {
         'react-bootstrap',
         'lodash',
         'jquery',
+        'bootstrap',
       ],
   },
   output: {
@@ -18,7 +20,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   module: {
     preLoaders: [
       {
@@ -36,14 +38,22 @@ module.exports = {
             cacheDirectory: true
           }
       },
-        {
-            test: /\.jsx$/,
-            loader: 'babel',
-            query: {
-              presets: ['es2015', 'react'],
-              cacheDirectory: true
-            }
-        }
+      {
+          test: /\.jsx$/,
+          loader: 'babel',
+          query: {
+            presets: ['es2015', 'react'],
+            cacheDirectory: true
+          }
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('css-loader')
+      },
+      {
+        test: /\.(ttf|eot|woff2?|svg|png|jpg|gif)$/,
+        loader: 'url-loader?limit=100000'
+      }
     ]
   },
   plugins: [
@@ -54,7 +64,7 @@ module.exports = {
       }
     }),
     */
-    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       mangle: true
@@ -65,5 +75,6 @@ module.exports = {
       '$': 'jquery',
       'jQuery': 'jquery',
     }),
+    new ExtractTextPlugin('bundle.css')
   ]
 };

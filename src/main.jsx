@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import Hello from './hello.js';
 import BoxList from './box/box.jsx';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 let hello = new Hello();
 console.log(`Hello result: ${hello}`);
 
