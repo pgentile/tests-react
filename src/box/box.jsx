@@ -1,4 +1,5 @@
 import React from 'react';
+import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
 
 class Box extends React.Component {
 
@@ -21,10 +22,10 @@ class Box extends React.Component {
   render() {
     let onRemoveBox = () => this.onRemoveBox();
     return (
-      <p className="box">
-        <b>Current box:</b> {this.props.children }
-        <button onClick={onRemoveBox}>Remove</button>
-      </p>
+      <MenuItem className="menu-text clearfix">
+        <b>Current box:</b> {this.props.children}
+        <Button onClick={onRemoveBox} className="float-right" size={Sizes.TINY}>Remove</Button>
+      </MenuItem>
     );
   }
 
@@ -51,7 +52,9 @@ class AddBoxComponent extends React.Component {
     });
   }
 
-  addBox() {
+  addBox(e) {
+    e.preventDefault();
+
     if (this.state.value) {
       this.props.onAddBox(this.state.value);
       this.setState({
@@ -62,17 +65,28 @@ class AddBoxComponent extends React.Component {
 
   render() {
     let valueChanged = event => this.valueChanged(event);
-    let addBox = event => this.addBox();
+    let addBox = e => this.addBox(e);
 
     return (
-      <span>
-        <input placeholder="Entrez votre texte ici"
-                value={this.state.value}
-                onChange={valueChanged}/>
-        <button onClick={addBox} disabled={!this.state.value}>
-          Add new box
-        </button>
-      </span>
+      <form onSubmit={addBox}>
+        <Row>
+          <Column large={12}>
+            <InputGroup>
+              <InputGroupField>
+                <input
+                        type="text"
+                        className="input-group-field"
+                        placeholder="Entrez votre texte ici"
+                        value={this.state.value}
+                        onChange={valueChanged}/>
+                </InputGroupField>
+                <div className="input-group-button">
+                  <Button disabled={!this.state.value}>Add new box</Button>
+                </div>
+              </InputGroup>
+          </Column>
+        </Row>
+      </form>
     )
   }
 
@@ -81,6 +95,24 @@ class AddBoxComponent extends React.Component {
 AddBoxComponent.propTypes = {
   onAddBox: React.PropTypes.func.isRequired
 };
+
+
+function InputGroup(props) {
+  return (
+    <div className="input-group">
+      {props.children}
+    </div>
+  )
+}
+
+
+function InputGroupField(props) {
+  return (
+    <div className="input-group-field">
+      {props.children}
+    </div>
+  )
+}
 
 
 class BoxList extends React.Component {
@@ -113,12 +145,10 @@ class BoxList extends React.Component {
 
     return (
       <div>
-        <p>
-          <AddBoxComponent onAddBox={addBox}/>
-        </p>
-        <div className="box-list">
+        <AddBoxComponent onAddBox={addBox}/>
+        <Menu isVertical>
           {boxeNodes}
-        </div>
+        </Menu>
       </div>
     );
   }
