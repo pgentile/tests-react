@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
+import './box.flux.js';
 
 class Box extends React.Component {
 
