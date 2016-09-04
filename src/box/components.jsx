@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
 
 
-function Box({item, onDelete, onMarkDone}) {
+export function Box({item, onDelete, onMarkDone}) {
 
   return (
     <MenuItem className="menu-text clearfix">
