@@ -5,6 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   entry: {
       app: './src/main.jsx',
+      /*
       vendor: [
         'babel-polyfill',
         'react',
@@ -15,11 +16,13 @@ module.exports = {
         'react-redux',
         'jquery',
       ],
+      */
   },
   resolve: {
     alias: {
         jquery: 'jquery/src/jquery',
-    }
+    },
+    extensions: ['', '.js', '.jsx'],
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -44,17 +47,25 @@ module.exports = {
     ],
   },
   plugins: [
+    /*
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("production")
       }
     }),
+    */
+    /*
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    */
+    /*
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       mangle: true
     }),
+    */
+    /*
     new webpack.optimize.DedupePlugin(),
+    */
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery',

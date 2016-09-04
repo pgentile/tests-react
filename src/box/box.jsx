@@ -1,40 +1,24 @@
 import React from 'react';
 import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
-import './box.flux.js';
 
-class Box extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    console.log(`Component ${this} mounted`);
-  }
-
-  componentWillUnmount() {
-    console.log(`Component ${this} unmounted`);
-  }
-
-  onRemoveBox() {
-    this.props.onRemoveBox();
-  }
-
-  render() {
-    let onRemoveBox = () => this.onRemoveBox();
-    return (
-      <MenuItem className="menu-text clearfix">
-        <b>Current box:</b> {this.props.children}
-        <Button onClick={onRemoveBox} className="float-right" size={Sizes.TINY}>Remove</Button>
-      </MenuItem>
-    );
-  }
-
+function Box(props) {
+  return (
+    <MenuItem className="menu-text clearfix">
+      <b>Current box:</b> {props.children}
+      <span className="float-right">
+        <Button onClick={props.onDone} disabled={props.done} size={Sizes.TINY}>Done</Button>
+        <Button onClick={props.onRemove} size={Sizes.TINY}>Remove</Button>
+      </span>
+    </MenuItem>
+  );
 }
 
 Box.propTypes = {
-  onRemoveBox: React.PropTypes.func.isRequired,
-  children: React.PropTypes.string.isRequired
+  onRemove: React.PropTypes.func.isRequired,
+  onDone: React.PropTypes.func.isRequired,
+  done: React.PropTypes.bool.isRequired,
+  children: React.PropTypes.string.isRequired,
 };
 
 
@@ -116,53 +100,34 @@ function InputGroupField(props) {
 }
 
 
-class BoxList extends React.Component {
+export function BoxList(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: props.list.slice()
-    };
-  }
+  let boxeNodes = props.list.map((item, index) => {
+    const removeBox = () => props.onRemoveBox(item.id);
+    const markDone = () => props.onDone(item.id);
+    return <Box key={item.id} onRemove={removeBox} onDone={markDone} done={item.done}>{item.content}</Box>;
+  });
 
-  addBox(value) {
-    this.setState({
-      list: this.state.list.concat([value])
-    });
-  }
+  const addBox = value => props.onAddBox(value);
 
-  removeBox(removeIndex) {
-    this.state.list.splice(removeIndex, 1);
-    this.forceUpdate();
-  }
+  return (
+    <div>
+      <AddBoxComponent onAddBox={addBox}/>
+      <Menu isVertical>
+        {boxeNodes}
+      </Menu>
+    </div>
+  );
 
-  render() {
-    let boxeNodes = this.state.list.map((item, index) => {
-      let removeBox = () => this.removeBox(index);
-      return <Box key={index} onRemoveBox={removeBox}>{item}</Box>;
-    });
-
-    let addBox = value => this.addBox(value);
-
-    return (
-      <div>
-        <AddBoxComponent onAddBox={addBox}/>
-        <Menu isVertical>
-          {boxeNodes}
-        </Menu>
-      </div>
-    );
-  }
-
-}
+};
 
 BoxList.propTypes = {
-  list: React.PropTypes.array.isRequired
+  list: React.PropTypes.array.isRequired,
+  onAddBox: React.PropTypes.func.isRequired,
+  onRemoveBox: React.PropTypes.func.isRequired,
+  onDone: React.PropTypes.func.isRequired,
 };
 
 BoxList.defaultProps = {
-  list: ['A', 'B', 'C']
+  list: [],
 };
-
-
-export default BoxList;

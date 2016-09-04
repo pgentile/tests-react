@@ -1,6 +1,7 @@
-import { combineReducers, createStore } from 'redux';
 import _ from 'lodash';
 import uuid from 'uuid';
+
+import { BoxList } from './box';
 
 
 // Actions
@@ -69,22 +70,3 @@ export function todos(state = [], action) {
 
   }
 }
-
-
-// Combined reducers
-
-export const todoApp = combineReducers({
-  todos
-});
-
-
-// App store
-
-export const todoStore = createStore(todoApp);
-
-
-// Every time the state changes, log it
-// Note that subscribe() returns a function for unregistering the listener
-todoStore.subscribe(() => {
-  console.log(todoStore.getState());
-});
