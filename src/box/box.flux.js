@@ -8,9 +8,9 @@ import { BoxList } from './box';
 
 // Actions
 
-export const ADD_TODO_ACTION = Symbol('ADD_TODO_ACTION');
-export const MARK_DONE_ACTION = Symbol('MARK_DONE_ACTION');
-export const DELETE_TODO_ACTION = Symbol('DELETE_TODO_ACTION');
+export const ADD_TODO_ACTION = 'ADD_TODO_ACTION';
+export const MARK_DONE_ACTION = 'MARK_DONE_ACTION';
+export const DELETE_TODO_ACTION = 'DELETE_TODO_ACTION';
 
 
 // Action creator

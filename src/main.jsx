@@ -2,11 +2,13 @@ import 'jquery';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
+import promiseMiddleware from 'redux-promise-middleware';
+import createLogger from 'redux-logger';
 
+import 'foundation-sites/js/foundation.core';
 import 'foundation-sites/dist/foundation.css';
-import 'foundation-sites/js/foundation.core.js';
 
 import { BoxList } from './box/box';
 import { todos, addTodo, deleteTodo, markDone } from './box/box.flux';
@@ -18,11 +20,10 @@ export const app = combineReducers({
   todos
 });
 
-export const store = createStore(app);
-
-store.subscribe(() => {
-  console.info('Store state:', store.getState());
-});
+export const store = createStore(app, applyMiddleware(
+  promiseMiddleware(),
+  createLogger(),
+));
 
 
 function mapStateToProps(state) {

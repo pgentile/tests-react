@@ -4,7 +4,9 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: {
-      app: './src/main.jsx',
+      app: [
+        './src/main.jsx',
+      ],
       /*
       vendor: [
         'babel-polyfill',
@@ -66,10 +68,12 @@ module.exports = {
     /*
     new webpack.optimize.DedupePlugin(),
     */
+    /*
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery',
     }),
+    */
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('bundle.css'),
   ],
