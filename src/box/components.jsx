@@ -66,11 +66,11 @@ export class AddBoxComponent extends React.Component {
                     placeholder="Entrez votre texte ici"
                     value={this.state.value}
                     onChange={valueChanged}/>
-                </InputGroupField>
-                <div className="input-group-button">
-                  <Button disabled={!this.state.value}>Add new box</Button>
-                </div>
-              </InputGroup>
+              </InputGroupField>
+              <div className="input-group-button">
+                <Button disabled={!this.state.value}>Add new box</Button>
+              </div>
+            </InputGroup>
           </Column>
         </Row>
       </form>
@@ -104,7 +104,7 @@ function InputGroupField(props) {
 
 export function BoxList({list, onDeleteItem, onMarkItemDone}) {
 
-  const boxeNodes = list.map((item, index) => {
+  const boxes = list.map((item, index) => {
     return <Box
               key={item.id}
               item={item}
@@ -115,7 +115,7 @@ export function BoxList({list, onDeleteItem, onMarkItemDone}) {
   return (
     <div>
       <Menu isVertical>
-        {boxeNodes}
+        {boxes}
       </Menu>
     </div>
   );
@@ -132,8 +132,24 @@ BoxList.defaultProps = {
 };
 
 
-function mapStateToProps(state) {
-  return {
-    list: state.todos,
-  };
-}
+export function TodoVisibilityComponent({viewDone, onDoneChange}) {
+
+  const onChange = (event) => onDoneChange(event.target.checked);
+
+  return (
+    <Row>
+      <fieldset className="large-6 columns">
+        <legend>Options de visibilité</legend>
+        <label>
+          <input type="checkbox" defaultChecked={viewDone} onChange={onChange}/>
+          Afficher les tâches terminées
+        </label>
+      </fieldset>
+    </Row>
+  );
+};
+
+TodoVisibilityComponent.propTypes = {
+  viewDone: React.PropTypes.bool.isRequired,
+  onDoneChange: React.PropTypes.func.isRequired,
+};

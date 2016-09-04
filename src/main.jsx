@@ -10,7 +10,7 @@ import createLogger from 'redux-logger';
 import 'foundation-sites/js/foundation.core';
 import 'foundation-sites/dist/foundation.css';
 
-import { todos } from './box/reducers';
+import { todos, todoVisibility } from './box/reducers';
 import { TodoComponent } from './box/containers';
 
 
@@ -18,6 +18,7 @@ import { TodoComponent } from './box/containers';
 
 export const app = combineReducers({
   todos,
+  todoVisibility,
 });
 
 export const store = createStore(app, applyMiddleware(

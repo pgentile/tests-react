@@ -39,3 +39,22 @@ export function todos(state = Immutable.List(), action) {
   }
 
 }
+
+
+const visibilityDefaultState = {
+  viewDone: true,
+};
+
+export function todoVisibility(state = visibilityDefaultState, action) {
+  switch (action.type) {
+
+    case actions.CHANGE_VISIBILITY:
+      return {
+        viewDone: action.viewDone,
+      };
+
+    default:
+      return state;
+
+  };
+};

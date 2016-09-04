@@ -6,6 +6,7 @@ import 'babel-polyfill';
 export const ADD_TODO = 'ADD_TODO';
 export const MARK_DONE = 'MARK_DONE';
 export const DELETE_TODO = 'DELETE_TODO';
+export const CHANGE_VISIBILITY = 'CHANGE_VISIBILITY';
 export const FOO_PROMISE = 'FOO';
 
 
@@ -30,6 +31,13 @@ export function deleteTodo(id) {
     type: DELETE_TODO,
     id,
   }
+}
+
+export function changeDoneVisibility(viewDone) {
+  return {
+    type: CHANGE_VISIBILITY,
+    viewDone,
+  };
 }
 
 export function foo() {
