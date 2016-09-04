@@ -1,28 +1,8 @@
 import expect from 'expect';
-import * as boxFlux from '../../src/box/box.flux';
+import Immutable from 'immutable';
 
-
-describe('Todo actions', () => {
-
-  describe('addTodo', () => {
-
-    it('should append content to todo list', () => {
-      // given
-      const content = 'New item';
-
-      // when
-      const action = boxFlux.addTodo(content);
-
-      // then
-      expect(action).toEqual({
-        type: boxFlux.ADD_TODO_ACTION,
-        content: content,
-      });
-    });
-
-  });
-
-});
+import * as actions from '../../src/box/actions';
+import * as reducers from '../../src/box/reducers';
 
 
 describe('Todo reducer', () => {
@@ -33,10 +13,9 @@ describe('Todo reducer', () => {
       let state = undefined;
 
       const items = ['Item A', 'Item B', 'Item C'];
-      const actions = items.map(item => boxFlux.addTodo(item));
 
-      actions.forEach(action => {
-        state = boxFlux.todos(state, action);
+      items.forEach(item => {
+        state = reducers.todos(state, actions.addTodo(item));
       });
 
       return state;
@@ -46,10 +25,10 @@ describe('Todo reducer', () => {
       // given
 
       // when
-      const state = boxFlux.todos(undefined, {});
+      const state = reducers.todos(undefined, {});
 
       // then
-      expect(state).toEqual([]);
+      expect(state).toEqual(Immutable.List());
     });
 
     it('should append new todo items on addTodo action', () => {
@@ -57,18 +36,18 @@ describe('Todo reducer', () => {
       let state = undefined;
 
       const items = ['Item A', 'Item B'];
-      const actions = items.map(item => boxFlux.addTodo(item));
+      const newActions = items.map(item => actions.addTodo(item));
 
       // when
-      actions.forEach(action => {
-        state = boxFlux.todos(state, action);
+      newActions.forEach(action => {
+        state = reducers.todos(state, action);
       });
 
       // then
-      expect(state.length).toEqual(items.length);
+      expect(state.size).toEqual(items.length);
 
       items.forEach((item, index) => {
-        expect(state[index]).toMatch({
+        expect(state.get(index)).toMatch({
           id: /^[a-z0-9-]+$/,
           content: item,
           done: false,
@@ -82,8 +61,8 @@ describe('Todo reducer', () => {
 
       // when
       const itemIndex = 1;
-      const markDoneAction = boxFlux.markDone(initialState[itemIndex].id);
-      const newState = boxFlux.todos(initialState, markDoneAction);
+      const markDoneAction = actions.markDone(initialState.get(itemIndex).id);
+      const newState = reducers.todos(initialState, markDoneAction);
 
       // then
       expect(newState.length).toEqual(initialState.length);
@@ -101,12 +80,12 @@ describe('Todo reducer', () => {
 
       // when
       const itemIndex = 1;
-      const itemToDeleteId = initialState[itemIndex].id;
-      const deleteTodoAction = boxFlux.deleteTodo(itemToDeleteId);
-      const newState = boxFlux.todos(initialState, deleteTodoAction);
+      const itemToDeleteId = initialState.get(itemIndex).id;
+      const deleteTodoAction = actions.deleteTodo(itemToDeleteId);
+      const newState = reducers.todos(initialState, deleteTodoAction);
 
       // then
-      expect(newState.length).toEqual(initialState.length - 1);
+      expect(newState.size).toEqual(initialState.size - 1);
 
       newState.forEach((item) => {
         expect(item.id).toNotEqual(itemToDeleteId);

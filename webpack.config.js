@@ -36,7 +36,9 @@ module.exports = {
     loaders: [
       {
           test: /\.jsx?$/,
-          loader: 'babel?cacheDirectory',
+          loaders: [
+            'babel?cacheDirectory',
+          ],
       },
       {
         test: /\.css$/,
