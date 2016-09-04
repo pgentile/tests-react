@@ -1,4 +1,5 @@
 import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
 
 
@@ -122,7 +123,7 @@ export function BoxList(props) {
 };
 
 BoxList.propTypes = {
-  list: React.PropTypes.array.isRequired,
+  list: ImmutablePropTypes.list.isRequired,
   onAddBox: React.PropTypes.func.isRequired,
   onRemoveBox: React.PropTypes.func.isRequired,
   onDone: React.PropTypes.func.isRequired,

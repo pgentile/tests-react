@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import uuid from 'uuid';
+import Immutable from 'immutable';
+
 
 import { BoxList } from './box';
 
@@ -36,18 +38,15 @@ export function deleteTodo(id) {
 
 // Reducer
 
-export function todos(state = [], action) {
+export function todos(state = Immutable.List(), action) {
   switch (action.type) {
 
     case ADD_TODO_ACTION:
-      return [
-        ...state,
-        {
-          id: uuid.v4(),
-          content: action.content,
-          done: false,
-        },
-      ];
+      return state.push({
+        id: uuid.v4(),
+        content: action.content,
+        done: false,
+      });
 
     case MARK_DONE_ACTION:
       return state.map(todo => {
