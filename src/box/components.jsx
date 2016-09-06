@@ -112,13 +112,17 @@ export function BoxList({list, onDeleteItem, onMarkItemDone}) {
               onMarkDone={() => onMarkItemDone(item.id)} />;
   });
 
-  return (
-    <div>
+  if (list.size > 0) {
+    return (
       <Menu isVertical>
         {boxes}
       </Menu>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <p>Aucun item à afficher</p>
+    );
+  }
 };
 
 BoxList.propTypes = {

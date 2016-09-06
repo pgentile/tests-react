@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { Router, Route, browserHistory } from 'react-router'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
 
@@ -19,6 +21,7 @@ import { TodoComponent } from './box/containers';
 export const app = combineReducers({
   todos,
   todoVisibility,
+  routing: routerReducer,
 });
 
 export const store = createStore(app, applyMiddleware(
@@ -26,12 +29,17 @@ export const store = createStore(app, applyMiddleware(
   createLogger(),
 ));
 
+const history = syncHistoryWithStore(browserHistory, store);
+
 
 // Render box list
+
 ReactDOM.render(
   (
     <Provider store={store}>
-      <TodoComponent/>
+      <Router history={history}>
+        <Route path="/" component={TodoComponent} />
+      </Router>
     </Provider>
   ),
   document.getElementById('content'),
