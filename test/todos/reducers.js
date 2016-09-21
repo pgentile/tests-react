@@ -1,8 +1,8 @@
 import expect from 'expect';
 import Immutable from 'immutable';
 
-import * as actions from '../../src/box/actions';
-import * as reducers from '../../src/box/reducers';
+import * as actions from '../../src/todos/actions';
+import * as reducers from '../../src/todos/reducers';
 
 
 describe('Todo reducer', () => {

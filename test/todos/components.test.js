@@ -10,7 +10,7 @@ global.navigator = {
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 
-import { Box } from '../../src/box/components';
+import { Box } from '../../src/todos/components';
 
 
 describe('Todo components', () => {

@@ -1,6 +1,6 @@
 import expect from 'expect';
 
-import * as actions from '../../src/box/actions';
+import * as actions from '../../src/todos/actions';
 
 
 describe('Todo actions', () => {
