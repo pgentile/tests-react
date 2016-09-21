@@ -4,16 +4,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
 
-import 'foundation-sites/js/foundation.core';
-import 'foundation-sites/dist/foundation.css';
-
 import { todos, todoVisibility } from './todos/reducers';
 import { TodoComponent } from './todos/containers';
+import { NavbarComponent } from './navbar/components';
+
+import 'foundation-sites/js/foundation.core';
+import 'foundation-sites/dist/foundation.css';
 
 
 // Combined reducers, create store

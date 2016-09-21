@@ -101,19 +101,19 @@ AddBoxComponent.propTypes = {
 };
 
 
-function InputGroup({children}) {
+function InputGroup(props) {
   return (
     <div className="input-group">
-      {children}
+      {props.children}
     </div>
   )
 }
 
 
-function InputGroupField({children}) {
+function InputGroupField(props) {
   return (
     <div className="input-group-field">
-      {children}
+      {props.children}
     </div>
   )
 }

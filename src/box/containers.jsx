@@ -9,8 +9,6 @@ import {
   TodoVisibilityComponent as TodoVisibilityComponentBase
 } from './components';
 
-import { PageWithNavbarComponent } from '../navbar/components';
-
 import * as actions from './actions';
 
 
@@ -70,11 +68,10 @@ const TodoVisibilityComponent = connect(
 
 export function TodoComponent() {
   return (
-    <PageWithNavbarComponent>
-      <h1>TODOs</h1>
+    <div>
       <AddBoxComponent/>
       <BoxList/>
       <TodoVisibilityComponent/>
-    </PageWithNavbarComponent>
+    </div>
   );
 };
