@@ -12,8 +12,8 @@ import createLogger from 'redux-logger';
 import 'foundation-sites/js/foundation.core';
 import 'foundation-sites/dist/foundation.css';
 
-import { todos, todoVisibility } from './box/reducers';
-import { TodoComponent } from './box/containers';
+import { todos, todoVisibility } from './todos/reducers';
+import { TodoComponent } from './todos/containers';
 
 
 // Combined reducers, create store

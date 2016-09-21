@@ -6,9 +6,26 @@ import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-f
 
 export function Box({item, onDelete, onMarkDone}) {
 
+  let creationDate = (
+    <small>
+      &mdash; créé le {item.createdAt.format('LLL')}
+    </small>
+  );
+
+  let modificationDate = null;
+  if (item.createdAt !== item.modifiedAt) {
+    modificationDate = (
+      <small>
+        &mdash; modifié le {item.modifiedAt.format('LLL')}
+      </small>
+    );
+  }
+
   return (
     <MenuItem className="menu-text clearfix">
-      <b>Current box:</b> {item.content}
+      <b>{item.content}</b>
+      {creationDate}
+      {modificationDate}
       <span className="float-right">
         <Button onClick={() => onMarkDone(item.id)} disabled={item.done} size={Sizes.TINY}>Done</Button>
         <Button onClick={() => onDelete(item.id)} size={Sizes.TINY}>Remove</Button>
