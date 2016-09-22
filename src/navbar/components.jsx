@@ -3,16 +3,24 @@ import { Menu, MenuItem } from 'react-foundation';
 import { Link } from 'react-router';
 
 
-export function NavbarComponent() {
+function NavbarLink({to, children}) {
   return (
-    <Menu>
-      <MenuItem>
-        <Link to="/">TODOs</Link>
-      </MenuItem>
-      <MenuItem>
-        <Link to="/reddit">Reddit</Link>
-      </MenuItem>
-    </Menu>
+    <MenuItem>
+      <Link to={to}>{children}</Link>
+    </MenuItem>
+  );
+}
+
+
+const Navbar = Menu;
+
+
+function NavbarComponent() {
+  return (
+    <Navbar>
+      <NavbarLink to="/">TODOs</NavbarLink>
+      <NavbarLink to="/reddit">Reddit</NavbarLink>
+    </Navbar>
   );
 };
 

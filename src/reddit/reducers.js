@@ -12,18 +12,8 @@ export function reddit(state = [], action) {
     case actions.SUBREDDIT_PROMISE + '_REJECTED':
       return [];
 
-    default:
-      return state;
-
-  }
-}
-
-
-export function redditTopic(state = 'java', action) {
-  switch (action.type) {
-
-    case actions.CHANGE_TOPIC:
-      return action.topic;
+    case actions.UNLOAD_SUBREDDIT:
+      return [];
 
     default:
       return state;

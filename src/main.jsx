@@ -4,16 +4,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
 
 import { todos, todoVisibility } from './todos/reducers';
 import { TodoComponent } from './todos/containers';
 
-import { reddit, redditTopic } from './reddit/reducers';
-import { RedditComponent } from './reddit/containers';
+import { reddit } from './reddit/reducers';
+import { RedditComponent, RedditListComponent } from './reddit/containers';
+
+import { PageWithNavbarComponent } from './navbar/components';
 
 import 'foundation-sites/js/foundation.core';
 import 'foundation-sites/dist/foundation.css';
@@ -23,13 +25,13 @@ import 'foundation-sites/dist/foundation.css';
 
 export const app = combineReducers({
   reddit,
-  redditTopic,
   todos,
   todoVisibility,
   routing: routerReducer,
 });
 
 export const store = createStore(app, applyMiddleware(
+  routerMiddleware(browserHistory),
   promiseMiddleware(),
   createLogger(),
 ));
@@ -43,8 +45,12 @@ ReactDOM.render(
   (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={TodoComponent} />
-        <Route path="/reddit" component={RedditComponent} />
+        <Route path="/" component={PageWithNavbarComponent}>
+          <IndexRoute component={TodoComponent}/>
+          <Route path="reddit" component={RedditComponent}>
+            <Route path=":topic" component={RedditListComponent}/>
+          </Route>
+        </Route>
       </Router>
     </Provider>
   ),

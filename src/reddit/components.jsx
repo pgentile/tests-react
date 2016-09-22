@@ -26,23 +26,31 @@ export class LoadTopicComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      topic: props.topic,
+    };
   }
 
   loadTopic(event) {
     event.preventDefault();
-    if (this.props.topic) {
-      this.props.onLoadTopic(this.props.topic);
+    if (this.state.topic) {
+      this.props.onLoadTopic(this.state.topic);
     }
   }
 
   changeTopic(event) {
     event.preventDefault();
-    this.props.onChangeTopic(event.target.value);
+    this.setState({
+      topic: event.target.value,
+    });
   }
 
-  componentDidMount() {
-    if (this.props.topic) {
-      this.props.onLoadTopic(this.props.topic);
+  componentDidUpdate(prevProps) {
+    if (this.props.topic !== prevProps.topic) {
+      console.log(`Updating load topic to ${this.props.topic}`);
+      this.setState({
+        topic: this.props.topic,
+      });
     }
   }
 
@@ -60,11 +68,11 @@ export class LoadTopicComponent extends React.Component {
                     type="text"
                     className="input-group-field"
                     placeholder="Topic"
-                    value={this.props.topic}
+                    value={this.state.topic}
                     onChange={changeTopic}/>
               </InputGroupField>
               <div className="input-group-button">
-                <Button disabled={!this.props.topic}>Load topic</Button>
+                <Button disabled={!this.state.topic}>Load topic</Button>
               </div>
             </InputGroup>
           </Column>
@@ -78,22 +86,54 @@ export class LoadTopicComponent extends React.Component {
 LoadTopicComponent.propTypes = {
   topic: React.PropTypes.string.isRequired,
   onLoadTopic: React.PropTypes.func.isRequired,
-  onChangeTopic: React.PropTypes.func.isRequired,
+};
+
+LoadTopicComponent.defaultProps = {
+  topic: '',
 };
 
 
-export function RedditListComponent({list}) {
-  const items = list.map(elem => {
-    return (
-      <li key={elem.id}>
-        <a href={elem.url}>{elem.title}</a>
-      </li>
-    );
-  });
+export class RedditListComponent extends React.Component {
 
-  return (
-    <div>
-      <ul>{items}</ul>
-    </div>
-  );
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.onLoadTopic(this.props.topic);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.topic !== this.props.topic) {
+      console.log(`Updating list topic to ${this.props.topic}`);
+      this.props.onLoadTopic(this.props.topic);
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.onUnloadTopic();
+  }
+
+  render() {
+    const items = this.props.list.map(elem => {
+      return (
+        <li key={elem.id}>
+          <a href={elem.url}>{elem.title}</a>
+        </li>
+      );
+    });
+
+    return (
+      <div>
+        <ul>{items}</ul>
+      </div>
+    );
+  }
+
+}
+
+RedditListComponent.propTypes = {
+  topic: React.PropTypes.string.isRequired,
+  onLoadTopic: React.PropTypes.func.isRequired,
+  onUnloadTopic: React.PropTypes.func.isRequired,
 };

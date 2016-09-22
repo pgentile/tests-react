@@ -1,7 +1,7 @@
 // Actions
 
 export const SUBREDDIT_PROMISE = 'SUBREDDIT';
-export const CHANGE_TOPIC = 'CHANGE_TOPIC';
+export const UNLOAD_SUBREDDIT = 'UNLOAD_SUBREDDIT';
 
 
 // Actions creator
@@ -22,9 +22,8 @@ export function loadSubreddit(subreddit) {
   };
 }
 
-export function changeTopic(topic) {
+export function unloadSubreddit() {
   return {
-    type: CHANGE_TOPIC,
-    topic,
+    type: UNLOAD_SUBREDDIT,
   };
 }

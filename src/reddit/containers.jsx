@@ -1,45 +1,51 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux'
 
 import {
   RedditListComponent as RedditListComponentBase,
   LoadTopicComponent as LoadTopicComponentBase,
 } from './components';
-import { PageWithNavbarComponent } from '../navbar/components';
 
 import * as actions from './actions';
 
 
-const RedditListComponent = connect(
-  (state) => {
+export const RedditListComponent = connect(
+  (state, ownProps) => {
     return {
       list: state.reddit,
+      topic: ownProps.params.topic,
+    };
+  },
+  (dispatch) => {
+    return {
+      onLoadTopic: (topic) => dispatch(actions.loadSubreddit(topic)),
+      onUnloadTopic: () => dispatch(actions.unloadSubreddit()),
     };
   },
 )(RedditListComponentBase);
 
 
 const LoadTopicComponent = connect(
-  (state) => {
+  (state, ownProps) => {
     return {
-      topic: state.redditTopic,
+      topic: ownProps.topic,
     }
   },
   (dispatch) => {
     return {
-      onLoadTopic: (topic) => dispatch(actions.loadSubreddit(topic)),
-      onChangeTopic: (topic) => dispatch(actions.changeTopic(topic)),
+      onLoadTopic: (topic) => dispatch(push('/reddit/' + topic)),
     };
   },
 )(LoadTopicComponentBase);
 
 
-export function RedditComponent() {
+export function RedditComponent({params, children}) {
   return (
-    <PageWithNavbarComponent>
+    <div>
       <h1>Reddit</h1>
-      <LoadTopicComponent/>
-      <RedditListComponent/>
-    </PageWithNavbarComponent>
+      <LoadTopicComponent topic={params.topic}/>
+      {children}
+    </div>
   );
 };
