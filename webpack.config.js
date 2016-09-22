@@ -6,6 +6,7 @@ module.exports = {
   entry: {
       app: [
         './src/main.jsx',
+        './src/main.scss',
       ],
       /*
       vendor: [
@@ -24,7 +25,7 @@ module.exports = {
     alias: {
         jquery: 'jquery/src/jquery',
     },
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', '.scss', '.css'],
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -42,11 +43,15 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap')
+        loader: ExtractTextPlugin.extract('css?sourceMap'),
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css?sourceMap!sass?sourceMap'),
       },
       {
         test: /\.(ttf|eot|woff2?|svg|png|jpg|gif)$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url?limit=100000',
       },
     ],
   },

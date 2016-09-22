@@ -18,7 +18,6 @@ import { RedditComponent, RedditListComponent } from './reddit/containers';
 import { PageWithNavbarComponent } from './navbar/components';
 
 import 'foundation-sites/js/foundation.core';
-import 'foundation-sites/dist/foundation.css';
 
 
 // Combined reducers, create store
