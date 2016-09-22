@@ -9,6 +9,9 @@ export function NavbarComponent() {
       <MenuItem>
         <Link to="/">TODOs</Link>
       </MenuItem>
+      <MenuItem>
+        <Link to="/reddit">Reddit</Link>
+      </MenuItem>
     </Menu>
   );
 };

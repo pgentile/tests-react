@@ -1,6 +1,3 @@
-import 'babel-polyfill';
-
-
 // Actions
 
 export const ADD_TODO = 'ADD_TODO';

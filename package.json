@@ -5,7 +5,7 @@
   "description": "Tests avec React",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --debug --progress --port 9000 --open",
+    "dev": "webpack-dev-server --inline --debug --progress --port 9000 --open --history-api-fallback",
     "build": "webpack --progress --profile --colors",
     "test": "mocha --compilers js:babel-register --recursive"
   },
