@@ -12,6 +12,7 @@ import createLogger from 'redux-logger';
 import { todos, todoVisibility } from './todos/reducers';
 import { reddit } from './reddit/reducers';
 import { loadingIndicator } from './loadingindicator/reducers';
+import { errors } from './errors/reducers';
 
 import { TodoComponent } from './todos/containers';
 import { RedditComponent, RedditListComponent } from './reddit/containers';
@@ -27,6 +28,7 @@ export const app = combineReducers({
   todos,
   todoVisibility,
   loadingIndicator,
+  errors,
   routing: routerReducer,
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router';
 import { Button, Row, Column } from 'react-foundation';
 
 
@@ -58,6 +58,15 @@ export class LoadTopicComponent extends React.Component {
     const changeTopic = this.changeTopic.bind(this);
     const loadTopic = this.loadTopic.bind(this);
 
+    const sampleTopics = this.props.sampleTopics.map(topic => {
+      const to = '/reddit/' + topic;
+      return (
+        <span>
+          {' '}<Link to={to}>{topic}</Link>
+        </span>
+      );
+    });
+
     return (
       <form onSubmit={loadTopic}>
         <Row>
@@ -77,6 +86,13 @@ export class LoadTopicComponent extends React.Component {
             </InputGroup>
           </Column>
         </Row>
+        <Row>
+          <Column large={12}>
+            <p>
+              Try these samples : {sampleTopics}
+            </p>
+          </Column>
+        </Row>
       </form>
     )
   }
@@ -85,11 +101,13 @@ export class LoadTopicComponent extends React.Component {
 
 LoadTopicComponent.propTypes = {
   topic: React.PropTypes.string.isRequired,
+  sampleTopics: React.PropTypes.array.isRequired,
   onLoadTopic: React.PropTypes.func.isRequired,
 };
 
 LoadTopicComponent.defaultProps = {
   topic: '',
+  sampleTopics: ['apple', 'google', 'python'],
 };
 
 

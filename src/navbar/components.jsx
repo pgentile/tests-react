@@ -1,18 +1,30 @@
 import React from 'react';
-import { Menu, MenuItem } from 'react-foundation';
 import { Link } from 'react-router';
 
 
 function NavbarLink({to, children}) {
   return (
-    <MenuItem>
+    <li>
       <Link to={to}>{children}</Link>
-    </MenuItem>
+    </li>
   );
 }
 
 
-const Navbar = Menu;
+function Navbar({children}) {
+  return (
+    <div className="top-bar">
+      <div className="top-bar-title">
+        <strong>Tests React</strong>
+      </div>
+      <div className="top-bar-left">
+        <ul className="menu">
+          {children}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 
 export function NavbarComponent() {
