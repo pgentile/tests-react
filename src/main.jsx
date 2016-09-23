@@ -10,12 +10,12 @@ import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
 
 import { todos, todoVisibility } from './todos/reducers';
-import { TodoComponent } from './todos/containers';
-
 import { reddit } from './reddit/reducers';
-import { RedditComponent, RedditListComponent } from './reddit/containers';
+import { loadingIndicator } from './loadingindicator/reducers';
 
-import { PageWithNavbarComponent } from './navbar/components';
+import { TodoComponent } from './todos/containers';
+import { RedditComponent, RedditListComponent } from './reddit/containers';
+import { PageWithNavbarComponent }  from './navbar/containers';
 
 import 'foundation-sites/js/foundation.core';
 
@@ -26,6 +26,7 @@ export const app = combineReducers({
   reddit,
   todos,
   todoVisibility,
+  loadingIndicator,
   routing: routerReducer,
 });
 

@@ -134,6 +134,7 @@ export class RedditListComponent extends React.Component {
 
 RedditListComponent.propTypes = {
   topic: React.PropTypes.string.isRequired,
+  list: React.PropTypes.array.isRequired,
   onLoadTopic: React.PropTypes.func.isRequired,
   onUnloadTopic: React.PropTypes.func.isRequired,
 };

@@ -15,21 +15,11 @@ function NavbarLink({to, children}) {
 const Navbar = Menu;
 
 
-function NavbarComponent() {
+export function NavbarComponent() {
   return (
     <Navbar>
       <NavbarLink to="/">TODOs</NavbarLink>
       <NavbarLink to="/reddit">Reddit</NavbarLink>
     </Navbar>
-  );
-};
-
-
-export function PageWithNavbarComponent({children}) {
-  return (
-    <div>
-      <NavbarComponent/>
-      {children}
-    </div>
   );
 };
