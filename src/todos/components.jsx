@@ -1,7 +1,7 @@
 import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Immutable from 'immutable';
-import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
+import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
 
 import { InputGroup, InputGroupField } from '../core/components';
 
@@ -34,7 +34,7 @@ export function Box({item, onDelete, onMarkDone}) {
       </span>
     </MenuItem>
   );
-};
+}
 
 Box.propTypes = {
   item: React.PropTypes.object.isRequired,
@@ -105,7 +105,7 @@ AddBoxComponent.propTypes = {
 
 export function BoxList({list, onDeleteItem, onMarkItemDone}) {
 
-  const boxes = list.map((item, index) => {
+  const boxes = list.map(item => {
     return <Box
               key={item.id}
               item={item}
@@ -124,7 +124,7 @@ export function BoxList({list, onDeleteItem, onMarkItemDone}) {
       <p>Aucun item à afficher</p>
     );
   }
-};
+}
 
 BoxList.propTypes = {
   list: ImmutablePropTypes.list.isRequired,
@@ -152,7 +152,7 @@ export function TodoVisibilityComponent({viewDone, doneTodosCount, onDoneChange}
       </fieldset>
     </Row>
   );
-};
+}
 
 TodoVisibilityComponent.propTypes = {
   viewDone: React.PropTypes.bool.isRequired,

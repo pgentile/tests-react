@@ -10,6 +10,11 @@ function NavbarLink({to, children}) {
   );
 }
 
+NavbarLink.propTypes = {
+  to: Link.propTypes.to,
+  children: React.PropTypes.string.isRequired,
+};
+
 
 function Navbar({children}) {
   return (
@@ -26,6 +31,10 @@ function Navbar({children}) {
   );
 }
 
+Navbar.propTypes = {
+  children: React.PropTypes.array.isRequired,
+};
+
 
 export function NavbarComponent() {
   return (
@@ -34,4 +43,4 @@ export function NavbarComponent() {
       <NavbarLink to="/reddit">Reddit</NavbarLink>
     </Navbar>
   );
-};
+}

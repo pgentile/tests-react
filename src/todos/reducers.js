@@ -65,5 +65,5 @@ export function todoVisibility(state = visibilityDefaultState, action) {
     default:
       return state;
 
-  };
-};
+  }
+}

@@ -30,7 +30,6 @@ export class LoadTopicComponent extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.topic !== prevProps.topic) {
-      console.log(`Updating load topic to ${this.props.topic}`);
       this.setState({
         topic: this.props.topic,
       });
@@ -105,6 +104,10 @@ function RedditListItem({elem}) {
   );
 }
 
+RedditListItem.propTypes = {
+  elem: React.PropTypes.object.isRequired,
+};
+
 
 export class RedditListComponent extends React.Component {
 
@@ -118,7 +121,6 @@ export class RedditListComponent extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.topic !== this.props.topic) {
-      console.log(`Updating list topic to ${this.props.topic}`);
       this.props.onLoadTopic(this.props.topic);
     }
   }

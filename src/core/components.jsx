@@ -9,6 +9,11 @@ export function InputGroup({children}) {
   )
 }
 
+InputGroup.propTypes = {
+  children: React.PropTypes.node.isRequired,
+};
+
+
 
 export function InputGroupField({children}) {
   return (
@@ -17,3 +22,7 @@ export function InputGroupField({children}) {
     </div>
   )
 }
+
+InputGroupField.propTypes = {
+  children: React.PropTypes.node.isRequired,
+};

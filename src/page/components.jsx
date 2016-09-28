@@ -11,13 +11,16 @@ export function BasePageComponent({children}) {
     <div>
       <NavbarComponent/>
       <LoadingIndicator/>
-      <div>
-        <Error/>
-        {children}
-      </div>
+      <Error/>
+      {children}
     </div>
   );
+}
+
+BasePageComponent.propTypes = {
+  children: React.PropTypes.element.isRequired,
 };
+
 
 
 export function PageComponent({title, children}) {
@@ -29,4 +32,9 @@ export function PageComponent({title, children}) {
       </Row>
     </Column>
   );
+}
+
+PageComponent.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  children: React.PropTypes.node.isRequired,
 };

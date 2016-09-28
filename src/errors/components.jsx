@@ -16,3 +16,8 @@ export function Error({message, onDismiss}) {
     </div>
   );
 }
+
+Error.propTypes = {
+  message: React.PropTypes.string,
+  onDismiss: React.PropTypes.func.isRequired,
+};

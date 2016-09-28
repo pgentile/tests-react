@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { Row, Column } from 'react-foundation';
 
 
 import {
@@ -85,4 +84,4 @@ export function TodoComponent() {
       <TodoVisibilityComponent/>
     </PageComponent>
   );
-};
+}

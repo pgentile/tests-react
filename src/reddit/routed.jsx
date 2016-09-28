@@ -13,9 +13,18 @@ export function RedditComponent({params, children}) {
   );
 }
 
+RedditComponent.propTypes = {
+  params: React.PropTypes.object.isRequired,
+  children: React.PropTypes.element,
+};
+
 
 export function RedditListComponent({params}) {
   return (
     <RedditListComponentBase topic={params.topic}/>
   )
 }
+
+RedditListComponent.propTypes = {
+  params: React.PropTypes.object.isRequired,
+};

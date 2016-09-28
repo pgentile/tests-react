@@ -4,7 +4,6 @@ export const ADD_TODO = 'ADD_TODO';
 export const MARK_DONE = 'MARK_DONE';
 export const DELETE_TODO = 'DELETE_TODO';
 export const CHANGE_VISIBILITY = 'CHANGE_VISIBILITY';
-export const FOO_PROMISE = 'FOO';
 
 
 // Action creator
@@ -36,18 +35,3 @@ export function changeDoneVisibility(viewDone) {
     viewDone,
   };
 }
-
-export function foo() {
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        message: 'This is done',
-      });
-    }, 500);
-  });
-
-  return {
-    type: FOO_PROMISE,
-    payload: promise,
-  };
-};

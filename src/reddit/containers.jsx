@@ -1,7 +1,5 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux'
-import { Row, Column } from 'react-foundation';
 
 import {
   RedditListComponent as RedditListComponentBase,
