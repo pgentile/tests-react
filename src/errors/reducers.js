@@ -19,6 +19,11 @@ export function errors(state = DEFAULT_STATE, action) {
         lastError: action.payload.message,
       };
     }
+    if (action.type === actions.ADD_ERROR) {
+      return {
+        lastError: action.payload,
+      };
+    }
   }
   return state;
 }
