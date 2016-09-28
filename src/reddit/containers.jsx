@@ -8,16 +8,13 @@ import {
   LoadTopicComponent as LoadTopicComponentBase,
 } from './components';
 
-import { PageComponent } from '../page/components';
-
 import * as actions from './actions';
 
 
 export const RedditListComponent = connect(
-  (state, ownProps) => {
+  (state) => {
     return {
       list: state.reddit,
-      topic: ownProps.params.topic,
     };
   },
   (dispatch) => {
@@ -29,25 +26,11 @@ export const RedditListComponent = connect(
 )(RedditListComponentBase);
 
 
-const LoadTopicComponent = connect(
-  (state, ownProps) => {
-    return {
-      topic: ownProps.topic,
-    }
-  },
+export const LoadTopicComponent = connect(
+  null,
   (dispatch) => {
     return {
       onLoadTopic: (topic) => dispatch(push(`/reddit/${topic}`)),
     };
   },
 )(LoadTopicComponentBase);
-
-
-export function RedditComponent({params, children}) {
-  return (
-    <PageComponent title="Reddit">
-      <LoadTopicComponent topic={params.topic}/>
-      {children}
-    </PageComponent>
-  );
-};

@@ -17,8 +17,9 @@ import { loadingIndicator } from './loadingindicator/reducers';
 import { errors } from './errors/reducers';
 
 import { TodoComponent } from './todos/containers';
-import { RedditComponent, RedditListComponent } from './reddit/containers';
 import { BasePageComponent } from './page/components';
+
+import { RedditComponent, RedditListComponent } from './reddit/routed';
 
 
 // Combined reducers, create store
