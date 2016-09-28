@@ -34,6 +34,10 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
+    preLoaders: [
+      test: /\.jsx?$/,
+      loader: 'eslint',
+    ],
     loaders: [
       {
           test: /\.jsx?$/,
