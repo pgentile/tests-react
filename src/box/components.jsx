@@ -74,7 +74,7 @@ export class AddBoxComponent extends React.Component {
     return (
       <form onSubmit={addBox}>
         <Row>
-          <Column large={12}>
+          <Column>
             <InputGroup>
               <InputGroupField>
                 <input
@@ -141,7 +141,7 @@ export function TodoVisibilityComponent({viewDone, onDoneChange}) {
 
   return (
     <Row>
-      <fieldset className="large-6 columns">
+      <fieldset className="columns">
         <legend>Options de visibilité</legend>
         <label>
           <input type="checkbox" defaultChecked={viewDone} onChange={onChange}/>

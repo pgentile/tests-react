@@ -53,7 +53,7 @@ export class LoadTopicComponent extends React.Component {
     return (
       <form onSubmit={loadTopic}>
         <Row>
-          <Column large={12}>
+          <Column>
             <InputGroup>
               <InputGroupField>
                 <input
@@ -70,7 +70,7 @@ export class LoadTopicComponent extends React.Component {
           </Column>
         </Row>
         <Row>
-          <Column large={12}>
+          <Column>
             <p>
               Try these samples : {sampleTopics}
             </p>
@@ -96,7 +96,7 @@ LoadTopicComponent.defaultProps = {
 
 function RedditListItem({elem}) {
   return (
-    <Row large={12}>
+    <Row>
       <h2>
         <a href={elem.url}>{elem.title}</a>
       </h2>

@@ -37,7 +37,7 @@ const LoadTopicComponent = connect(
   },
   (dispatch) => {
     return {
-      onLoadTopic: (topic) => dispatch(push('/reddit/' + topic)),
+      onLoadTopic: (topic) => dispatch(push(`/reddit/${topic}`)),
     };
   },
 )(LoadTopicComponentBase);

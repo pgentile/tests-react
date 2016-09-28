@@ -4,7 +4,7 @@ import React from 'react';
 export function LoadingIndicator({ active }) {
   if (active) {
     return (
-      <p><b>Loading...</b></p>
+      <p><b>Loading&hellip;</b></p>
     )
   }
 
@@ -13,4 +13,8 @@ export function LoadingIndicator({ active }) {
 
 LoadingIndicator.propTypes = {
   active: React.PropTypes.bool.isRequired,
+};
+
+LoadingIndicator.defaultProps = {
+  active: false,
 };
