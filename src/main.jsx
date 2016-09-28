@@ -1,4 +1,6 @@
+import 'babel-polyfill';
 import 'jquery';
+import 'foundation-sites/js/foundation.core';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -16,9 +18,7 @@ import { errors } from './errors/reducers';
 
 import { TodoComponent } from './todos/containers';
 import { RedditComponent, RedditListComponent } from './reddit/containers';
-import { PageWithNavbarComponent }  from './navbar/containers';
-
-import 'foundation-sites/js/foundation.core';
+import { BasePageComponent } from './page/components';
 
 
 // Combined reducers, create store
@@ -47,7 +47,7 @@ ReactDOM.render(
   (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={PageWithNavbarComponent}>
+        <Route path="/" component={BasePageComponent}>
           <IndexRoute component={TodoComponent}/>
           <Route path="reddit" component={RedditComponent}>
             <Route path=":topic" component={RedditListComponent}/>

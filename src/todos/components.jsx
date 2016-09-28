@@ -3,6 +3,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import Immutable from 'immutable';
 import { Menu, MenuItem, Button, Sizes, Row, Column, ButtonGroup } from 'react-foundation';
 
+import { InputGroup, InputGroupField } from '../core/components';
+
 
 export function Box({item, onDelete, onMarkDone}) {
 
@@ -101,24 +103,6 @@ AddBoxComponent.propTypes = {
 };
 
 
-function InputGroup({children}) {
-  return (
-    <div className="input-group">
-      {children}
-    </div>
-  )
-}
-
-
-function InputGroupField({children}) {
-  return (
-    <div className="input-group-field">
-      {children}
-    </div>
-  )
-}
-
-
 export function BoxList({list, onDeleteItem, onMarkItemDone}) {
 
   const boxes = list.map((item, index) => {
@@ -153,17 +137,17 @@ BoxList.defaultProps = {
 };
 
 
-export function TodoVisibilityComponent({viewDone, onDoneChange}) {
+export function TodoVisibilityComponent({viewDone, doneTodosCount, onDoneChange}) {
 
   const onChange = (event) => onDoneChange(event.target.checked);
 
   return (
     <Row>
-      <fieldset className="large-6 columns">
+      <fieldset className="large-12 columns">
         <legend>Options de visibilité</legend>
         <label>
           <input type="checkbox" defaultChecked={viewDone} onChange={onChange}/>
-          Afficher les tâches terminées
+          Afficher les tâches terminées ({doneTodosCount})
         </label>
       </fieldset>
     </Row>
@@ -172,5 +156,6 @@ export function TodoVisibilityComponent({viewDone, onDoneChange}) {
 
 TodoVisibilityComponent.propTypes = {
   viewDone: React.PropTypes.bool.isRequired,
+  doneTodosCount: React.PropTypes.number.isRequired,
   onDoneChange: React.PropTypes.func.isRequired,
 };

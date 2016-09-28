@@ -2,24 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Button, Row, Column } from 'react-foundation';
 
-
-
-function InputGroup({children}) {
-  return (
-    <div className="input-group">
-      {children}
-    </div>
-  )
-}
-
-
-function InputGroupField({children}) {
-  return (
-    <div className="input-group-field">
-      {children}
-    </div>
-  )
-}
+import { InputGroup, InputGroupField } from '../core/components';
 
 
 export class LoadTopicComponent extends React.Component {
@@ -61,7 +44,7 @@ export class LoadTopicComponent extends React.Component {
     const sampleTopics = this.props.sampleTopics.map(topic => {
       const to = '/reddit/' + topic;
       return (
-        <span>
+        <span key={topic}>
           {' '}<Link to={to}>{topic}</Link>
         </span>
       );
@@ -107,8 +90,20 @@ LoadTopicComponent.propTypes = {
 
 LoadTopicComponent.defaultProps = {
   topic: '',
-  sampleTopics: ['apple', 'google', 'python'],
+  sampleTopics: ['apple', 'google', 'redis', 'python'],
 };
+
+
+function RedditListItem({elem}) {
+  return (
+    <Row large={12}>
+      <h2>
+        <a href={elem.url}>{elem.title}</a>
+      </h2>
+      <p>{elem.selftext}</p>
+    </Row>
+  );
+}
 
 
 export class RedditListComponent extends React.Component {
@@ -133,18 +128,12 @@ export class RedditListComponent extends React.Component {
   }
 
   render() {
-    const items = this.props.list.map(elem => {
-      return (
-        <li key={elem.id}>
-          <a href={elem.url}>{elem.title}</a>
-        </li>
-      );
-    });
+    const items = this.props.list.map(elem => <RedditListItem key={elem.id} elem={elem}/>);
 
     return (
-      <div>
-        <ul>{items}</ul>
-      </div>
+      <Column>
+        {items}
+      </Column>
     );
   }
 

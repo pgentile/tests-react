@@ -101,24 +101,6 @@ AddBoxComponent.propTypes = {
 };
 
 
-function InputGroup(props) {
-  return (
-    <div className="input-group">
-      {props.children}
-    </div>
-  )
-}
-
-
-function InputGroupField(props) {
-  return (
-    <div className="input-group-field">
-      {props.children}
-    </div>
-  )
-}
-
-
 export function BoxList({list, onDeleteItem, onMarkItemDone}) {
 
   const boxes = list.map((item, index) => {

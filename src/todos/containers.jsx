@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Row, Column } from 'react-foundation';
 
 
 import {
@@ -8,6 +9,8 @@ import {
   AddBoxComponent as AddBoxComponentBase,
   TodoVisibilityComponent as TodoVisibilityComponentBase
 } from './components';
+
+import { PageComponent } from '../page/components';
 
 import * as actions from './actions';
 
@@ -23,6 +26,13 @@ const selectTodosByVisibility = createSelector(
     }
 
     return todos.filter(todo => !todo.done);
+  },
+);
+
+const selectDoneTodosCount = createSelector(
+  [getTodos],
+  (todos) => {
+    return todos.filter(todo => todo.done).size;
   },
 );
 
@@ -56,6 +66,7 @@ const TodoVisibilityComponent = connect(
   (state) => {
     return {
       viewDone: state.todoVisibility.viewDone,
+      doneTodosCount: selectDoneTodosCount(state),
     };
   },
   (dispatch) => {
@@ -68,11 +79,10 @@ const TodoVisibilityComponent = connect(
 
 export function TodoComponent() {
   return (
-    <div>
-      <h1>TODOs</h1>
+    <PageComponent title="TODOs">
       <AddBoxComponent/>
       <BoxList/>
       <TodoVisibilityComponent/>
-    </div>
+    </PageComponent>
   );
 };

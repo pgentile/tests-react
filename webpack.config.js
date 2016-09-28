@@ -72,15 +72,12 @@ module.exports = {
       mangle: true
     }),
     */
-    /*
     new webpack.optimize.DedupePlugin(),
-    */
-    /*
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery',
+      'fetch': 'isomorphic-fetch',
     }),
-    */
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('bundle.css'),
   ],
