@@ -15,11 +15,9 @@ export const RedditListComponent = connect(
       list: state.reddit,
     };
   },
-  (dispatch) => {
-    return {
-      onLoadTopic: (topic) => dispatch(actions.loadSubreddit(topic)),
-      onUnloadTopic: () => dispatch(actions.unloadSubreddit()),
-    };
+  {
+    onLoadTopic: actions.loadSubreddit,
+    onUnloadTopic: actions.unloadSubreddit,
   },
 )(RedditListComponentBase);
 

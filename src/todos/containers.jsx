@@ -42,21 +42,17 @@ const BoxList = connect(
       list: selectTodosByVisibility(state),
     };
   },
-  (dispatch) => {
-    return {
-      onDeleteItem: (id) => dispatch(actions.deleteTodo(id)),
-      onMarkItemDone: (id) => dispatch(actions.markDone(id)),
-    };
+  {
+    onDeleteItem: actions.deleteTodo,
+    onMarkItemDone: actions.markDone,
   },
 )(BoxListBase);
 
 
 const AddBoxComponent = connect(
   null,
-  (dispatch) => {
-    return {
-      onAddItem: (content) => dispatch(actions.addTodo(content)),
-    };
+  {
+    onAddItem: actions.addTodo,
   },
 )(AddBoxComponentBase);
 
@@ -68,10 +64,8 @@ const TodoVisibilityComponent = connect(
       doneTodosCount: selectDoneTodosCount(state),
     };
   },
-  (dispatch) => {
-    return {
-      onDoneChange: (viewDone) => dispatch(actions.changeDoneVisibility(viewDone)),
-    };
+  {
+    onDoneChange: actions.changeDoneVisibility,
   },
 )(TodoVisibilityComponentBase);
 

@@ -11,9 +11,7 @@ export const Error = connect(
       message: state.errors.lastError,
     };
   },
-  (dispatch) => {
-    return {
-      onDismiss: () => dispatch(actions.dismissError()),
-    };
-  }
+  {
+    onDismiss: actions.dismissError,
+  },
 )(ErrorBase);
