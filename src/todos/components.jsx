@@ -87,7 +87,7 @@ export class AddBoxComponent extends React.Component {
                     onChange={valueChanged}/>
               </InputGroupField>
               <div className="input-group-button">
-                <Button disabled={!this.state.value}>Add new box</Button>
+                <Button disabled={!this.state.value}>Add</Button>
               </div>
             </InputGroup>
           </Column>
