@@ -27,6 +27,13 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "no-console": "warn",
-    "prefer-template": "warn"
+    "prefer-template": "warn",
+    "quotes": [
+      "warn",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ]
   }
 }
