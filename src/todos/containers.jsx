@@ -4,8 +4,8 @@ import { createSelector } from 'reselect';
 
 
 import {
-  BoxList as BoxListBase,
-  AddBoxComponent as AddBoxComponentBase,
+  TodoList as TodoListBase,
+  AddTodoComponent as AddTodoComponentBase,
   TodoVisibilityComponent as TodoVisibilityComponentBase
 } from './components';
 
@@ -36,7 +36,7 @@ const selectDoneTodosCount = createSelector(
 );
 
 
-const BoxList = connect(
+const TodoList = connect(
   (state) => {
     return {
       list: selectTodosByVisibility(state),
@@ -46,15 +46,15 @@ const BoxList = connect(
     onDeleteItem: actions.deleteTodo,
     onMarkItemDone: actions.markDone,
   },
-)(BoxListBase);
+)(TodoListBase);
 
 
-const AddBoxComponent = connect(
+const AddTodoComponent = connect(
   null,
   {
     onAddItem: actions.addTodo,
   },
-)(AddBoxComponentBase);
+)(AddTodoComponentBase);
 
 
 const TodoVisibilityComponent = connect(
@@ -73,8 +73,8 @@ const TodoVisibilityComponent = connect(
 export function TodoComponent() {
   return (
     <PageComponent title="TODOs">
-      <AddBoxComponent/>
-      <BoxList/>
+      <AddTodoComponent/>
+      <TodoList/>
       <TodoVisibilityComponent/>
     </PageComponent>
   );

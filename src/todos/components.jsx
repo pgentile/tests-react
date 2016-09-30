@@ -6,11 +6,11 @@ import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
 import { InputGroup, InputGroupField } from '../core/components';
 
 
-export function Box({item, onDelete, onMarkDone}) {
+export function Todo({item, onDelete, onMarkDone}) {
 
   let creationDate = (
     <small>
-      &mdash; créé le {item.createdAt.format('LLL')}
+      {' '}&mdash; créé le {item.createdAt.format('LLL')}
     </small>
   );
 
@@ -18,7 +18,7 @@ export function Box({item, onDelete, onMarkDone}) {
   if (item.createdAt !== item.modifiedAt) {
     modificationDate = (
       <small>
-        &mdash; modifié le {item.modifiedAt.format('LLL')}
+        {' '}&mdash; modifié le {item.modifiedAt.format('LLL')}
       </small>
     );
   }
@@ -36,14 +36,48 @@ export function Box({item, onDelete, onMarkDone}) {
   );
 }
 
-Box.propTypes = {
+Todo.propTypes = {
   item: React.PropTypes.object.isRequired,
   onDelete: React.PropTypes.func.isRequired,
   onMarkDone: React.PropTypes.func.isRequired,
 };
 
 
-export class AddBoxComponent extends React.Component {
+export function TodoList({list, onDeleteItem, onMarkItemDone}) {
+
+  const todos = list.map(item => {
+    return <Todo
+              key={item.id}
+              item={item}
+              onDelete={() => onDeleteItem(item.id)}
+              onMarkDone={() => onMarkItemDone(item.id)} />;
+  });
+
+  if (list.size > 0) {
+    return (
+      <Menu isVertical>
+        {todos}
+      </Menu>
+    );
+  } else {
+    return (
+      <p>Aucun item à afficher</p>
+    );
+  }
+}
+
+TodoList.propTypes = {
+  list: ImmutablePropTypes.list.isRequired,
+  onDeleteItem: React.PropTypes.func.isRequired,
+  onMarkItemDone: React.PropTypes.func.isRequired,
+};
+
+TodoList.defaultProps = {
+  list: Immutable.List(),
+};
+
+
+export class AddTodoComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -58,7 +92,7 @@ export class AddBoxComponent extends React.Component {
     });
   }
 
-  addBox(event) {
+  addTodo(event) {
     event.preventDefault();
 
     if (this.state.value) {
@@ -71,10 +105,10 @@ export class AddBoxComponent extends React.Component {
 
   render() {
     const valueChanged = this.valueChanged.bind(this);
-    const addBox = this.addBox.bind(this);
+    const addTodo = this.addTodo.bind(this);
 
     return (
-      <form onSubmit={addBox}>
+      <form onSubmit={addTodo}>
         <Row>
           <Column>
             <InputGroup>
@@ -98,42 +132,8 @@ export class AddBoxComponent extends React.Component {
 
 }
 
-AddBoxComponent.propTypes = {
+AddTodoComponent.propTypes = {
   onAddItem: React.PropTypes.func.isRequired,
-};
-
-
-export function BoxList({list, onDeleteItem, onMarkItemDone}) {
-
-  const boxes = list.map(item => {
-    return <Box
-              key={item.id}
-              item={item}
-              onDelete={() => onDeleteItem(item.id)}
-              onMarkDone={() => onMarkItemDone(item.id)} />;
-  });
-
-  if (list.size > 0) {
-    return (
-      <Menu isVertical>
-        {boxes}
-      </Menu>
-    );
-  } else {
-    return (
-      <p>Aucun item à afficher</p>
-    );
-  }
-}
-
-BoxList.propTypes = {
-  list: ImmutablePropTypes.list.isRequired,
-  onDeleteItem: React.PropTypes.func.isRequired,
-  onMarkItemDone: React.PropTypes.func.isRequired,
-};
-
-BoxList.defaultProps = {
-  list: Immutable.List(),
 };
 
 
