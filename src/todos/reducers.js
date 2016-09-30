@@ -12,7 +12,7 @@ moment.locale('fr');
 // Reducer
 
 export function todos(state = Immutable.List(), action) {
-  let now = moment();
+  const now = moment();
 
   switch (action.type) {
 

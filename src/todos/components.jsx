@@ -8,7 +8,7 @@ import { InputGroup, InputGroupField } from '../core/components';
 
 export function Todo({item, onDelete, onMarkDone}) {
 
-  let creationDate = (
+  const creationDate = (
     <small>
       {' '}&mdash; créé le {item.createdAt.format('LLL')}
     </small>

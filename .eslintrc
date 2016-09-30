@@ -9,13 +9,24 @@
     "react"
   ],
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2015,
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "rules": {
+    "eqeqeq": ["error", "always"],
+    "curly": "error",
+    "default-case": "error",
+    "no-var": "error",
+    "no-multi-spaces": "error",
+    "no-useless-constructor": "error",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "no-console": "warn",
+    "prefer-template": "warn"
   }
 }

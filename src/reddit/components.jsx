@@ -41,7 +41,7 @@ export class LoadTopicComponent extends React.Component {
     const loadTopic = this.loadTopic.bind(this);
 
     const sampleTopics = this.props.sampleTopics.map(topic => {
-      const to = '/reddit/' + topic;
+      const to = `/reddit/${topic}`;
       return (
         <span key={topic}>
           {' '}<Link to={to}>{topic}</Link>
@@ -110,10 +110,6 @@ RedditListItem.propTypes = {
 
 
 export class RedditListComponent extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.onLoadTopic(this.props.topic);
