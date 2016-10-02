@@ -14,12 +14,13 @@ import createLogger from 'redux-logger';
 import { todos, todoVisibility } from './todos/reducers';
 import { reddit } from './reddit/reducers';
 import { loadingIndicator } from './loadingindicator/reducers';
+import { charts } from './charts/reducers';
 import { errors } from './errors/reducers';
 
 import { TodoComponent } from './todos/containers';
 import { BasePageComponent } from './page/components';
-
 import { RedditComponent, RedditListComponent } from './reddit/routed';
+import { ChartsComponent } from './charts/containers';
 
 
 // Combined reducers, create store
@@ -30,6 +31,7 @@ export const app = combineReducers({
   todoVisibility,
   loadingIndicator,
   errors,
+  charts,
   routing: routerReducer,
 });
 
@@ -53,6 +55,7 @@ ReactDOM.render(
           <Route path="reddit" component={RedditComponent}>
             <Route path=":topic" component={RedditListComponent}/>
           </Route>
+          <Route path="charts" component={ChartsComponent}/>
         </Route>
       </Router>
     </Provider>

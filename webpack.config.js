@@ -23,7 +23,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-        jquery: 'jquery/src/jquery',
+        'jquery': 'jquery/src/jquery',
+        'chart.js': 'chart.js/src/chart.js',
     },
     extensions: ['', '.js', '.jsx', '.scss', '.css'],
   },

@@ -25,12 +25,12 @@ BasePageComponent.propTypes = {
 
 export function PageComponent({title, children}) {
   return (
-    <Column>
-      <Row>
-        <h1>{title}</h1>
-        {children}
-      </Row>
-    </Column>
+    <Row>
+      <Column>
+          <h1>{title}</h1>
+          {children}
+      </Column>
+    </Row>
   );
 }
 

@@ -16,34 +16,34 @@ export function todos(state = Immutable.List(), action) {
 
   switch (action.type) {
 
-    case actions.ADD_TODO:
-      return state.push({
-        id: uuid.v4(),
-        content: action.content,
-        done: false,
-        createdAt: now,
-        modifiedAt: now,
-      });
+  case actions.ADD_TODO:
+    return state.push({
+      id: uuid.v4(),
+      content: action.content,
+      done: false,
+      createdAt: now,
+      modifiedAt: now,
+    });
 
-    case actions.MARK_DONE:
-      return state.map(todo => {
-        if (todo.id !== action.id) {
-          return todo;
-        }
+  case actions.MARK_DONE:
+    return state.map(todo => {
+      if (todo.id !== action.id) {
+        return todo;
+      }
 
-        const newTodo = _.cloneDeep(todo);
-        newTodo.done = true;
-        newTodo.modifiedAt = now;
-        return newTodo;
-      });
+      const newTodo = _.cloneDeep(todo);
+      newTodo.done = true;
+      newTodo.modifiedAt = now;
+      return newTodo;
+    });
 
-    case actions.DELETE_TODO:
-      return state.filter(todo => {
-        return todo.id !== action.id;
-      });
+  case actions.DELETE_TODO:
+    return state.filter(todo => {
+      return todo.id !== action.id;
+    });
 
-    default:
-      return state;
+  default:
+    return state;
 
   }
 
@@ -57,13 +57,13 @@ const visibilityDefaultState = {
 export function todoVisibility(state = visibilityDefaultState, action) {
   switch (action.type) {
 
-    case actions.CHANGE_VISIBILITY:
-      return {
-        viewDone: action.viewDone,
-      };
+  case actions.CHANGE_VISIBILITY:
+    return {
+      viewDone: action.viewDone,
+    };
 
-    default:
-      return state;
+  default:
+    return state;
 
   }
 }
