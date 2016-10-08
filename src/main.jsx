@@ -35,11 +35,20 @@ export const app = combineReducers({
   routing: routerReducer,
 });
 
-export const store = createStore(app, applyMiddleware(
+
+let middleware = [];
+
+if (process.env.NODE_ENV === 'production') {
+  middleware.push(require('redux-immutable-state-invariant')());
+}
+
+middleware = middleware.concat([
   routerMiddleware(browserHistory),
   promiseMiddleware(),
   createLogger(),
-));
+]);
+
+export const store = createStore(app, applyMiddleware(...middleware));
 
 const history = syncHistoryWithStore(browserHistory, store);
 

@@ -1,8 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
+var validate = require('webpack-validator')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
+module.exports = validate({
   entry: {
       app: [
         './src/main.jsx',
@@ -88,4 +89,4 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('bundle.css'),
   ],
-};
+});
