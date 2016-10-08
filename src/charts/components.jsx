@@ -10,6 +10,8 @@ export class BaseChartComponent extends React.Component {
     super(props);
     this.canvas = null;
     this.chart = null;
+
+    this.setCanvas = this.setCanvas.bind(this);
   }
 
   componentDidMount() {
@@ -19,34 +21,30 @@ export class BaseChartComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.data !== this.props.data) {
-      if (this.props.data === null) {
-        if (this.chart !== null) {
-          this.destroyChart();
-        }
-      } else {
-        if (this.chart === null) {
-          this.initChart();
-        } else {
-          this.updateChart();
-        }
-      }
+    if (prevProps.type !== this.props.type || prevProps.options !== this.props.options) {
+      this.initChart();
+    } else if (prevProps.data !== this.props.data) {
+      this.updateChart();
     }
   }
 
   componentWillUnmount() {
-    this.chart.destroy();
+    this.destroyChart();
   }
 
   render() {
-    const referenceCanvas = element => this.canvas = element;
-
     return (
-      <canvas ref={referenceCanvas} width={400} height={250}></canvas>
+      <canvas ref={this.setCanvas} width={400} height={250}></canvas>
     )
   }
 
+  setCanvas(canvas) {
+    this.canvas = canvas;
+  }
+
   initChart() {
+    this.destroyChart();
+
     this.chart = new Chart(this.canvas, {
       type: this.props.type,
       data: this.props.data,
@@ -55,20 +53,26 @@ export class BaseChartComponent extends React.Component {
   }
 
   updateChart() {
-    this.chart.data.labels = this.props.data.labels;
-    this.chart.data.datasets = this.props.data.datasets;
-    this.chart.update();
+    if (this.chart === null) {
+      this.initChart();
+    } else {
+      this.chart.data.labels = this.props.data.labels;
+      this.chart.data.datasets = this.props.data.datasets;
+      this.chart.update();
+    }
   }
 
   destroyChart() {
-    this.chart.destroy();
-    this.chart = null;
+    if (this.chart !== null) {
+      this.chart.destroy();
+      this.chart = null;
+    }
   }
 
 }
 
 BaseChartComponent.propTypes = {
-  data: React.PropTypes.object,
+  data: React.PropTypes.object.isRequired,
   options: React.PropTypes.object,
   type: React.PropTypes.string.isRequired,
 };
@@ -80,44 +84,66 @@ export function PieChart(props) {
 }
 
 
-export class ChartsComponent extends React.Component {
+export function DoughnutChart(props) {
+  const realProps = Object.assign({}, { type: 'doughnut' }, props);
+  return <BaseChartComponent {...realProps}/>;
+}
 
-  constructor(props) {
-    super(props);
-    this.refreshData = this.refreshData.bind(this);
-  }
 
-  refreshData(event) {
+export function BarChart(props) {
+  const realProps = Object.assign({}, { type: 'bar' }, props);
+  return <BaseChartComponent {...realProps}/>;
+}
+
+
+export function ChartsComponent({ data, displayLegend, onRefresh, onEnableLegend, onDisableLegend }) {
+  const options = {
+    legend: {
+      display: displayLegend,
+    },
+  };
+
+  const onRefreshClick = event => {
     event.preventDefault();
-    this.props.onRefresh();
-  }
+    onRefresh();
+  };
 
-  render() {
-    return (
-      <PageComponent title="Charts">
-        <Row>
-          <Column large={4}>
-            <PieChart data={this.props.data}/>
-          </Column>
-          <Column large={4}>
-            <PieChart data={this.props.data}/>
-          </Column>
-          <Column large={4}>
-            <PieChart data={this.props.data}/>
-          </Column>
-        </Row>
-        <Row>
-          <Column>
-            <Button onClick={this.refreshData}>Refresh data</Button>
-          </Column>
-        </Row>
-      </PageComponent>
-    );
-  }
+  const onToggleLegendClick = event => {
+    event.preventDefault();
+    if (displayLegend) {
+      onDisableLegend();
+    } else {
+      onEnableLegend();
+    }
+  };
 
+  return (
+    <PageComponent title="Charts">
+      <Row>
+        <Column large={4}>
+          <PieChart data={data} options={options}/>
+        </Column>
+        <Column large={4}>
+          <BarChart data={data} options={options}/>
+        </Column>
+        <Column large={4}>
+          <DoughnutChart data={data} options={options}/>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <Button onClick={onRefreshClick}>Refresh data</Button>
+          <Button onClick={onToggleLegendClick}>Toggle legend</Button>
+        </Column>
+      </Row>
+    </PageComponent>
+  );
 }
 
 ChartsComponent.propTypes = {
   data: React.PropTypes.object.isRequired,
+  displayLegend: React.PropTypes.bool.isRequired,
   onRefresh: React.PropTypes.func.isRequired,
+  onEnableLegend: React.PropTypes.func.isRequired,
+  onDisableLegend: React.PropTypes.func.isRequired,
 };

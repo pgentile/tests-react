@@ -35,6 +35,7 @@ function generateData() {
 
 const DEFAULT_STATE = {
   data: generateData(),
+  displayLegend: true,
 };
 
 export function charts(state = DEFAULT_STATE, action) {
@@ -43,6 +44,19 @@ export function charts(state = DEFAULT_STATE, action) {
   case actions.REFRESH_CHART:
     return {
       data: generateData(),
+      displayLegend: state.displayLegend,
+    };
+
+  case actions.ENABLE_CHART_LEGEND:
+    return {
+      data: state.data,
+      displayLegend: true,
+    };
+
+  case actions.DISABLE_CHART_LEGEND:
+    return {
+      data: state.data,
+      displayLegend: false,
     };
 
   default:
