@@ -1,35 +1,37 @@
+import _ from 'lodash';
+
 import * as actions from './actions';
+
+
+function generateRainbowColors(size, saturation = 1, lightness = 0.5) {
+  return _.range(size).map(i => {
+    const hue = Math.round(360 * (i / size)) % 360;
+    return `hsl(${hue}, ${saturation * 100}%, ${lightness * 100}%)`;
+  });
+}
 
 
 function generateData() {
   const generateNumber = () => Math.round(Math.random() * 100);
 
-  return {
-    labels: [
-      'Red',
-      'Blue',
-      'Yellow'
-    ],
+  const count = 15;
+  const labels = _.range(count).map(i => `Label ${i}`);
+  const data = _.range(count).map(() => generateNumber());
+  const backgroundColor = generateRainbowColors(count, 1, 0.5);
+  const hoverBackgroundColor = generateRainbowColors(count, 1, 0.8);
+
+  const graphData = {
+    labels,
     datasets: [
       {
-        data: [
-          generateNumber(),
-          generateNumber(),
-          generateNumber(),
-        ],
-        backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-        ],
-        hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-        ]
+        data,
+        backgroundColor,
+        hoverBackgroundColor,
       },
-    ]
+    ],
   };
+
+  return graphData;
 }
 
 
