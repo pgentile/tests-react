@@ -1,4 +1,5 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Immutable from 'immutable';
 import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
@@ -6,34 +7,57 @@ import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
 import { InputGroup, InputGroupField } from '../core/components';
 
 
-export function Todo({item, onDelete, onMarkDone}) {
+export class Todo extends React.Component {
 
-  const creationDate = (
-    <small>
-      {' '}&mdash; créé le {item.createdAt.format('LLL')}
-    </small>
-  );
+  constructor(props) {
+    super(props);
+    this.onMarkDone = this.onMarkDone.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+  }
 
-  let modificationDate = null;
-  if (item.createdAt !== item.modifiedAt) {
-    modificationDate = (
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+  onMarkDone() {
+    this.props.onMarkDone(this.props.item.id);
+  }
+
+  onDelete() {
+    this.props.onDelete(this.props.item.id);
+  }
+
+  render() {
+    const { item } = this.props;
+
+    const creationDate = (
       <small>
-        {' '}&mdash; modifié le {item.modifiedAt.format('LLL')}
+        {' '}&mdash; créé le {item.createdAt.format('LLL')}
       </small>
+    );
+
+    let modificationDate = null;
+    if (item.createdAt !== item.modifiedAt) {
+      modificationDate = (
+        <small>
+          {' '}&mdash; modifié le {item.modifiedAt.format('LLL')}
+        </small>
+      );
+    }
+
+    return (
+      <MenuItem className="menu-text clearfix">
+        <b>{item.content}</b>
+        {creationDate}
+        {modificationDate}
+        <span className="float-right">
+          <Button onClick={this.onMarkDone} disabled={item.done} size={Sizes.TINY}>Done</Button>
+          <Button onClick={this.onDelete} size={Sizes.TINY}>Remove</Button>
+        </span>
+      </MenuItem>
     );
   }
 
-  return (
-    <MenuItem className="menu-text clearfix">
-      <b>{item.content}</b>
-      {creationDate}
-      {modificationDate}
-      <span className="float-right">
-        <Button onClick={() => onMarkDone(item.id)} disabled={item.done} size={Sizes.TINY}>Done</Button>
-        <Button onClick={() => onDelete(item.id)} size={Sizes.TINY}>Remove</Button>
-      </span>
-    </MenuItem>
-  );
 }
 
 Todo.propTypes = {
@@ -49,8 +73,8 @@ export function TodoList({list, onDeleteItem, onMarkItemDone}) {
     return <Todo
               key={item.id}
               item={item}
-              onDelete={() => onDeleteItem(item.id)}
-              onMarkDone={() => onMarkItemDone(item.id)} />;
+              onDelete={onDeleteItem}
+              onMarkDone={onMarkItemDone} />;
   });
 
   if (list.size > 0) {
@@ -81,6 +105,8 @@ export class AddTodoComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.valueChanged = this.valueChanged.bind(this);
+    this.addTodo = this.addTodo.bind(this);
     this.state = {
       value: '',
     };
@@ -104,11 +130,8 @@ export class AddTodoComponent extends React.Component {
   }
 
   render() {
-    const valueChanged = this.valueChanged.bind(this);
-    const addTodo = this.addTodo.bind(this);
-
     return (
-      <form onSubmit={addTodo}>
+      <form onSubmit={this.addTodo}>
         <Row>
           <Column>
             <InputGroup>
@@ -118,7 +141,7 @@ export class AddTodoComponent extends React.Component {
                     className="input-group-field"
                     placeholder="Entrez votre texte ici"
                     value={this.state.value}
-                    onChange={valueChanged}/>
+                    onChange={this.valueChanged}/>
               </InputGroupField>
               <div className="input-group-button">
                 <Button disabled={!this.state.value}>Add</Button>

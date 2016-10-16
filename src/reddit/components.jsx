@@ -9,6 +9,8 @@ export class LoadTopicComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.changeTopic = this.changeTopic.bind(this);
+    this.loadTopic = this.loadTopic.bind(this);
     this.state = {
       topic: props.topic,
     };
@@ -37,9 +39,6 @@ export class LoadTopicComponent extends React.Component {
   }
 
   render() {
-    const changeTopic = this.changeTopic.bind(this);
-    const loadTopic = this.loadTopic.bind(this);
-
     const sampleTopics = this.props.sampleTopics.map(topic => {
       const to = `/reddit/${topic}`;
       return (
@@ -50,7 +49,7 @@ export class LoadTopicComponent extends React.Component {
     });
 
     return (
-      <form onSubmit={loadTopic}>
+      <form onSubmit={this.loadTopic}>
         <Row>
           <Column>
             <InputGroup>
@@ -60,7 +59,7 @@ export class LoadTopicComponent extends React.Component {
                     className="input-group-field"
                     placeholder="Topic"
                     value={this.state.topic}
-                    onChange={changeTopic}/>
+                    onChange={this.changeTopic}/>
               </InputGroupField>
               <div className="input-group-button">
                 <Button disabled={!this.state.topic}>Load topic</Button>

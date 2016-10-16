@@ -24,6 +24,10 @@ import { ChartsComponent } from './charts/containers';
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
 
+if (process.env.NODE_ENV !== 'production') {
+  global.Perf = require('react-addons-perf');
+}
+
 // Combined reducers, create store
 
 export const app = combineReducers({
@@ -41,7 +45,7 @@ let middlewares = [];
 if (process.env.NODE_ENV !== 'production') {
   middlewares = middlewares.concat([
     require('redux-logger')(),
-    require('redux-immutable-state-invariant')(),
+    // require('redux-immutable-state-invariant')(),
   ]);
 }
 
