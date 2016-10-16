@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import uuid from 'uuid';
 import moment from 'moment';
 import Immutable from 'immutable';
@@ -13,7 +12,7 @@ moment.locale('fr');
 // Reducer
 
 export function todos(state = Immutable.List(), action) {
-  const now = moment();
+  const now = Object.freeze(moment());
 
   switch (action.type) {
 
@@ -32,10 +31,10 @@ export function todos(state = Immutable.List(), action) {
         return todo;
       }
 
-      const newTodo = _.cloneDeep(todo);
-      newTodo.done = true;
-      newTodo.modifiedAt = now;
-      return newTodo;
+      return Object.assign({}, todo, {
+        modifiedAt: now,
+        done: true,
+      });
     });
 
   case actions.DELETE_TODO:
