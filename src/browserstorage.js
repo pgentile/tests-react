@@ -1,36 +1,15 @@
+import shallowEqual from 'shallowequal';
 import invariant from 'invariant';
 
-/*
-class BrowserStorageItem {
 
-  constructor({ type, entryName }) {
-    this.storage = window[type];
-    this.entryName = entryName;
-  }
+class BrowserStorage {
 
-  read() {
-    return this.storage.getItem(this.entryName);
-  }
-
-  write(value) {
-    this.storage.setItem(this.entryName, value);
-  }
-
-  reset() {
-    this.storage.removeItem(this.entryName);
-  }
-
-}
-*/
-
-
-export class BrowserStorage {
-
-  constructor(config) {
+  constructor(storage, config) {
     invariant(config.entryName, 'entryName is undefined');
 
+    this.storage = storage;
+
     this.config = Object.assign({
-      type: 'localStorage',
       defaultState: () => {
         return {};
       },
@@ -66,24 +45,42 @@ export class BrowserStorage {
   }
 
   readInStorage() {
-    const { type, entryName } = this.config;
-    return window[type].getItem(entryName);
+    const { entryName } = this.config;
+    return this.storage.getItem(entryName);
   }
 
   writeInStorage(value) {
-    const { type, entryName } = this.config;
-    window[type].setItem(entryName, value);
+    const { entryName } = this.config;
+    this.storage.setItem(entryName, value);
   }
 
   clearInStorage() {
-    const { type, entryName } = this.config;
-    window[type].removeItem(entryName);
+    const { entryName } = this.config;
+    this.storage.removeItem(entryName);
   }
 
 }
 
 
-export function wrapReducer(browserStorage, reducer) {
+export class BrowserLocalStorage extends BrowserStorage {
+
+  constructor(config) {
+    super(window.localStorage, config);
+  }
+
+}
+
+
+export class BrowserSessionStorage extends BrowserStorage {
+
+  constructor(config) {
+    super(window.sessionStorage, config);
+  }
+
+}
+
+
+export function wrapReducerWithStorage(browserStorage, reducer) {
   const defaultState = browserStorage.read();
   return (state = defaultState, action) => {
     return reducer(state, action);
@@ -91,12 +88,12 @@ export function wrapReducer(browserStorage, reducer) {
 }
 
 
-export function createMiddleware(browserStorage, stateSelector) {
+export function createMiddleware(browserStorage, stateSelector, compare = shallowEqual) {
   return store => next => action => {
     const beforeState = stateSelector(store.getState());
     const output = next(action);
     const afterState = stateSelector(store.getState());
-    if (beforeState !== afterState) {
+    if (!compare(beforeState, afterState)) {
       browserStorage.write(afterState);
     }
     return output;

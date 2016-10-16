@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
-import createLogger from 'redux-logger';
 
 import { todos, todoVisibility, visibilityBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
@@ -22,7 +21,7 @@ import { BasePageComponent } from './page/components';
 import { RedditComponent, RedditListComponent } from './reddit/routed';
 import { ChartsComponent } from './charts/containers';
 
-import { createMiddleware as createBrowserStorageMiddleware } from './browserstorage/BrowserStorage';
+import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
 
 // Combined reducers, create store
@@ -38,20 +37,22 @@ export const app = combineReducers({
 });
 
 
-let middleware = [];
+let middlewares = [];
 
-if (process.env.NODE_ENV === 'production') {
-  middleware.push(require('redux-immutable-state-invariant')());
+if (process.env.NODE_ENV !== 'production') {
+  middlewares = middlewares.concat([
+    require('redux-logger')(),
+    require('redux-immutable-state-invariant')(),
+  ]);
 }
 
-middleware = middleware.concat([
+middlewares = middlewares.concat([
   routerMiddleware(browserHistory),
   promiseMiddleware(),
-  createLogger(),
-  createBrowserStorageMiddleware(visibilityBrowserStorage, state => state.todoVisibility),
+  browserStorageMiddleware(visibilityBrowserStorage, state => state.todoVisibility),
 ]);
 
-export const store = createStore(app, applyMiddleware(...middleware));
+export const store = createStore(app, applyMiddleware(...middlewares));
 
 const history = syncHistoryWithStore(browserHistory, store);
 

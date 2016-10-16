@@ -4,7 +4,7 @@ import moment from 'moment';
 import Immutable from 'immutable';
 
 import * as actions from './actions';
-import { BrowserStorage, wrapReducer as wrapBrowserStorageReducer } from '../browserstorage/BrowserStorage';
+import { BrowserLocalStorage, wrapReducerWithStorage } from '../browserstorage';
 
 
 moment.locale('fr');
@@ -51,7 +51,7 @@ export function todos(state = Immutable.List(), action) {
 }
 
 
-export const visibilityBrowserStorage = new BrowserStorage({
+export const visibilityBrowserStorage = new BrowserLocalStorage({
   entryName: 'todoVisibility',
   defaultState: () => {
     return {
@@ -61,7 +61,7 @@ export const visibilityBrowserStorage = new BrowserStorage({
 });
 
 
-export const todoVisibility = wrapBrowserStorageReducer(visibilityBrowserStorage, (state, action) => {
+export const todoVisibility = wrapReducerWithStorage(visibilityBrowserStorage, (state, action) => {
   switch (action.type) {
 
   case actions.CHANGE_VISIBILITY:
