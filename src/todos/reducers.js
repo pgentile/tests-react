@@ -1,6 +1,7 @@
 import uuid from 'uuid';
 import moment from 'moment';
 import Immutable from 'immutable';
+import { combineReducers } from 'redux';
 
 import * as actions from './actions';
 import { BrowserLocalStorage, wrapReducerWithStorage } from '../browserstorage';
@@ -11,7 +12,7 @@ moment.locale('fr');
 
 // Reducer
 
-export function todos(state = Immutable.List(), action) {
+function list(state = Immutable.List(), action) {
   const now = Object.freeze(moment());
 
   switch (action.type) {
@@ -60,7 +61,7 @@ export const visibilityBrowserStorage = new BrowserLocalStorage({
 });
 
 
-export const todoVisibility = wrapReducerWithStorage(visibilityBrowserStorage, (state, action) => {
+const visibility = wrapReducerWithStorage(visibilityBrowserStorage, (state, action) => {
   switch (action.type) {
 
   case actions.CHANGE_VISIBILITY:
@@ -72,4 +73,10 @@ export const todoVisibility = wrapReducerWithStorage(visibilityBrowserStorage, (
     return state;
 
   }
+});
+
+
+export const todos = combineReducers({
+  list,
+  visibility,
 });

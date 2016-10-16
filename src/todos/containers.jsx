@@ -14,8 +14,8 @@ import { PageComponent } from '../page/components';
 import * as actions from './actions';
 
 
-const getDoneTodosVisibility = (state) => state.todoVisibility.viewDone;
-const getTodos = (state) => state.todos;
+const getDoneTodosVisibility = (state) => state.todos.visibility.viewDone;
+const getTodos = (state) => state.todos.list;
 
 const selectTodosByVisibility = createSelector(
   [getDoneTodosVisibility, getTodos],
@@ -60,7 +60,7 @@ const AddTodoComponent = connect(
 const TodoVisibilityComponent = connect(
   (state) => {
     return {
-      viewDone: state.todoVisibility.viewDone,
+      viewDone: state.todos.visibility.viewDone,
       doneTodosCount: selectDoneTodosCount(state),
     };
   },

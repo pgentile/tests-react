@@ -10,7 +10,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
-import { todos, todoVisibility, visibilityBrowserStorage } from './todos/reducers';
+import { todos, visibilityBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
 import { loadingIndicator } from './loadingindicator/reducers';
 import { charts } from './charts/reducers';
@@ -29,7 +29,6 @@ import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 export const app = combineReducers({
   reddit,
   todos,
-  todoVisibility,
   loadingIndicator,
   errors,
   charts,
@@ -49,7 +48,7 @@ if (process.env.NODE_ENV !== 'production') {
 middlewares = middlewares.concat([
   routerMiddleware(browserHistory),
   promiseMiddleware(),
-  browserStorageMiddleware(visibilityBrowserStorage, state => state.todoVisibility),
+  browserStorageMiddleware(visibilityBrowserStorage, state => state.todos.visibility),
 ]);
 
 export const store = createStore(app, applyMiddleware(...middlewares));
