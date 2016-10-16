@@ -13,21 +13,25 @@ function generateRainbowColors(size, saturation = 1, lightness = 0.5) {
 
 function generateData() {
   const generateNumber = () => Math.round(Math.random() * 100);
+  const count = 10;
+  const generateData = () => _.range(count).map(() => generateNumber());
+  const generateBackgroundColors = (saturation, lightness) => generateRainbowColors(count, saturation, lightness);
 
-  const count = 15;
   const labels = _.range(count).map(i => `Label ${i}`);
-  const data = _.range(count).map(() => generateNumber());
-  const backgroundColor = generateRainbowColors(count, 1, 0.5);
-  const hoverBackgroundColor = generateRainbowColors(count, 1, 0.8);
 
   const graphData = {
     labels,
     datasets: [
       {
-        data,
-        backgroundColor,
-        hoverBackgroundColor,
+        data: generateData(),
+        backgroundColor: generateBackgroundColors(1, 0.5),
+        hoverBackgroundColor: generateBackgroundColors(1, 0.8),
       },
+      /*{
+        data: generateData(),
+        backgroundColor: generateBackgroundColors(0.6, 0.5),
+        hoverBackgroundColor: generateBackgroundColors(1, 0.8),
+      },*/
     ],
   };
 

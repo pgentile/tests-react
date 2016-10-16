@@ -4,14 +4,14 @@ import { PageComponent } from '../page/components';
 import { Row, Column, Button } from 'react-foundation';
 
 
-export class BaseChartComponent extends React.Component {
+class BaseChartComponent extends React.Component {
 
-  constructor(props) {
+  constructor(type, props) {
     super(props);
+    this.setCanvas = this.setCanvas.bind(this);
+    this.type = type;
     this.canvas = null;
     this.chart = null;
-
-    this.setCanvas = this.setCanvas.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +21,7 @@ export class BaseChartComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.type !== this.props.type || prevProps.options !== this.props.options) {
+    if (prevProps.options !== this.props.options) {
       this.initChart();
     } else if (prevProps.data !== this.props.data) {
       this.updateChart();
@@ -35,7 +35,7 @@ export class BaseChartComponent extends React.Component {
   render() {
     return (
       <canvas ref={this.setCanvas} width={400} height={250}></canvas>
-    )
+    );
   }
 
   setCanvas(canvas) {
@@ -46,7 +46,7 @@ export class BaseChartComponent extends React.Component {
     this.destroyChart();
 
     this.chart = new Chart(this.canvas, {
-      type: this.props.type,
+      type: this.type,
       data: this.props.data,
       options: this.props.options,
     });
@@ -74,25 +74,42 @@ export class BaseChartComponent extends React.Component {
 BaseChartComponent.propTypes = {
   data: React.PropTypes.object.isRequired,
   options: React.PropTypes.object,
-  type: React.PropTypes.string.isRequired,
 };
 
 
-export function PieChart(props) {
-  const realProps = Object.assign({}, { type: 'pie' }, props);
-  return <BaseChartComponent {...realProps}/>;
+export class PieChart extends BaseChartComponent {
+
+  constructor(props) {
+    super('pie', props);
+  }
+
 }
 
 
-export function DoughnutChart(props) {
-  const realProps = Object.assign({}, { type: 'doughnut' }, props);
-  return <BaseChartComponent {...realProps}/>;
+export class DoughnutChart extends BaseChartComponent {
+
+  constructor(props) {
+    super('doughnut', props);
+  }
+
 }
 
 
-export function BarChart(props) {
-  const realProps = Object.assign({}, { type: 'bar' }, props);
-  return <BaseChartComponent {...realProps}/>;
+export class BarChart extends BaseChartComponent {
+
+  constructor(props) {
+    super('bar', props);
+  }
+
+}
+
+
+export class PolarChart extends BaseChartComponent {
+
+  constructor(props) {
+    super('polarArea', props);
+  }
+
 }
 
 
@@ -120,14 +137,19 @@ export function ChartsComponent({ data, displayLegend, onRefresh, onEnableLegend
   return (
     <PageComponent title="Charts">
       <Row>
-        <Column large={4}>
+        <Column large={6}>
           <PieChart data={data} options={options}/>
         </Column>
-        <Column large={4}>
+        <Column large={6}>
           <BarChart data={data} options={options}/>
         </Column>
-        <Column large={4}>
-          <DoughnutChart data={data} options={options}/>
+      </Row>
+      <Row>
+        <Column large={6}>
+          <BarChart data={data} options={options}/>
+        </Column>
+        <Column large={6}>
+          <PolarChart data={data} options={options}/>
         </Column>
       </Row>
       <Row>
