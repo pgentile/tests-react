@@ -42,6 +42,7 @@ export function NavbarComponent() {
       <NavbarLink to="/">TODOs</NavbarLink>
       <NavbarLink to="/reddit">Reddit</NavbarLink>
       <NavbarLink to="/charts">Charts</NavbarLink>
+      <NavbarLink to="/spotify">Spotify</NavbarLink>
     </Navbar>
   );
 }

@@ -14,12 +14,15 @@ import { todos, visibilityBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
 import { loadingIndicator } from './loadingindicator/reducers';
 import { charts } from './charts/reducers';
+import { spotify } from './spotify/reducers';
 import { errors } from './errors/reducers';
 
 import { TodoComponent } from './todos/containers';
 import { BasePageComponent } from './page/components';
 import { RedditComponent, RedditListComponent } from './reddit/routed';
 import { ChartsComponent } from './charts/containers';
+import { SpotifyComponent, FollowedArtists, TopArtists } from './spotify/containers';
+import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
@@ -36,6 +39,7 @@ export const app = combineReducers({
   loadingIndicator,
   errors,
   charts,
+  spotify,
   routing: routerReducer,
 });
 
@@ -72,6 +76,11 @@ ReactDOM.render(
             <Route path=":topic" component={RedditListComponent}/>
           </Route>
           <Route path="charts" component={ChartsComponent}/>
+          <Route path="spotify" component={SpotifyComponent}>
+            <IndexRoute component={FollowedArtists}/>
+            <Route path="top" component={TopArtists}/>
+          </Route>
+          <Route path="spotify/callback" onEnter={handleSpotifyCallback}/>
         </Route>
       </Router>
     </Provider>

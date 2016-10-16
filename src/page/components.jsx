@@ -18,7 +18,7 @@ export function BasePageComponent({children}) {
 }
 
 BasePageComponent.propTypes = {
-  children: React.PropTypes.element.isRequired,
+  children: React.PropTypes.element,
 };
 
 
@@ -36,5 +36,5 @@ export function PageComponent({title, children}) {
 
 PageComponent.propTypes = {
   title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node.isRequired,
+  children: React.PropTypes.node,
 };
