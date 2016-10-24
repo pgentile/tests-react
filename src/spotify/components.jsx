@@ -26,6 +26,14 @@ function Artist({ artist }) {
     );
   }
 
+  const albums = artist.albums.map(album => {
+    return (
+      <span key={album.id}>
+        {' '}<a href={album.uri}>{album.name}</a>
+      </span>
+    );
+  })
+
   return (
     <MediaObject>
       {image}
@@ -37,6 +45,7 @@ function Artist({ artist }) {
         </h4>
         <p><b>Genres :</b> {artist.genres.join(', ')}</p>
         <p><b>Popularité :</b> {artist.popularity}%</p>
+        <p><b>Albums :</b> {albums}</p>
       </MediaObjectSection>
     </MediaObject>
   );

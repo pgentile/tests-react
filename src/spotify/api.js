@@ -1,6 +1,6 @@
-import queryString from 'query-string';
+import uuid from 'uuid';
 
-import { BrowserLocalStorage } from '../browserstorage';
+import { BrowserSessionStorage } from '../browserstorage';
 
 
 const API_ROOT_URL = 'https://api.spotify.com';
@@ -8,11 +8,12 @@ const ACCOUNTS_ROOT_URL = 'https://accounts.spotify.com';
 const CLIENT_ID = '847878927a644fc98c98d6313d7f4cdd';
 
 
-export const spotifyBrowserStorage = new BrowserLocalStorage({
+const spotifyBrowserStorage = new BrowserSessionStorage({
   entryName: 'spotify',
   defaultState: () => {
     return {
       token: null,
+      authState: null,
     };
   },
 });
@@ -22,10 +23,11 @@ class SpotifyApi {
 
   constructor() {
     this.token = spotifyBrowserStorage.read().token;
-    this.scopes = [];
-    this.redirectUri = null;
+    this.scopes = ['user-follow-read', 'user-read-private', 'user-top-read'];
+    this.redirectUri = 'http://localhost:9000/spotify/callback';
     this.authorizing = false;
     this.me = new MeApi(this);
+    this.artists = new ArtistsApi(this);
   }
 
   get(url) {
@@ -41,14 +43,13 @@ class SpotifyApi {
         if (response.status) {
           switch (response.status) {
           case 401:
-            this.authorize();
-            throw new Error('Not authorized to use the Spotify API, redirecting to Spotify...');
+            return this.authorize();
           default:
             throw new Error(`Got HTTP error ${response.status} calling Spotify API`);
           }
-        } else {
-          throw new Error(`Failed response: ${response}`);
         }
+
+        throw new Error(`Failed response: ${response}`);
       }
       return response.json();
     });
@@ -58,26 +59,48 @@ class SpotifyApi {
     // Redirect only once
     if (!this.authorizing) {
       this.authorizing = true;
+
+      const authState = uuid.v4();
+      this.writeInStorage({
+        authState,
+      });
+
       const joinedScopes = this.scopes.join(' ');
-      window.location = `${ACCOUNTS_ROOT_URL}/authorize?response_type=token&client_id=${CLIENT_ID}&scope=${joinedScopes}&redirect_uri=${this.redirectUri}`;
+      window.location = `${ACCOUNTS_ROOT_URL}/authorize?response_type=token&client_id=${CLIENT_ID}&scope=${joinedScopes}&redirect_uri=${this.redirectUri}&state=${authState}`;
     }
+
+    // Promise that never resolves, because of a inflight authorization
+    return new Promise(() => {});
   }
 
-  handleCallback(rawQueryString) {
+  handleCallback(callbackArgs) {
     return new Promise((resolve, reject) => {
-      const params = queryString.parse(rawQueryString);
-      const token = params.access_token;
+      const token = callbackArgs.access_token;
+      const authState = callbackArgs.state;
+
       if (token) {
-        this.token = token;
-        spotifyBrowserStorage.write({
+        const storageAuthState = spotifyBrowserStorage.read().authState;
+        if (authState !== storageAuthState) {
+          reject(new Error('State from callback different from current session state'));
+        }
+
+        this.writeInStorage({
           token,
+          authState: null,
         });
+        this.token = token;
 
         resolve();
       } else {
-        reject(new Error(`Got error from Spotify: ${params.error}`));
+        reject(new Error(`Got error from Spotify auth: ${callbackArgs.error}`));
       }
     });
+  }
+
+  writeInStorage(newStorage) {
+    const storage = spotifyBrowserStorage.read();
+    const mergedStorage = Object.assign({}, storage, newStorage);
+    spotifyBrowserStorage.write(mergedStorage);
   }
 
 }
@@ -104,6 +127,18 @@ class MeApi {
 }
 
 
+class ArtistsApi {
+
+  constructor(base) {
+    this.base = base;
+  }
+
+  getAlbums(artistId) {
+    // TODO Market as parameter
+    return this.base.get(`/v1/artists/${artistId}/albums?album_type=album&market=FR`);
+  }
+
+}
+
+
 export const api = new SpotifyApi();
-api.redirectUri = 'http://localhost:9000/spotify/callback';
-api.scopes = ['user-follow-read', 'user-read-private', 'user-top-read'];

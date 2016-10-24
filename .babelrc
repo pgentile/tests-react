@@ -4,6 +4,7 @@
     "react"
   ],
   "plugins": [
-    "babel-plugin-import-asserts"
+    "import-asserts",
+    "transform-strict-mode"
   ]
 }
