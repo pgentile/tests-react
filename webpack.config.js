@@ -1,7 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
-var validate = require('webpack-validator')
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const validate = require('webpack-validator')
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+
+// Load packages names
+const packageContent = require('./package.json');
+const vendorLibs = Object.keys(packageContent.dependencies);
+
 
 module.exports = validate({
   entry: {
@@ -9,18 +15,7 @@ module.exports = validate({
         './src/main.jsx',
         './src/main.scss',
       ],
-      /*
-      vendor: [
-        'babel-polyfill',
-        'react',
-        'react-dom',
-        'foundation-sites',
-        'react-foundation',
-        'redux',
-        'react-redux',
-        'jquery',
-      ],
-      */
+      vendor: vendorLibs,
   },
   resolve: {
     alias: {
@@ -31,7 +26,7 @@ module.exports = validate({
   },
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: '/static/',
   },
   devtool: 'source-map',
@@ -72,21 +67,22 @@ module.exports = validate({
     }),
     */
     /*
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-    */
-    /*
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       mangle: true
     }),
     */
     new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+    }),
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery',
       'fetch': 'isomorphic-fetch',
     }),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin('[name].css'),
   ],
 });
