@@ -9,13 +9,14 @@ class BrowserStorage {
 
     this.storage = storage;
 
-    this.config = Object.assign({
+    this.config = {
       defaultState: () => {
         return {};
       },
       serializer: JSON.stringify,
       deserializer: JSON.parse,
-    }, config);
+      ...config,
+    };
   }
 
   read() {

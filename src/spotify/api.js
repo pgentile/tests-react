@@ -99,7 +99,10 @@ class SpotifyApi {
 
   writeInStorage(newStorage) {
     const storage = spotifyBrowserStorage.read();
-    const mergedStorage = Object.assign({}, storage, newStorage);
+    const mergedStorage = {
+      ...storage,
+      ...newStorage,
+    };
     spotifyBrowserStorage.write(mergedStorage);
   }
 

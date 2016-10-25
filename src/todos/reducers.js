@@ -32,10 +32,11 @@ function list(state = Immutable.List(), action) {
         return todo;
       }
 
-      return Object.assign({}, todo, {
+      return {
+        ...todo,
         modifiedAt: now,
         done: true,
-      });
+      };
     });
 
   case actions.DELETE_TODO:
