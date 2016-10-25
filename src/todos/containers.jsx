@@ -14,23 +14,20 @@ import { PageComponent } from '../page/components';
 import * as actions from './actions';
 
 
-const getDoneTodosVisibility = (state) => state.todos.visibility.viewDone;
-const getTodos = (state) => state.todos.list;
-
 const selectTodosByVisibility = createSelector(
-  [getDoneTodosVisibility, getTodos],
+  state => state.todos.visibility.viewDone,
+  state => state.todos.list,
   (viewDone, todos) => {
     if (viewDone) {
       return todos;
     }
-
     return todos.filter(todo => !todo.done);
   },
 );
 
 const selectDoneTodosCount = createSelector(
-  [getTodos],
-  (todos) => {
+  state => state.todos.list,
+  todos => {
     return todos.filter(todo => todo.done).size;
   },
 );
