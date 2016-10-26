@@ -24,7 +24,7 @@ class SpotifyApi {
   constructor() {
     this.token = spotifyBrowserStorage.read().token;
     this.scopes = ['user-follow-read', 'user-read-private', 'user-top-read'];
-    this.redirectUri = 'http://localhost:9000/spotify/callback';
+    this.redirectUri = `${window.location.protocol}//${window.location.host}/spotify/callback`;
     this.authorizing = false;
     this.me = new MeApi(this);
     this.artists = new ArtistsApi(this);
