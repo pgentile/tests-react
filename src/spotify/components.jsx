@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Row, Column, MediaObject, MediaObjectSection, Thumbnail, Badge } from 'react-foundation';
+import queryString from 'query-string';
 
 import { PageComponent } from '../page/components';
 
@@ -46,6 +47,7 @@ function Artist({ artist }) {
         <p><b>Genres :</b> {artist.genres.join(', ')}</p>
         <p><b>Popularité :</b> {artist.popularity}%</p>
         <p><b>Albums :</b> {albums}</p>
+        <SpotifyWidget uri={artist.uri} view="coverart"/>
       </MediaObjectSection>
     </MediaObject>
   );
@@ -68,7 +70,7 @@ export class Artists extends React.Component {
     const columns = artists.map(artist => {
       return (
         <Column key={artist.id} isColumn>
-          <Artist key={artist.id} artist={artist}/>
+          <Artist artist={artist}/>
         </Column>
       );
     });
@@ -133,4 +135,38 @@ SpotifyComponent.propTypes = {
   profile: React.PropTypes.object,
   children: React.PropTypes.element,
   onLoadProfile: React.PropTypes.func.isRequired,
+};
+
+
+export function SpotifyWidget({ uri, view, theme, height, width }) {
+  const dimensions = {};
+  if (height) {
+    dimensions.height = height;
+  }
+  if (width) {
+    dimensions.width = width;
+  }
+
+  const queryParams = queryString.stringify({
+    uri,
+    theme,
+    view,
+  });
+  const url = `https://embed.spotify.com/?${queryParams}`;
+
+  return (
+    <iframe src={url} frameBorder="0" allowTransparency="true" {...dimensions}></iframe>
+  );
+}
+
+SpotifyWidget.propTypes = {
+  uri: React.PropTypes.string.isRequired,
+  view: React.PropTypes.oneOf(['list', 'coverart']).isRequired,
+  theme: React.PropTypes.oneOf(['black', 'white']).isRequired,
+  height: React.PropTypes.number,
+  width: React.PropTypes.number,
+};
+
+SpotifyWidget.defaultProps = {
+  theme: 'white',
 };
