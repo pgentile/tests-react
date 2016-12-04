@@ -169,7 +169,7 @@ export function TodoVisibilityComponent({viewDone, doneTodosCount, onDoneChange}
       <fieldset className="columns">
         <legend>Options de visibilité</legend>
         <label>
-          <input type="checkbox" defaultChecked={viewDone} onChange={onChange}/>
+          <input type="checkbox" defaultChecked={viewDone} disabled={doneTodosCount === 0} onChange={onChange}/>
           Afficher les tâches terminées ({doneTodosCount})
         </label>
       </fieldset>
