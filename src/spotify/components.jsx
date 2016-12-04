@@ -47,7 +47,6 @@ function Artist({ artist }) {
         <p><b>Genres :</b> {artist.genres.join(', ')}</p>
         <p><b>Popularité :</b> {artist.popularity}%</p>
         <p><b>Albums :</b> {albums}</p>
-        <SpotifyWidget uri={artist.uri} view="coverart"/>
       </MediaObjectSection>
     </MediaObject>
   );
