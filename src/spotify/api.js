@@ -19,6 +19,18 @@ const spotifyBrowserStorage = new BrowserSessionStorage({
 });
 
 
+function unresolvablePromise() {
+  return new Promise(() => {});
+}
+
+
+function syncPromise(callback) {
+  return new Promise(resolve => {
+    return resolve(callback());
+  });
+}
+
+
 class SpotifyApi {
 
   constructor() {
@@ -70,29 +82,28 @@ class SpotifyApi {
     }
 
     // Promise that never resolves, because of a inflight authorization
-    return new Promise(() => {});
+    return unresolvablePromise();
   }
 
   handleCallback(callbackArgs) {
-    return new Promise((resolve, reject) => {
+    return syncPromise(() => {
       const token = callbackArgs.access_token;
       const authState = callbackArgs.state;
 
-      if (token) {
-        const storageAuthState = spotifyBrowserStorage.read().authState;
-        if (authState !== storageAuthState) {
-          reject(new Error('State from callback different from current session state'));
-        } else {
-          this.writeInStorage({
-            token,
-          });
-          this.token = token;
-
-          resolve();
-        }
-      } else {
-        reject(new Error(`Got error from Spotify auth: ${callbackArgs.error}`));
+      if (!token) {
+        throw new Error(`Got error from Spotify auth: ${callbackArgs.error}`);
       }
+
+      const storageAuthState = spotifyBrowserStorage.read().authState;
+      if (authState !== storageAuthState) {
+        throw new Error('State from callback different from current session state');
+      }
+
+      this.writeInStorage({
+        token,
+      });
+      this.token = token;
+
     });
   }
 
