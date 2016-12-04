@@ -82,15 +82,14 @@ class SpotifyApi {
         const storageAuthState = spotifyBrowserStorage.read().authState;
         if (authState !== storageAuthState) {
           reject(new Error('State from callback different from current session state'));
+        } else {
+          this.writeInStorage({
+            token,
+          });
+          this.token = token;
+
+          resolve();
         }
-
-        this.writeInStorage({
-          token,
-          authState: null,
-        });
-        this.token = token;
-
-        resolve();
       } else {
         reject(new Error(`Got error from Spotify auth: ${callbackArgs.error}`));
       }
