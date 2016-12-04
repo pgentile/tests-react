@@ -13,6 +13,8 @@ class BrowserStorage {
       defaultState: () => {
         return {};
       },
+      beforeSerialize: value => value,
+      afterDeserialize: value => value,
       serializer: JSON.stringify,
       deserializer: JSON.parse,
       ...config,
@@ -20,7 +22,7 @@ class BrowserStorage {
   }
 
   read() {
-    const { defaultState, deserializer } = this.config;
+    const { defaultState, deserializer, afterDeserialize } = this.config;
 
     const storedValue = this.readInStorage();
     if (storedValue === null) {
@@ -28,7 +30,7 @@ class BrowserStorage {
     }
 
     try {
-      return deserializer(storedValue);
+      return afterDeserialize(deserializer(storedValue));
     } catch (e) {
       // Ignoring exception, use default value
       this.clearInStorage();
@@ -37,8 +39,8 @@ class BrowserStorage {
   }
 
   write(value) {
-    const { serializer } = this.config;
-    this.writeInStorage(serializer(value));
+    const { serializer, beforeSerialize } = this.config;
+    this.writeInStorage(serializer(beforeSerialize(value)));
   }
 
   reset() {
@@ -78,14 +80,6 @@ export class BrowserSessionStorage extends BrowserStorage {
     super(window.sessionStorage, config);
   }
 
-}
-
-
-export function wrapReducerWithStorage(browserStorage, reducer) {
-  const defaultState = browserStorage.read();
-  return (state = defaultState, action) => {
-    return reducer(state, action);
-  };
 }
 
 

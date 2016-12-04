@@ -4,13 +4,38 @@ import Immutable from 'immutable';
 import { combineReducers } from 'redux';
 
 import * as actions from './actions';
-import { BrowserLocalStorage, wrapReducerWithStorage } from '../browserstorage';
+import { BrowserLocalStorage } from '../browserstorage';
 
 
 moment.locale('fr');
 
 
 // Reducer
+
+
+export const todoListBrowserStorage = new BrowserLocalStorage({
+  entryName: 'todoList',
+  defaultState: () => Immutable.List(),
+  beforeSerialize: list => {
+    return list.map(item => {
+      return {
+        ...item,
+        createdAt: item.createdAt.format(),
+        modifiedAt: item.modifiedAt.format(),
+      };
+    }).toArray();
+  },
+  afterDeserialize: list => {
+    return Immutable.List(list).map(item => {
+      return {
+        ...item,
+        createdAt: Object.freeze(moment(item.createdAt)),
+        modifiedAt: Object.freeze(moment(item.modifiedAt)),
+      };
+    });
+  },
+})
+
 
 function list(state = Immutable.List(), action) {
   const now = Object.freeze(moment());
@@ -62,7 +87,7 @@ export const visibilityBrowserStorage = new BrowserLocalStorage({
 });
 
 
-const visibility = wrapReducerWithStorage(visibilityBrowserStorage, (state, action) => {
+function visibility(state = { viewDone: true }, action) {
   switch (action.type) {
 
   case actions.CHANGE_VISIBILITY:
@@ -74,7 +99,7 @@ const visibility = wrapReducerWithStorage(visibilityBrowserStorage, (state, acti
     return state;
 
   }
-});
+}
 
 
 export const todos = combineReducers({

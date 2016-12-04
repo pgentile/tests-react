@@ -10,7 +10,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
-import { todos, visibilityBrowserStorage } from './todos/reducers';
+import { todos, visibilityBrowserStorage, todoListBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
 import { loadingIndicator } from './loadingindicator/reducers';
 import { charts } from './charts/reducers';
@@ -57,9 +57,17 @@ middlewares = middlewares.concat([
   routerMiddleware(browserHistory),
   promiseMiddleware(),
   browserStorageMiddleware(visibilityBrowserStorage, state => state.todos.visibility),
+  browserStorageMiddleware(todoListBrowserStorage, state => state.todos.list),
 ]);
 
-export const store = createStore(app, applyMiddleware(...middlewares));
+const initialState = {
+  todos: {
+    visibility: visibilityBrowserStorage.read(),
+    list: todoListBrowserStorage.read(),
+  },
+};
+
+export const store = createStore(app, initialState, applyMiddleware(...middlewares));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
