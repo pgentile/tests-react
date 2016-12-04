@@ -43,6 +43,7 @@ export function NavbarComponent() {
       <NavbarLink to="/reddit">Reddit</NavbarLink>
       <NavbarLink to="/charts">Charts</NavbarLink>
       <NavbarLink to="/spotify">Spotify</NavbarLink>
+      <NavbarLink to="/pagination">Pagination</NavbarLink>
     </Navbar>
   );
 }

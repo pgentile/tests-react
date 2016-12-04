@@ -22,6 +22,7 @@ import { BasePageComponent } from './page/components';
 import { RedditComponent, RedditListComponent } from './reddit/routed';
 import { ChartsComponent } from './charts/containers';
 import { SpotifyComponent, FollowedArtists, TopArtists } from './spotify/containers';
+import { PaginationComponent } from './pagination/containers';
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
@@ -89,6 +90,7 @@ ReactDOM.render(
             <Route path="top" component={TopArtists}/>
           </Route>
           <Route path="spotify/callback" onEnter={handleSpotifyCallback}/>
+          <Route path="pagination" component={PaginationComponent}/>
         </Route>
       </Router>
     </Provider>
