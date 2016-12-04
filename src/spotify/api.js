@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import queryString from 'query-string';
 
 import { BrowserSessionStorage } from '../browserstorage';
 
@@ -77,8 +78,14 @@ class SpotifyApi {
         authState,
       });
 
-      const joinedScopes = this.scopes.join(' ');
-      window.location = `${ACCOUNTS_ROOT_URL}/authorize?response_type=token&client_id=${CLIENT_ID}&scope=${joinedScopes}&redirect_uri=${this.redirectUri}&state=${authState}`;
+      const queryParams = queryString.stringify({
+        response_type: 'token',
+        client_id: CLIENT_ID,
+        scope: this.scopes.join(' '),
+        redirect_uri: this.redirectUri,
+        state: authState,
+      });
+      window.location = `${ACCOUNTS_ROOT_URL}/authorize?${queryParams}`;
     }
 
     // Promise that never resolves, because of a inflight authorization
