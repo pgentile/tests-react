@@ -1,13 +1,9 @@
-import uuid from 'uuid';
 import moment from 'moment';
 import Immutable from 'immutable';
 import { combineReducers } from 'redux';
 
 import * as actions from './actions';
 import { BrowserLocalStorage } from '../browserstorage';
-
-
-moment.locale('fr');
 
 
 // Reducer
@@ -38,17 +34,15 @@ export const todoListBrowserStorage = new BrowserLocalStorage({
 
 
 function list(state = Immutable.List(), action) {
-  const now = Object.freeze(moment());
-
   switch (action.type) {
 
   case actions.ADD_TODO:
     return state.push({
-      id: uuid.v4(),
+      id: action.id,
       content: action.content,
       done: false,
-      createdAt: now,
-      modifiedAt: now,
+      createdAt: action.date,
+      modifiedAt: action.date,
     });
 
   case actions.MARK_DONE:
@@ -59,7 +53,7 @@ function list(state = Immutable.List(), action) {
 
       return {
         ...todo,
-        modifiedAt: now,
+        modifiedAt: action.date,
         done: true,
       };
     });

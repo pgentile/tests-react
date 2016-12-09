@@ -2,6 +2,8 @@ import 'babel-polyfill';
 import 'jquery';
 import 'foundation-sites/js/foundation.core';
 
+import moment from 'moment';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
@@ -26,6 +28,9 @@ import { PaginationComponent } from './pagination/containers';
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
+
+
+moment.locale('fr');
 
 
 if (process.env.NODE_ENV !== 'production') {

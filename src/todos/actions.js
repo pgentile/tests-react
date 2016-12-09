@@ -1,3 +1,6 @@
+import uuid from 'uuid';
+import moment from 'moment';
+
 // Actions
 
 export const ADD_TODO = 'ADD_TODO';
@@ -11,6 +14,8 @@ export const CHANGE_VISIBILITY = 'CHANGE_VISIBILITY';
 export function addTodo(content) {
   return {
     type: ADD_TODO,
+    id: uuid.v4(),
+    date: Object.freeze(moment()),
     content,
   };
 }
@@ -18,6 +23,7 @@ export function addTodo(content) {
 export function markDone(id) {
   return {
     type: MARK_DONE,
+    date: Object.freeze(moment()),
     id,
   }
 }
