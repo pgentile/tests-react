@@ -58,6 +58,19 @@ function list(state = Immutable.List(), action) {
       };
     });
 
+  case actions.MARK_TODO:
+    return state.map(todo => {
+      if (todo.id !== action.id) {
+        return todo;
+      }
+
+      return {
+        ...todo,
+        modifiedAt: action.date,
+        done: false,
+      };
+    });
+
   case actions.DELETE_TODO:
     return state.filter(todo => {
       return todo.id !== action.id;

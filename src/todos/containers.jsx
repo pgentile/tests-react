@@ -42,6 +42,7 @@ const TodoList = connect(
   {
     onDeleteItem: actions.deleteTodo,
     onMarkItemDone: actions.markDone,
+    onMarkItemTodo: actions.markTodo,
   },
 )(TodoListBase);
 

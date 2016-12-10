@@ -7,11 +7,27 @@ import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
 import { InputGroup, InputGroupField } from '../core/components';
 
 
+function ChangeTodoStateButton({done, onMarkDone, onMarkTodo}) {
+  const changeState = () => done ? onMarkTodo() : onMarkDone();
+  const actionText = done ? 'Todo' : 'Done';
+  return (
+    <Button onClick={changeState} size={Sizes.TINY}>{actionText}</Button>
+  );
+}
+
+ChangeTodoStateButton.propTypes = {
+  done: React.PropTypes.bool.isRequired,
+  onMarkDone: React.PropTypes.func.isRequired,
+  onMarkTodo: React.PropTypes.func.isRequired,
+};
+
+
 export class Todo extends React.Component {
 
   constructor(props) {
     super(props);
     this.onMarkDone = this.onMarkDone.bind(this);
+    this.onMarkTodo = this.onMarkTodo.bind(this);
     this.onDelete = this.onDelete.bind(this);
   }
 
@@ -21,6 +37,10 @@ export class Todo extends React.Component {
 
   onMarkDone() {
     this.props.onMarkDone(this.props.item.id);
+  }
+
+  onMarkTodo() {
+    this.props.onMarkTodo(this.props.item.id);
   }
 
   onDelete() {
@@ -51,7 +71,7 @@ export class Todo extends React.Component {
         {creationDate}
         {modificationDate}
         <span className="float-right">
-          <Button onClick={this.onMarkDone} disabled={item.done} size={Sizes.TINY}>Done</Button>
+          <ChangeTodoStateButton done={item.done} onMarkDone={this.onMarkDone} onMarkTodo={this.onMarkTodo}/>
           <Button onClick={this.onDelete} size={Sizes.TINY}>Remove</Button>
         </span>
       </MenuItem>
@@ -64,17 +84,19 @@ Todo.propTypes = {
   item: React.PropTypes.object.isRequired,
   onDelete: React.PropTypes.func.isRequired,
   onMarkDone: React.PropTypes.func.isRequired,
+  onMarkTodo: React.PropTypes.func.isRequired,
 };
 
 
-export function TodoList({list, onDeleteItem, onMarkItemDone}) {
+export function TodoList({list, onDeleteItem, onMarkItemDone, onMarkItemTodo}) {
 
   const todos = list.map(item => {
     return <Todo
               key={item.id}
               item={item}
               onDelete={onDeleteItem}
-              onMarkDone={onMarkItemDone} />;
+              onMarkDone={onMarkItemDone}
+              onMarkTodo={onMarkItemTodo} />;
   });
 
   if (list.size > 0) {
@@ -94,6 +116,7 @@ TodoList.propTypes = {
   list: ImmutablePropTypes.list.isRequired,
   onDeleteItem: React.PropTypes.func.isRequired,
   onMarkItemDone: React.PropTypes.func.isRequired,
+  onMarkItemTodo: React.PropTypes.func.isRequired,
 };
 
 TodoList.defaultProps = {
