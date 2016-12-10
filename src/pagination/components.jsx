@@ -1,63 +1,79 @@
 import _ from 'lodash';
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import { Pagination, PaginationItem, PaginationPrevious, PaginationNext } from 'react-foundation';
 
 import { PageComponent } from '../page/components';
 
 
-function PagerLink({ page, current, onPageChange, children }) {
-  if (page === current) {
+class PagerLink extends React.PureComponent {
+
+  render() {
+    const {page, isDisabled, onPageChange, children} = this.props;
+
+    if (isDisabled) {
+      return (
+        <span>{children}</span>
+      );
+    }
+
+    const goToPage = event => {
+      event.preventDefault();
+      onPageChange(page);
+    };
+
     return (
-      <span>{children}</span>
+      <a onClick={goToPage}>{children}</a>
     );
   }
 
-  const goToPage = event => {
-    event.preventDefault();
-    onPageChange(page);
-  };
-
-  return (
-    <a onClick={goToPage}>{children}</a>
-  );
 }
 
 PagerLink.propTypes = {
   page: React.PropTypes.number.isRequired,
-  current: React.PropTypes.number.isRequired,
+  isDisabled: React.PropTypes.bool.isRequired,
   onPageChange: React.PropTypes.func.isRequired,
   children: React.PropTypes.node.isRequired,
 };
 
 
-export function Pager({ current, count, onPageChange }) {
-  const items = _.range(count).map(index => {
-    const page = index + 1;
-    const isCurrentPage = (page === current);
-    return (
-      <PaginationItem key={page} isCurrent={isCurrentPage}>
-        <PagerLink current={current} page={page} onPageChange={onPageChange}>{page}</PagerLink>
-      </PaginationItem>
-    );
-  });
+class Pager extends React.PureComponent {
 
-  return (
-    <Pagination isCentered>
-      <PaginationPrevious isDisabled={current === 1}>
-        <PagerLink current={current} page={1} onPageChange={onPageChange}>Première</PagerLink>
-      </PaginationPrevious>
-      <PaginationPrevious isDisabled={current === 1}>
-        <PagerLink current={current} page={Math.max(1, current - 1)} onPageChange={onPageChange}>Précédente</PagerLink>
-      </PaginationPrevious>
-      {items}
-      <PaginationNext isDisabled={current === count}>
-        <PagerLink current={current} page={Math.min(count, current + 1)} onPageChange={onPageChange}>Suivante</PagerLink>
-      </PaginationNext>
-      <PaginationNext isDisabled={current === count}>
-        <PagerLink current={current} page={count} onPageChange={onPageChange}>Dernière</PagerLink>
-      </PaginationNext>
-    </Pagination>
-  );
+  render() {
+    const { current, count, onPageChange } = this.props;
+
+    const items = _.range(count).map(index => {
+      const page = index + 1;
+      const isCurrentPage = (page === current);
+      return (
+        <PaginationItem key={page} isCurrent={isCurrentPage}>
+          <PagerLink isDisabled={isCurrentPage} page={page} onPageChange={onPageChange}>{page}</PagerLink>
+        </PaginationItem>
+      );
+    });
+
+    const isFirstPage = current === 1;
+    const isLastPage = current === count;
+
+    return (
+      <Pagination isCentered>
+        <PaginationPrevious isDisabled={isFirstPage}>
+          <PagerLink isDisabled={isFirstPage} page={1} onPageChange={onPageChange}>Première</PagerLink>
+        </PaginationPrevious>
+        <PaginationPrevious isDisabled={isFirstPage}>
+          <PagerLink isDisabled={isFirstPage} page={Math.max(1, current - 1)} onPageChange={onPageChange}>Précédente</PagerLink>
+        </PaginationPrevious>
+        {items}
+        <PaginationNext isDisabled={isLastPage}>
+          <PagerLink isDisabled={isLastPage} page={Math.min(count, current + 1)} onPageChange={onPageChange}>Suivante</PagerLink>
+        </PaginationNext>
+        <PaginationNext isDisabled={isLastPage}>
+          <PagerLink isDisabled={isLastPage} page={count} onPageChange={onPageChange}>Dernière</PagerLink>
+        </PaginationNext>
+      </Pagination>
+    );
+  }
+
 }
 
 Pager.propTypes = {
@@ -72,33 +88,35 @@ class PaginatedList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.computeState(props, props.currentPage);
+    this.state = this.computeState(props);
 
     this.onPageChange = this.onPageChange.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this.setState(this.computeState(this.props, this.props.currentPage));
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
-  computeState(props, page) {
-    const pageCount = Math.max(1, Math.ceil(props.items.length / props.maxPerPage));
-    const currentPage = Math.min(page, pageCount);
-    const startIndex = (currentPage - 1) * props.maxPerPage;
-    const endIndex = currentPage * props.maxPerPage;
-    const selectedItems = props.items.length === 0 ? [] : props.items.slice(startIndex, endIndex);
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.computeState(nextProps))
+  }
+
+  computeState({ currentPage, maxPerPage, items }) {
+    const pageCount = Math.max(1, Math.ceil(items.length / maxPerPage));
+    const realCurrentPage = Math.min(currentPage, pageCount);
+    const startIndex = (realCurrentPage - 1) * maxPerPage;
+    const endIndex = realCurrentPage * maxPerPage;
+    const selectedItems = items.slice(startIndex, endIndex);
 
     return {
-      currentPage,
+      realCurrentPage,
       pageCount,
       selectedItems,
     };
   }
 
   onPageChange(page) {
-    this.setState((prevState, props) => this.computeState(props, page));
+    this.props.onPageChange(page);
   }
 
   render() {
@@ -109,7 +127,7 @@ class PaginatedList extends React.Component {
     return (
       <div>
         {renderedItems}
-        <Pager current={this.state.currentPage} count={this.state.pageCount} onPageChange={this.onPageChange} />
+        <Pager current={this.state.realCurrentPage} count={this.state.pageCount} onPageChange={this.onPageChange} />
       </div>
     );
   }
@@ -121,10 +139,7 @@ PaginatedList.propTypes = {
   currentPage: React.PropTypes.number.isRequired,
   maxPerPage: React.PropTypes.number.isRequired,
   component: React.PropTypes.func.isRequired,
-};
-
-PaginatedList.defaultProps = {
-  currentPage: 1,
+  onPageChange: React.PropTypes.func.isRequired,
 };
 
 
@@ -158,26 +173,42 @@ ListItems.propTypes = {
 };
 
 
-export function PaginatedContentComponent() {
-  const content = _.range(103).map(index => {
-    return {
-      index,
-      title: `Content at index ${index}`,
-    }
-  });
-
-  return (
-    <PaginatedList items={content} maxPerPage={10} component={ListItems}/>
-  );
-}
-
-
 export class PaginationComponent extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    const items = _.range(103).map(index => {
+      return {
+        index,
+        title: `Content at index ${index}`,
+      }
+    });
+
+    this.state = {
+      items,
+      maxPerPage: 10,
+      currentPage: 1,
+    };
+
+    this.onPageChange = this.onPageChange.bind(this);
+  }
+
+  onPageChange(page) {
+    this.setState({
+      currentPage: page,
+    });
+  }
 
   render() {
     return (
       <PageComponent title="Pagination">
-        <PaginatedContentComponent/>
+        <PaginatedList
+            items={this.state.items}
+            currentPage={this.state.currentPage}
+            maxPerPage={this.state.maxPerPage}
+            onPageChange={this.onPageChange}
+            component={ListItems}/>
       </PageComponent>
     );
   }
