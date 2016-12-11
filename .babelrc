@@ -1,10 +1,10 @@
 {
   "presets": [
-    "es2015",
     "react",
-    "stage-2"
+    "stage-3"
   ],
   "plugins": [
+    "transform-es2015-modules-commonjs",
     "import-asserts",
     "transform-strict-mode"
   ]
