@@ -9,8 +9,10 @@ import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import Perf from 'react-addons-perf';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
+import createLogger from 'redux-logger';
 
 import { todos, visibilityBrowserStorage, todoListBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
@@ -34,7 +36,7 @@ moment.locale('fr');
 
 
 if (process.env.NODE_ENV !== 'production') {
-  global.Perf = require('react-addons-perf');
+  global.Perf = Perf;
 }
 
 // Combined reducers, create store
@@ -54,8 +56,7 @@ let middlewares = [];
 
 if (process.env.NODE_ENV !== 'production') {
   middlewares = middlewares.concat([
-    require('redux-logger')(),
-    // require('redux-immutable-state-invariant')(),
+    createLogger(),
   ]);
 }
 
