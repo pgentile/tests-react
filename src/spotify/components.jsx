@@ -6,17 +6,6 @@ import queryString from 'query-string';
 import { PageComponent } from '../page/components';
 
 
-function Profile({ profile }) {
-  return (
-    <p><b>Profil Spotify :</b> <a href={profile.uri}>{profile.id}</a></p>
-  );
-}
-
-Profile.propTypes = {
-  profile: React.PropTypes.object.isRequired,
-};
-
-
 function Artist({ artist }) {
   let image = null;
   if (artist.image) {
@@ -97,10 +86,9 @@ export class SpotifyComponent extends React.Component {
   render() {
     const { profile, children } = this.props;
 
-    let content = null;
-
+    let loggedContent = null;
     if (profile) {
-      content = (
+      loggedContent = (
         <div>
           <Row>
             <Column>
@@ -113,7 +101,7 @@ export class SpotifyComponent extends React.Component {
           </Row>
           <Row>
             <Column>
-              <Profile profile={profile}/>
+              <p><b>Profil Spotify :</b> <a href={profile.uri}>{profile.id}</a></p>
             </Column>
           </Row>
           <Row>
@@ -124,7 +112,9 @@ export class SpotifyComponent extends React.Component {
     }
 
     return (
-      <PageComponent title="Spotify">{content}</PageComponent>
+      <PageComponent title="Spotify">
+        {loggedContent}
+      </PageComponent>
     );
   }
 
