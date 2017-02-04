@@ -101,13 +101,17 @@ export function TodoList({list, onDeleteItem, onMarkItemDone, onMarkItemTodo}) {
 
   if (list.size > 0) {
     return (
-      <Menu isVertical>
-        {todos}
-      </Menu>
+      <Column>
+        <Menu isVertical>
+          {todos}
+        </Menu>
+      </Column>
     );
   } else {
     return (
-      <p>Aucun item à afficher</p>
+      <Column>
+        <p>Aucun item à afficher</p>
+      </Column>
     );
   }
 }
@@ -189,13 +193,15 @@ export function TodoVisibilityComponent({viewDone, doneTodosCount, onDoneChange}
 
   return (
     <Row>
-      <fieldset className="columns">
-        <legend>Options de visibilité</legend>
-        <label>
-          <input type="checkbox" defaultChecked={viewDone} disabled={doneTodosCount === 0} onChange={onChange}/>
-          Afficher les tâches terminées ({doneTodosCount})
-        </label>
-      </fieldset>
+      <Column>
+        <fieldset className="columns">
+          <legend>Options de visibilité</legend>
+          <label>
+            <input type="checkbox" defaultChecked={viewDone} disabled={doneTodosCount === 0} onChange={onChange}/>
+            Afficher les tâches terminées ({doneTodosCount})
+          </label>
+        </fieldset>
+      </Column>
     </Row>
   );
 }

@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
@@ -20,6 +20,7 @@ import { loadingIndicator } from './loadingindicator/reducers';
 import { charts } from './charts/reducers';
 import { spotify } from './spotify/reducers';
 import { errors } from './errors/reducers';
+import { springBoot } from './spring-boot/reducers';
 
 import { TodoComponent } from './todos/containers';
 import { BasePageComponent } from './page/components';
@@ -27,6 +28,7 @@ import { RedditComponent, RedditListComponent } from './reddit/routed';
 import { ChartsComponent } from './charts/containers';
 import { SpotifyComponent, FollowedArtists, TopArtists } from './spotify/containers';
 import { PaginationComponent } from './pagination/containers';
+import { SpringBootContainer } from './spring-boot/containers';
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
@@ -48,6 +50,7 @@ export const app = combineReducers({
   errors,
   charts,
   spotify,
+  springBoot,
   routing: routerReducer,
 });
 
@@ -74,7 +77,9 @@ const initialState = {
   },
 };
 
-export const store = createStore(app, initialState, applyMiddleware(...middlewares));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(app, initialState, composeEnhancers(applyMiddleware(...middlewares)));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -97,6 +102,7 @@ ReactDOM.render(
           </Route>
           <Route path="spotify/callback" onEnter={handleSpotifyCallback}/>
           <Route path="pagination" component={PaginationComponent}/>
+          <Route path="spring-boot" component={SpringBootContainer}/>
         </Route>
       </Router>
     </Provider>

@@ -44,6 +44,7 @@ export function NavbarComponent() {
       <NavbarLink to="/charts">Charts</NavbarLink>
       <NavbarLink to="/spotify">Spotify</NavbarLink>
       <NavbarLink to="/pagination">Pagination</NavbarLink>
+      <NavbarLink to="/spring-boot">Spring Boot</NavbarLink>
     </Navbar>
   );
 }
