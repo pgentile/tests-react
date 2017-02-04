@@ -1,3 +1,5 @@
+import { createAction } from 'redux-actions';
+
 import * as api from './api';
 
 const PREFIX = '@@springBoot';
@@ -22,38 +24,26 @@ export const GET_CONFIG_PROPS_REJECTED = `${GET_CONFIG_PROPS}_REJECTED`;
 export const CHANGE_TAB = `${PREFIX}/CHANGE_TAB`;
 
 
-export function changeTab(tabName) {
+const changeTab = createAction(CHANGE_TAB, tabName => {
   return {
-    type: CHANGE_TAB,
     tabName,
   };
-}
+});
 
-
-export function changeBaseUrl(baseUrl) {
+const changeBaseUrl = createAction(CHANGE_BASE_URL, baseUrl => {
   return {
-    type: CHANGE_BASE_URL,
-    baseUrl: baseUrl,
+    baseUrl,
   };
-}
+});
 
-export function getAppHealth(baseUrl) {
-  return {
-    type: GET_APP_HEALTH,
-    payload: api.getHealth(baseUrl),
-  };
-}
+const getAppHealth = createAction(GET_APP_HEALTH, api.getHealth);
+const getAppInfo = createAction(GET_APP_INFO, api.getInfo);
+const getConfigProps = createAction(GET_CONFIG_PROPS, api.getConfigProps);
 
-export function getAppInfo(baseUrl) {
-  return {
-    type: GET_APP_INFO,
-    payload: api.getInfo(baseUrl),
-  };
-}
-
-export function getConfigProps(baseUrl) {
-  return {
-    type: GET_CONFIG_PROPS,
-    payload: api.getConfigProps(baseUrl),
-  };
-}
+export {
+  changeTab,
+  changeBaseUrl,
+  getAppHealth,
+  getAppInfo,
+  getConfigProps,
+};

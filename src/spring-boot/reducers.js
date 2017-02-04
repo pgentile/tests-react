@@ -19,7 +19,7 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return {
       ...state,
       ...SPRING_DEFAULT_STATE,
-      baseUrl: action.baseUrl,
+      ...action.payload,
     };
 
   case actions.GET_APP_HEALTH_FULFILLED:
@@ -59,12 +59,12 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     };
 
   case actions.CHANGE_TAB:
-    if (action.tabName === state.currentTab) {
+    if (action.payload.tabName === state.currentTab) {
       return state;
     }
     return {
       ...state,
-      currentTab: action.tabName,
+      currentTab: action.payload.tabName,
     };
 
   default:
