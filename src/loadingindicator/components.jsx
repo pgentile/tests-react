@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export class LoadingIndicator extends React.Component {
+export class LoadingIndicator extends React.PureComponent {
 
   constructor(props) {
     super(props);
