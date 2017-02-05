@@ -2,7 +2,7 @@ import React from 'react';
 import { Label, Colors } from 'react-foundation';
 
 
-export default function GlobalHealth({status}) {
+export default function ComponentStatus({status}) {
   const successful = (status === 'UP');
   const color = successful ? Colors.SUCCESS : Colors.ALERT;
 
@@ -11,6 +11,6 @@ export default function GlobalHealth({status}) {
   );
 }
 
-GlobalHealth.propTypes = {
+ComponentStatus.propTypes = {
   status: React.PropTypes.string.isRequired,
 };
