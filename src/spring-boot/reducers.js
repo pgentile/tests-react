@@ -8,6 +8,7 @@ const SPRING_DEFAULT_STATE = {
   info: null,
   configProps: null,
   metrics: null,
+  env: null,
 };
 
 const APPLICATION_DEFAULT_STATE = {
@@ -16,6 +17,7 @@ const APPLICATION_DEFAULT_STATE = {
   metricNameFilter: '',
   ...SPRING_DEFAULT_STATE,
 };
+
 
 export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
   switch (action.type) {
@@ -73,6 +75,18 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return {
       ...state,
       metrics: null,
+    };
+
+  case actions.GET_ENV_FULFILLED:
+    return {
+      ...state,
+      env: action.payload,
+    };
+
+  case actions.GET_ENV_REJECTED:
+    return {
+      ...state,
+      env: null,
     };
 
   case actions.CHANGE_TAB:

@@ -85,10 +85,49 @@ export function getMetrics(baseUrl) {
           name,
           value: _.round(value, 3),
         });
-      })
+      });
 
       metrics = _.sortBy(metrics, property => property.name);
 
       return metrics;
+    });
+}
+
+export function getEnv(baseUrl) {
+  return fetch(`${baseUrl}/env`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to get app info');
+      }
+
+      return response.json();
+    })
+    .then(data => {
+      const env = {
+        profiles: data.profiles,
+        properties: [],
+      };
+
+      _.forOwn(data, (value, name) => {
+        if (name !== 'profiles') {
+          const propertiesGroup = {
+            group: name,
+            properties: [],
+          };
+
+          _.forOwn(value, (subValue, subName) => {
+            propertiesGroup.properties.push({
+              name: subName,
+              value: subValue,
+            });
+          });
+
+          propertiesGroup.properties = _.sortBy(propertiesGroup.properties, property => property.name);
+
+          env.properties.push(propertiesGroup);
+        }
+      });
+
+      return env;
     });
 }

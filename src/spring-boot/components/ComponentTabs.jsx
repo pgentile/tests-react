@@ -9,6 +9,7 @@ import AppInfoContainer from '../containers/AppInfoContainer';
 import HealthInfoContainer from '../containers/HealthInfoContainer';
 import ConfigPropsContainer from '../containers/ConfigPropsContainer';
 import MetricsContainer from '../containers/MetricsContainer';
+import EnvContainer from '../containers/EnvContainer';
 
 
 export default function ComponentTabs({currentTab, onTabClick}) {
@@ -26,6 +27,7 @@ export default function ComponentTabs({currentTab, onTabClick}) {
       <Tabs>
         <Tab onClick={handleTabClick('health')} isActive={isTabActive('health')}>Health</Tab>
         <Tab onClick={handleTabClick('infos')} isActive={isTabActive('infos')}>Infos</Tab>
+        <Tab onClick={handleTabClick('env')} isActive={isTabActive('env')}>Env</Tab>
         <Tab onClick={handleTabClick('config')} isActive={isTabActive('config')}>Config</Tab>
         <Tab onClick={handleTabClick('metrics')} isActive={isTabActive('metrics')}>Metrics</Tab>
       </Tabs>
@@ -36,6 +38,9 @@ export default function ComponentTabs({currentTab, onTabClick}) {
         </TabPanel>
         <TabPanel isActive={isTabActive('infos')}>
           <AppInfoContainer />
+        </TabPanel>
+        <TabPanel isActive={isTabActive('env')}>
+          <EnvContainer />
         </TabPanel>
         <TabPanel isActive={isTabActive('config')}>
           <ConfigPropsContainer/>
