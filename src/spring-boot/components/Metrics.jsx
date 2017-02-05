@@ -4,8 +4,29 @@ import { Row, Column } from 'react-foundation';
 
 export default class Metrics extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.timerRef = null;
+
+    this.scheduleRefresh = this.scheduleRefresh.bind(this);
+    this.refresh = this.refresh.bind(this);
+  }
+
   componentDidMount() {
-    this.props.onLoad();
+    this.refresh();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerRef);
+  }
+
+  refresh() {
+    this.props.onLoad().then(this.scheduleRefresh, this.scheduleRefresh);
+  }
+
+  scheduleRefresh() {
+    this.timerRef = setTimeout(this.refresh, 5000);
   }
 
   render() {

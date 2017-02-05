@@ -72,7 +72,7 @@ export function getMetrics(baseUrl) {
   return fetch(`${baseUrl}/metrics`)
     .then(response => {
       if (!response.ok) {
-        throw new Error('Failed to get app info');
+        throw new Error('Failed to get metrics');
       }
 
       return response.json();

@@ -28,7 +28,7 @@ export const CHANGE_TAB = `${PREFIX}/CHANGE_TAB`;
 function loadComponent(baseUrl) {
   return dispatch => {
     dispatch(changeBaseUrl(baseUrl));
-    dispatch(getAppInfo());
+    return dispatch(getAppInfo());
   };
 }
 
@@ -49,7 +49,7 @@ const createGetAppHealth = createAction(GET_APP_HEALTH, api.getHealth);
 function getAppHealth() {
   return (dispatch, getState) => {
     const baseUrl = getState().springBoot.baseUrl;
-    dispatch(createGetAppHealth(baseUrl));
+    return dispatch(createGetAppHealth(baseUrl));
   };
 }
 
@@ -58,7 +58,7 @@ const createGetAppInfoAction = createAction(GET_APP_INFO, api.getInfo);
 function getAppInfo() {
   return (dispatch, getState) => {
     const baseUrl = getState().springBoot.baseUrl;
-    dispatch(createGetAppInfoAction(baseUrl));
+    return dispatch(createGetAppInfoAction(baseUrl));
   };
 }
 
@@ -67,7 +67,7 @@ const createGetConfigPropsAction = createAction(GET_CONFIG_PROPS, api.getConfigP
 function getConfigProps() {
   return (dispatch, getState) => {
     const baseUrl = getState().springBoot.baseUrl;
-    dispatch(createGetConfigPropsAction(baseUrl));
+    return dispatch(createGetConfigPropsAction(baseUrl));
   };
 }
 
@@ -76,7 +76,7 @@ const createGetMetricsAction = createAction(GET_METRICS, api.getMetrics);
 function getMetrics() {
   return (dispatch, getState) => {
     const baseUrl = getState().springBoot.baseUrl;
-    dispatch(createGetMetricsAction(baseUrl));
+    return dispatch(createGetMetricsAction(baseUrl));
   };
 }
 
