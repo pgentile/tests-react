@@ -4,6 +4,7 @@ const SPRING_DEFAULT_STATE = {
   health: null,
   info: null,
   configProps: null,
+  metrics: null,
 };
 
 const APPLICATION_DEFAULT_STATE = {
@@ -56,6 +57,18 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return {
       ...state,
       configProps: null,
+    };
+
+  case actions.GET_METRICS_FULFILLED:
+    return {
+      ...state,
+      metrics: action.payload,
+    };
+
+  case actions.GET_METRICS_REJECTED:
+    return {
+      ...state,
+      metrics: null,
     };
 
   case actions.CHANGE_TAB:

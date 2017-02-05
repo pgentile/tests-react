@@ -67,3 +67,28 @@ export function getConfigProps(baseUrl) {
       return _.sortBy(configProps, configProp => configProp.prefix);
     });
 }
+
+export function getMetrics(baseUrl) {
+  return fetch(`${baseUrl}/metrics`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to get app info');
+      }
+
+      return response.json();
+    })
+    .then(data => {
+      let metrics = [];
+
+      _.forOwn(data, (value, name) => {
+        metrics.push({
+          name,
+          value,
+        });
+      })
+
+      metrics = _.sortBy(metrics, property => property.name);
+
+      return metrics;
+    });
+}
