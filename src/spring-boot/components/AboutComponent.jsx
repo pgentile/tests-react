@@ -6,16 +6,6 @@ import ComponentTabsContainer from '../containers/ComponentTabsContainer';
 
 export default class AboutComponent extends React.Component {
 
-  componentDidMount() {
-    this.props.onLoad();
-  }
-
-  /*
-  componentDidUpdate() {
-    this.props.onLoad();
-  }
-  */
-
   render() {
     if (!this.props.loaded) {
       return null;
@@ -40,7 +30,6 @@ export default class AboutComponent extends React.Component {
 }
 
 AboutComponent.propTypes = {
-  onLoad: React.PropTypes.func.isRequired,
   loaded: React.PropTypes.bool.isRequired,
   instanceName: React.PropTypes.string.isRequired,
 };

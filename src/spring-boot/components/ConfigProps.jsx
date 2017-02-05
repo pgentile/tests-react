@@ -10,12 +10,6 @@ export default class ConfigProps extends React.Component {
     this.props.onLoad();
   }
 
-  /*
-  componentDidUpdate() {
-    this.props.onLoad();
-  }
-  */
-
   render() {
     let table = null;
 
@@ -50,7 +44,7 @@ export default class ConfigProps extends React.Component {
       });
 
       table = (
-        <table className="unstriped">
+        <table>
           <thead>
             <tr>
               <th>Name</th>
@@ -67,7 +61,7 @@ export default class ConfigProps extends React.Component {
     return (
       <Row>
         <Column>
-          <h3>Configuration properties</h3>
+          <h4>Configuration properties</h4>
           {table}
         </Column>
       </Row>

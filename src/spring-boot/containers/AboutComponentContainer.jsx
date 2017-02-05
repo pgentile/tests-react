@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import AboutComponent from '../components/AboutComponent';
-import * as actions from '../actions';
 
 
 const selectInstanceName = createSelector(
@@ -27,9 +26,6 @@ const AboutComponentContainer = connect(
       loaded: selectLoaded(state),
       instanceName: selectInstanceName(state),
     };
-  },
-  {
-    onLoad: actions.getAppInfo,
   },
 )(AboutComponent);
 

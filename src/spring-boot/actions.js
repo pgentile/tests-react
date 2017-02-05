@@ -24,6 +24,13 @@ export const GET_CONFIG_PROPS_REJECTED = `${GET_CONFIG_PROPS}_REJECTED`;
 export const CHANGE_TAB = `${PREFIX}/CHANGE_TAB`;
 
 
+function loadComponent(baseUrl) {
+  return dispatch => {
+    dispatch(changeBaseUrl(baseUrl));
+    dispatch(getAppInfo());
+  };
+}
+
 const changeTab = createAction(CHANGE_TAB, tabName => {
   return {
     tabName,
@@ -64,6 +71,7 @@ function getConfigProps() {
 }
 
 export {
+  loadComponent,
   changeTab,
   changeBaseUrl,
   getAppHealth,

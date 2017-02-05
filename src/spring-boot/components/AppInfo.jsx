@@ -14,7 +14,7 @@ export default class AppInfo extends React.Component {
     return (
       <Row>
         <Column>
-          <h3>Build info</h3>
+          <h4>Build info</h4>
           <ul>
             <li><b>Group ID:</b> <code>{info.build.group}</code></li>
             <li><b>Artifact ID:</b> <code>{info.build.artifact}</code></li>
@@ -22,13 +22,13 @@ export default class AppInfo extends React.Component {
             <li><b>Version:</b> <code>{info.build.version}</code></li>
           </ul>
 
-          <h3>Git</h3>
+          <h4>Git</h4>
           <ul>
             <li><b>Git branch:</b> <code>{info.git.branch}</code></li>
             <li><b>Git commit:</b> <code>{info.git.commit.id}</code></li>
           </ul>
 
-          <h3>Instance info</h3>
+          <h4>Instance info</h4>
           <ul>
             <li><b>Application:</b> <code>{info.instanceInfo.app}</code></li>
             <li><b>Env logique:</b> <code>{info.instanceInfo.logicalEnv}</code></li>

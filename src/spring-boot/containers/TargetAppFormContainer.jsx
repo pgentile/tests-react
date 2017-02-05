@@ -11,7 +11,7 @@ const TargetAppFormContainer = connect(
     };
   },
   {
-    onUrlChange: actions.changeBaseUrl,
+    onUrlChange: actions.loadComponent,
   },
 )(TargetAppForm);
 
