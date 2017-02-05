@@ -1,16 +1,27 @@
 import React from 'react';
 
 
-export function Error({message, onDismiss}) {
-  if (message === null) {
+export function Error({lastMessage, errorCount, onDismiss}) {
+  if (errorCount === 0) {
     return null;
   }
+
+  let moreErrors = null;
+  if (errorCount > 1) {
+    moreErrors = (
+      <p>{errorCount - 1} autres erreurs se sont également produites avant.</p>
+    );
+  }
+
+  const onDismissClick = () => onDismiss();
 
   return (
     <div className="alert callout">
       <h5>Une erreur s'est produite...</h5>
-      <p>{message}</p>
-      <button className="close-button" aria-label="Dismiss alert" type="button" onClick={onDismiss}>
+      <p>{lastMessage ? lastMessage : 'Raison inconnue'}</p>
+      {moreErrors}
+
+      <button className="close-button" aria-label="Dismiss alert" type="button" onClick={onDismissClick}>
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -18,6 +29,7 @@ export function Error({message, onDismiss}) {
 }
 
 Error.propTypes = {
-  message: React.PropTypes.string,
+  lastMessage: React.PropTypes.string,
+  errorCount: React.PropTypes.number.isRequired,
   onDismiss: React.PropTypes.func.isRequired,
 };

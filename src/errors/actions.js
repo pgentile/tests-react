@@ -1,15 +1,8 @@
-export const ADD_ERROR = 'ADD_ERROR';
+import { createAction } from 'redux-actions';
+
+
 export const DISMISS_ERROR = 'DISMISS_ERROR';
 
-export function addError(message) {
-  return {
-    type: ADD_ERROR,
-    payload: message,
-  };
-}
+const dismissError = createAction(DISMISS_ERROR);
 
-export function dismissError() {
-  return {
-    type: DISMISS_ERROR,
-  };
-}
+export {dismissError};
