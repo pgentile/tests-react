@@ -8,14 +8,14 @@ import ComponentsHealth from './ComponentsHealth';
 export default class HealthInfo extends React.Component {
 
   componentDidMount() {
-    this.props.onLoad(this.props.baseUrl);
+    this.props.onLoad();
   }
 
-  componentDidUpdate(oldProps) {
-    if (oldProps.baseUrl !== this.props.baseUrl) {
-      this.props.onLoad(this.props.baseUrl);
-    }
+  /*
+  componentDidUpdate() {
+    this.props.onLoad();
   }
+  */
 
   render() {
     if (!this.props.health) {
@@ -42,6 +42,5 @@ export default class HealthInfo extends React.Component {
 
 HealthInfo.propTypes = {
   health: React.PropTypes.object,
-  baseUrl: React.PropTypes.string.isRequired,
   onLoad: React.PropTypes.func.isRequired,
 };

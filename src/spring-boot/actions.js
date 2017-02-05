@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions';
 
 import * as api from './api';
 
-const PREFIX = '@@springBoot';
+const PREFIX = 'springBoot';
 
 export const CHANGE_BASE_URL = `${PREFIX}/CHANGE_BASE_URL`;
 
@@ -36,9 +36,32 @@ const changeBaseUrl = createAction(CHANGE_BASE_URL, baseUrl => {
   };
 });
 
-const getAppHealth = createAction(GET_APP_HEALTH, api.getHealth);
-const getAppInfo = createAction(GET_APP_INFO, api.getInfo);
-const getConfigProps = createAction(GET_CONFIG_PROPS, api.getConfigProps);
+const createGetAppHealth = createAction(GET_APP_HEALTH, api.getHealth);
+
+function getAppHealth() {
+  return (dispatch, getState) => {
+    const baseUrl = getState().springBoot.baseUrl;
+    dispatch(createGetAppHealth(baseUrl));
+  };
+}
+
+const createGetAppInfoAction = createAction(GET_APP_INFO, api.getInfo);
+
+function getAppInfo() {
+  return (dispatch, getState) => {
+    const baseUrl = getState().springBoot.baseUrl;
+    dispatch(createGetAppInfoAction(baseUrl));
+  };
+}
+
+const createGetConfigProps = createAction(GET_CONFIG_PROPS, api.getConfigProps);
+
+function getConfigProps() {
+  return (dispatch, getState) => {
+    const baseUrl = getState().springBoot.baseUrl;
+    dispatch(createGetConfigProps(baseUrl));
+  };
+}
 
 export {
   changeTab,

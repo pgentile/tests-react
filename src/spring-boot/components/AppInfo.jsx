@@ -30,10 +30,10 @@ export default class AppInfo extends React.Component {
 
           <h3>Instance info</h3>
           <ul>
-            <li><b>Application:</b> <code>{info['instance-info'].app}</code></li>
-            <li><b>Env logique:</b> <code>{info['instance-info'].logicalEnv}</code></li>
-            <li><b>Env physique:</b> <code>{info['instance-info'].physicalEnv}</code></li>
-            <li><b>Instance:</b> <code>{info['instance-info'].instance}</code></li>
+            <li><b>Application:</b> <code>{info.instanceInfo.app}</code></li>
+            <li><b>Env logique:</b> <code>{info.instanceInfo.logicalEnv}</code></li>
+            <li><b>Env physique:</b> <code>{info.instanceInfo.physicalEnv}</code></li>
+            <li><b>Instance:</b> <code>{info.instanceInfo.instance}</code></li>
           </ul>
         </Column>
       </Row>

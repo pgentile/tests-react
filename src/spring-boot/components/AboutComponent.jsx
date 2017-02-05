@@ -7,17 +7,17 @@ import ComponentTabsContainer from '../containers/ComponentTabsContainer';
 export default class AboutComponent extends React.Component {
 
   componentDidMount() {
-    this.props.onLoad(this.props.baseUrl);
+    this.props.onLoad();
   }
 
-  componentDidUpdate(oldProps) {
-    if (oldProps.baseUrl !== this.props.baseUrl) {
-      this.props.onLoad(this.props.baseUrl);
-    }
+  /*
+  componentDidUpdate() {
+    this.props.onLoad();
   }
+  */
 
   render() {
-    if (!this.props.info) {
+    if (!this.props.loaded) {
       return null;
     }
 
@@ -25,7 +25,7 @@ export default class AboutComponent extends React.Component {
       <div>
         <Row>
           <Column>
-            <h3>Instance {this.props.info['instance-info'].instance}</h3>
+            <h3>Instance <i>{this.props.instanceName}</i></h3>
           </Column>
         </Row>
         <Row>
@@ -41,6 +41,6 @@ export default class AboutComponent extends React.Component {
 
 AboutComponent.propTypes = {
   onLoad: React.PropTypes.func.isRequired,
-  baseUrl: React.PropTypes.string.isRequired,
-  info: React.PropTypes.object,
+  loaded: React.PropTypes.bool.isRequired,
+  instanceName: React.PropTypes.string.isRequired,
 };

@@ -12,6 +12,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Perf from 'react-addons-perf';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
+import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import { todos, visibilityBrowserStorage, todoListBrowserStorage } from './todos/reducers';
@@ -28,7 +29,7 @@ import { RedditComponent, RedditListComponent } from './reddit/routed';
 import { ChartsComponent } from './charts/containers';
 import { SpotifyComponent, FollowedArtists, TopArtists } from './spotify/containers';
 import { PaginationComponent } from './pagination/containers';
-import { SpringBootContainer } from './spring-boot/containers';
+import { SpringBootComponent } from './spring-boot/components/SpringBootComponent';
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
@@ -65,6 +66,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 middlewares = middlewares.concat([
   routerMiddleware(browserHistory),
+  thunkMiddleware,
   promiseMiddleware(),
   browserStorageMiddleware(visibilityBrowserStorage, state => state.todos.visibility),
   browserStorageMiddleware(todoListBrowserStorage, state => state.todos.list),
@@ -102,7 +104,7 @@ ReactDOM.render(
           </Route>
           <Route path="spotify/callback" onEnter={handleSpotifyCallback}/>
           <Route path="pagination" component={PaginationComponent}/>
-          <Route path="spring-boot" component={SpringBootContainer}/>
+          <Route path="spring-boot" component={SpringBootComponent}/>
         </Route>
       </Router>
     </Provider>

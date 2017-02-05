@@ -19,19 +19,7 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return {
       ...state,
       ...SPRING_DEFAULT_STATE,
-      ...action.payload,
-    };
-
-  case actions.GET_APP_HEALTH_FULFILLED:
-    return {
-      ...state,
-      health: action.payload,
-    };
-
-  case actions.GET_APP_HEALTH_REJECTED:
-    return {
-      ...state,
-      health: null,
+      baseUrl: action.payload.baseUrl,
     };
 
   case actions.GET_APP_INFO_FULFILLED:
@@ -44,6 +32,18 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return {
       ...state,
       info: null,
+    };
+
+  case actions.GET_APP_HEALTH_FULFILLED:
+    return {
+      ...state,
+      health: action.payload,
+    };
+
+  case actions.GET_APP_HEALTH_REJECTED:
+    return {
+      ...state,
+      health: null,
     };
 
   case actions.GET_CONFIG_PROPS_FULFILLED:

@@ -7,14 +7,14 @@ import PrettyValue from './PrettyValue';
 export default class ConfigProps extends React.Component {
 
   componentDidMount() {
-    this.props.onLoad(this.props.baseUrl);
+    this.props.onLoad();
   }
 
-  componentDidUpdate(oldProps) {
-    if (oldProps.baseUrl !== this.props.baseUrl) {
-      this.props.onLoad(this.props.baseUrl);
-    }
+  /*
+  componentDidUpdate() {
+    this.props.onLoad();
   }
+  */
 
   render() {
     let table = null;
@@ -79,6 +79,5 @@ export default class ConfigProps extends React.Component {
 
 ConfigProps.propTypes = {
   configProps: React.PropTypes.array,
-  baseUrl: React.PropTypes.string.isRequired,
   onLoad: React.PropTypes.func.isRequired,
 };

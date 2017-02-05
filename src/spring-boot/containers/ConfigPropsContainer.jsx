@@ -7,7 +7,6 @@ import * as actions from '../actions';
 const ConfigPropsContainer = connect(
   state => {
     return {
-      baseUrl: state.springBoot.baseUrl,
       configProps: state.springBoot.configProps,
     };
   },

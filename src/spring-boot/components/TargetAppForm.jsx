@@ -1,28 +1,8 @@
 import React from 'react';
 import { Row, Column, Button } from 'react-foundation';
 
-import AboutComponentContainer from './containers/AboutComponentContainer';
 
-
-import { PageComponent } from '../page/components';
-
-
-export function SpringBootComponent({springBoot, onUrlChange}) {
-  return (
-    <PageComponent title="Spring Boot">
-      <TargetAppForm baseUrl={springBoot.baseUrl} onUrlChange={onUrlChange} />
-      <AboutComponentContainer/>
-    </PageComponent>
-  );
-}
-
-SpringBootComponent.propTypes = {
-  springBoot: React.PropTypes.object,
-  onUrlChange: React.PropTypes.func.isRequired,
-};
-
-
-class TargetAppForm extends React.Component {
+export default class TargetAppForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -66,7 +46,7 @@ class TargetAppForm extends React.Component {
           </Column>
         </Row>
       </form>
-    )
+    );
   }
 
 }

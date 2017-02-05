@@ -7,7 +7,6 @@ import * as actions from '../actions';
 const HealthInfoContainer = connect(
   state => {
     return {
-      baseUrl: state.springBoot.baseUrl,
       health: state.springBoot.health,
     };
   },
