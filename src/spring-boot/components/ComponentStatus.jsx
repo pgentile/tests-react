@@ -2,13 +2,19 @@ import React from 'react';
 import { Label, Colors } from 'react-foundation';
 
 
-export default function ComponentStatus({status}) {
-  const successful = (status === 'UP');
-  const color = successful ? Colors.SUCCESS : Colors.ALERT;
+export default class ComponentStatus extends React.PureComponent {
 
-  return (
-    <Label color={color}>{status}</Label>
-  );
+  render() {
+    const {status} = this.props;
+
+    const successful = (status === 'UP');
+    const color = successful ? Colors.SUCCESS : Colors.ALERT;
+
+    return (
+      <Label color={color}>{status}</Label>
+    );
+  }
+
 }
 
 ComponentStatus.propTypes = {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
+import MetricValue from './MetricValue';
+
 
 export default class Metrics extends React.Component {
 
@@ -37,7 +39,7 @@ export default class Metrics extends React.Component {
         return (
           <tr key={metric.name}>
             <td><code>{metric.name}</code></td>
-            <td>{metric.value}</td>
+            <td><MetricValue value={metric.value} delta={metric.delta} /></td>
           </tr>
         );
       })
@@ -66,7 +68,6 @@ export default class Metrics extends React.Component {
       </Row>
     );
   }
-
 
 }
 

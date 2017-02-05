@@ -1,4 +1,7 @@
+import _ from 'lodash';
+
 import * as actions from './actions';
+
 
 const SPRING_DEFAULT_STATE = {
   health: null,
@@ -62,7 +65,7 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
   case actions.GET_METRICS_FULFILLED:
     return {
       ...state,
-      metrics: action.payload,
+      metrics: computeMetricsDelta(state.metrics, action.payload),
     };
 
   case actions.GET_METRICS_REJECTED:
@@ -84,4 +87,20 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return state;
 
   }
+}
+
+
+function computeMetricsDelta(oldMetrics, newMetrics) {
+  if (oldMetrics) {
+    newMetrics.forEach(newMetric => {
+      const oldMetricIndex = _.findIndex(oldMetrics, metric => metric.name === newMetric.name);
+      if (oldMetricIndex >= 0) {
+        const oldMetric = oldMetrics[oldMetricIndex];
+        const delta = oldMetric ? newMetric.value - oldMetric.value : null;
+        newMetric.delta = delta;
+      }
+    });
+  }
+
+  return newMetrics;
 }

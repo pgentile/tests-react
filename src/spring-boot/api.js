@@ -83,7 +83,7 @@ export function getMetrics(baseUrl) {
       _.forOwn(data, (value, name) => {
         metrics.push({
           name,
-          value,
+          value: _.round(value, 3),
         });
       })
 
