@@ -2,7 +2,7 @@ import React from 'react';
 
 import Tabs from './Tabs';
 import Tab from './Tab';
-import TabContent from './TabContent';
+import TabPanels from './TabPanels';
 import TabPanel from './TabPanel';
 
 import AppInfoContainer from '../containers/AppInfoContainer';
@@ -28,7 +28,7 @@ export default function ComponentTabs({currentTab, onTabClick}) {
         <Tab onClick={handleTabClick('config')} isActive={isTabActive('config')}>Config</Tab>
       </Tabs>
 
-      <TabContent>
+      <TabPanels>
         <TabPanel isActive={isTabActive('health')}>
           <HealthInfoContainer/>
         </TabPanel>
@@ -38,7 +38,7 @@ export default function ComponentTabs({currentTab, onTabClick}) {
         <TabPanel isActive={isTabActive('config')}>
           <ConfigPropsContainer/>
         </TabPanel>
-      </TabContent>
+      </TabPanels>
 
     </div>
   )

@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function TabContent({children}) {
+export default function TabPanels({children}) {
   return (
     <div className="tabs-content">
       {children}
@@ -9,6 +9,6 @@ export default function TabContent({children}) {
   )
 }
 
-TabContent.propTypes = {
+TabPanels.propTypes = {
   children: React.PropTypes.node.isRequired,
 };
