@@ -2,6 +2,8 @@ import React from 'react';
 import { Row, Column } from 'react-foundation';
 
 import MetricValue from './MetricValue';
+import MetricsFilterFormContainer from '../containers/MetricsFilterFormContainer';
+import MetricNameContainer from '../containers/MetricNameContainer';
 
 
 export default class Metrics extends React.Component {
@@ -38,11 +40,11 @@ export default class Metrics extends React.Component {
       const rows = this.props.metrics.map(metric => {
         return (
           <tr key={metric.name}>
-            <td><code>{metric.name}</code></td>
+            <td><MetricNameContainer name={metric.name}/></td>
             <td><MetricValue value={metric.value} delta={metric.delta} /></td>
           </tr>
         );
-      })
+      });
 
       table = (
         <table>
@@ -60,12 +62,23 @@ export default class Metrics extends React.Component {
     }
 
     return (
-      <Row>
-        <Column>
-          <h4>Metrics</h4>
-          {table}
-        </Column>
-      </Row>
+      <div>
+        <Row>
+          <Column>
+            <h4>Metrics</h4>
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <MetricsFilterFormContainer/>
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            {table}
+          </Column>
+        </Row>
+      </div>
     );
   }
 

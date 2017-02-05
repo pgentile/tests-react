@@ -13,6 +13,7 @@ const SPRING_DEFAULT_STATE = {
 const APPLICATION_DEFAULT_STATE = {
   baseUrl: 'http://localhost:8080/system',
   currentTab: 'health',
+  metricNameFilter: '',
   ...SPRING_DEFAULT_STATE,
 };
 
@@ -83,6 +84,15 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
       currentTab: action.payload.tabName,
     };
 
+  case actions.UPDATE_METRIC_NAME_FILTER:
+    if (action.payload.metricNameFilter === state.metricNameFilter) {
+      return state;
+    }
+    return {
+      ...state,
+      metricNameFilter: action.payload.metricNameFilter,
+    };
+
   default:
     return state;
 
@@ -96,7 +106,7 @@ function computeMetricsDelta(oldMetrics, newMetrics) {
       const oldMetricIndex = _.findIndex(oldMetrics, metric => metric.name === newMetric.name);
       if (oldMetricIndex >= 0) {
         const oldMetric = oldMetrics[oldMetricIndex];
-        const delta = oldMetric ? newMetric.value - oldMetric.value : null;
+        const delta = newMetric.value - oldMetric.value;
         newMetric.delta = delta;
       }
     });
