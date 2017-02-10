@@ -9,15 +9,15 @@ export default class MetricValue extends React.PureComponent {
 
     if (delta > 0) {
       return (
-        <Label color={Colors.SUCCESS}>{value} &#9650;</Label>
+        <Label color={Colors.SUCCESS}>{value.toLocaleString()} &#9650;</Label>
       );
     } else if (delta < 0) {
       return (
-        <Label color={Colors.WARNING}>{value} &#9660;</Label>
+        <Label color={Colors.WARNING}>{value.toLocaleString()} &#9660;</Label>
       );
     } else {
       return (
-        <span>{value}</span>
+        <span>{value.toLocaleString()}</span>
       );
     }
   }
