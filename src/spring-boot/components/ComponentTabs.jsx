@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Tabs from './Tabs';
-import Tab from './Tab';
-import TabPanels from './TabPanels';
-import TabPanel from './TabPanel';
+import Tabs from '../../core/components/Tabs';
+import Tab from '../../core/components/Tab';
+import TabPanels from '../../core/components/TabPanels';
+import TabPanel from '../../core/components/TabPanel';
 
 import AppInfoContainer from '../containers/AppInfoContainer';
 import HealthInfoContainer from '../containers/HealthInfoContainer';
@@ -51,7 +51,7 @@ export default function ComponentTabs({currentTab, onTabClick}) {
       </TabPanels>
 
     </div>
-  )
+  );
 }
 
 ComponentTabs.propTypes = {
