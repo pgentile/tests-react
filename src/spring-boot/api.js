@@ -1,8 +1,9 @@
+import uuid from 'uuid';
 import _ from 'lodash';
 
 
 export function getHealth(baseUrl) {
-  return fetch(`${baseUrl}/health`)
+  return get(`${baseUrl}/health`)
     .then(response => response.json())
     .then(data => {
 
@@ -22,18 +23,21 @@ export function getHealth(baseUrl) {
 }
 
 export function getInfo(baseUrl) {
-  return fetch(`${baseUrl}/info`)
+  return get(`${baseUrl}/info`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to get app info');
       }
 
       return response.json();
+    })
+    .catch(error => {
+      throw new Error(`Can't get infos for ${baseUrl}: ${error}`);
     });
 }
 
 export function getConfigProps(baseUrl) {
-  return fetch(`${baseUrl}/configprops`)
+  return get(`${baseUrl}/configprops`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to get config props');
@@ -69,7 +73,7 @@ export function getConfigProps(baseUrl) {
 }
 
 export function getMetrics(baseUrl) {
-  return fetch(`${baseUrl}/metrics`)
+  return get(`${baseUrl}/metrics`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to get metrics');
@@ -94,7 +98,7 @@ export function getMetrics(baseUrl) {
 }
 
 export function getEnv(baseUrl) {
-  return fetch(`${baseUrl}/env`)
+  return get(`${baseUrl}/env`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to get app info');
@@ -130,4 +134,14 @@ export function getEnv(baseUrl) {
 
       return env;
     });
+}
+
+
+function get(url) {
+  return fetch(url, {
+    headers: {
+      'X-Correlation-ID': `React-${uuid.v4()}`,
+      'Accept': 'application/json',
+    },
+  });
 }
