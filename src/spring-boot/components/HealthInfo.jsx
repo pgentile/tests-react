@@ -7,9 +7,31 @@ import ComponentsHealth from './ComponentsHealth';
 
 export default class HealthInfo extends React.Component {
 
-  componentDidMount() {
-    this.props.onLoad();
+  constructor(props) {
+    super(props);
+
+    this.timerRef = null;
+
+    this.scheduleRefresh = this.scheduleRefresh.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
+
+  componentDidMount() {
+    this.refresh();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerRef);
+  }
+
+  refresh() {
+    this.props.onLoad().then(this.scheduleRefresh, this.scheduleRefresh);
+  }
+
+  scheduleRefresh() {
+    this.timerRef = setTimeout(this.refresh, 5000);
+  }
+
 
   render() {
     if (!this.props.health) {
