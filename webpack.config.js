@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const validate = require('webpack-validator')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
@@ -9,7 +8,7 @@ const packageContent = require('./package.json');
 const vendorLibs = Object.keys(packageContent.dependencies);
 
 
-module.exports = validate({
+module.exports = {
   entry: {
       app: [
         './src/main.jsx',
@@ -18,11 +17,15 @@ module.exports = validate({
       vendor: vendorLibs,
   },
   resolve: {
+    modules: [
+      path.join(__dirname, 'src'),
+      'node_modules',
+    ],
     alias: {
         'jquery': 'jquery/src/jquery',
         'chart.js': 'chart.js/src/chart.js',
     },
-    extensions: ['', '.js', '.jsx', '.scss', '.css'],
+    extensions: ['.js', '.jsx', '.scss', '.css'],
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -31,30 +34,42 @@ module.exports = validate({
   },
   devtool: 'source-map',
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'eslint',
+        enforce: 'pre',
+        use: [
+          'eslint-loader',
+        ],
       },
-    ],
-    loaders: [
       {
-          test: /\.jsx?$/,
-          loaders: [
-            'babel?cacheDirectory',
-          ],
+        test: /\.jsx?$/,
+        use: [
+          'babel-loader?cacheDirectory',
+        ],
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('css?sourceMap'),
+        use: ExtractTextPlugin.extract({
+          use: [
+            'css-loader?sourceMap',
+          ],
+        }),
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css?sourceMap!sass?sourceMap'),
+        use: ExtractTextPlugin.extract({
+          use: [
+            'css-loader?sourceMap',
+            'sass-loader?sourceMap',
+          ],
+        }),
       },
       {
         test: /\.(ttf|eot|woff2?|svg|png|jpg|gif)$/,
-        loader: 'url?limit=100000',
+        use: [
+          'url-loader?limit=100000',
+        ],
       },
     ],
   },
@@ -65,14 +80,11 @@ module.exports = validate({
         NODE_ENV: JSON.stringify("production")
       }
     }),
-    */
-    /*
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       mangle: true
     }),
     */
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
@@ -82,7 +94,6 @@ module.exports = validate({
       'jQuery': 'jquery',
       'fetch': 'isomorphic-fetch',
     }),
-    new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('[name].css'),
   ],
-});
+};
