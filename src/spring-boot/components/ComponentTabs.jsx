@@ -2,8 +2,6 @@ import React from 'react';
 
 import Tabs from '../../core/components/Tabs';
 import Tab from '../../core/components/Tab';
-import TabPanels from '../../core/components/TabPanels';
-import TabPanel from '../../core/components/TabPanel';
 
 import AppInfoContainer from '../containers/AppInfoContainer';
 import HealthInfoContainer from '../containers/HealthInfoContainer';
@@ -25,30 +23,22 @@ export default function ComponentTabs({currentTab, onTabClick}) {
     <div>
 
       <Tabs>
-        <Tab onClick={handleTabClick('health')} isActive={isTabActive('health')}>Health</Tab>
-        <Tab onClick={handleTabClick('infos')} isActive={isTabActive('infos')}>Infos</Tab>
-        <Tab onClick={handleTabClick('env')} isActive={isTabActive('env')}>Env</Tab>
-        <Tab onClick={handleTabClick('config')} isActive={isTabActive('config')}>Config</Tab>
-        <Tab onClick={handleTabClick('metrics')} isActive={isTabActive('metrics')}>Metrics</Tab>
-      </Tabs>
-
-      <TabPanels>
-        <TabPanel isActive={isTabActive('health')}>
+        <Tab title="Health" onTitleClick={handleTabClick('health')} isActive={isTabActive('health')}>
           <HealthInfoContainer/>
-        </TabPanel>
-        <TabPanel isActive={isTabActive('infos')}>
+        </Tab>
+        <Tab title="Infos" onTitleClick={handleTabClick('infos')} isActive={isTabActive('infos')}>
           <AppInfoContainer />
-        </TabPanel>
-        <TabPanel isActive={isTabActive('env')}>
+        </Tab>
+        <Tab title="Env" onTitleClick={handleTabClick('env')} isActive={isTabActive('env')}>
           <EnvContainer />
-        </TabPanel>
-        <TabPanel isActive={isTabActive('config')}>
+        </Tab>
+        <Tab title="Config" onTitleClick={handleTabClick('config')} isActive={isTabActive('config')}>
           <ConfigPropsContainer/>
-        </TabPanel>
-        <TabPanel isActive={isTabActive('metrics')}>
+        </Tab>
+        <Tab title="Metrics" onTitleClick={handleTabClick('metrics')} isActive={isTabActive('metrics')}>
           <MetricsContainer/>
-        </TabPanel>
-      </TabPanels>
+        </Tab>
+      </Tabs>
 
     </div>
   );
