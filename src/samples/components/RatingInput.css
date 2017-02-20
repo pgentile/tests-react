@@ -1,0 +1,10 @@
+:local(.rating .rating-input) {
+  color: black;
+  cursor: pointer;
+}
+
+:local(.rating .rating-input-selected) {
+  color: yellow;
+  text-shadow: 0 0 2px black;
+  cursor: pointer;
+}

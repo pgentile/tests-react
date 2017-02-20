@@ -31,6 +31,7 @@ import { SpotifyComponent, FollowedArtists, TopArtists } from './spotify/contain
 import { PaginationComponent } from './pagination/containers';
 import { SpringBootComponent } from './spring-boot/components/SpringBootComponent';
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
+import SamplesComponent from './samples/components/SamplesComponent';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
@@ -105,6 +106,7 @@ ReactDOM.render(
           <Route path="spotify/callback" onEnter={handleSpotifyCallback}/>
           <Route path="pagination" component={PaginationComponent}/>
           <Route path="spring-boot" component={SpringBootComponent}/>
+          <Route path="samples" component={SamplesComponent}/>
         </Route>
       </Router>
     </Provider>
