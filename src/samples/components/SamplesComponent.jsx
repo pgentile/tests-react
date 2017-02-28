@@ -12,7 +12,7 @@ export default class SamplesComponent extends React.Component {
     this._onRatingChange = this._onRatingChange.bind(this);
 
     this.state = {
-      value: 3,
+      value: null,
     };
   }
 
@@ -26,9 +26,8 @@ export default class SamplesComponent extends React.Component {
     return (
       <PageComponent title="Exemples">
         <div>
-          <p>
-            <RatingInput value={this.state.value} max={5} onChange={this._onRatingChange}/>
-          </p>
+          <p><RatingInput value={this.state.value} max={5} onChange={this._onRatingChange} /></p>
+          <p>Current value is : {this.state.value}</p>
         </div>
       </PageComponent>
     );

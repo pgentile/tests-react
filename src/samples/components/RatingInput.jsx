@@ -7,7 +7,7 @@ import css from './RatingInput.css';
 
 export default function RatingInput({max, value, onChange}) {
   const stars = _.range(max).map(index => {
-    const className = index < value ? css['rating-input-selected'] : css['rating-input'];
+    const className = value !== null && index < value ? css['rating-input-selected'] : css['rating-input'];
 
     const onClick = newValue => {
       if (onChange) {
@@ -30,7 +30,7 @@ export default function RatingInput({max, value, onChange}) {
 }
 
 RatingInput.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   max: PropTypes.number.isRequired,
   onChange: PropTypes.func,
 };

@@ -4,7 +4,7 @@
 }
 
 :local(.rating .rating-input-selected) {
-  color: yellow;
+  color: orange;
   text-shadow: 0 0 2px black;
   cursor: pointer;
 }
