@@ -6,6 +6,7 @@ const PREFIX = 'springBoot';
 
 export const CHANGE_BASE_URL = `${PREFIX}/CHANGE_BASE_URL`;
 export const UPDATE_METRIC_NAME_FILTER = `${PREFIX}/UPDATE_METRIC_NAME_FILTER`;
+export const UPDATE_ENV_FILTER = `${PREFIX}/UPDATE_ENV_FILTER`;
 
 export const GET_APP_HEALTH = `${PREFIX}/GET_APP_HEALTH`;
 export const GET_APP_HEALTH_FULFILLED = `${GET_APP_HEALTH}_FULFILLED`;
@@ -91,6 +92,12 @@ const updateMetricNameFilter = createAction(UPDATE_METRIC_NAME_FILTER, metricNam
   };
 });
 
+const updateEnvFilter = createAction(UPDATE_ENV_FILTER, envFilter => {
+  return {
+    envFilter,
+  };
+});
+
 const createGetEnvAction = createAction(GET_ENV, api.getEnv);
 
 function getEnv() {
@@ -110,4 +117,5 @@ export {
   getConfigProps,
   getEnv,
   updateMetricNameFilter,
+  updateEnvFilter,
 };

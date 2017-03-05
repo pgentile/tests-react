@@ -15,6 +15,7 @@ const APPLICATION_DEFAULT_STATE = {
   baseUrl: 'http://localhost:8080/system',
   currentTab: 'health',
   metricNameFilter: '',
+  envFilter: '',
   ...SPRING_DEFAULT_STATE,
 };
 
@@ -105,6 +106,15 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
     return {
       ...state,
       metricNameFilter: action.payload.metricNameFilter,
+    };
+
+  case actions.UPDATE_ENV_FILTER:
+    if (action.payload.envFilter === state.envFilter) {
+      return state;
+    }
+    return {
+      ...state,
+      envFilter: action.payload.envFilter,
     };
 
   default:

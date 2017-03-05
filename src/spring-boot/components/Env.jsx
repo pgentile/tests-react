@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
+import EnvFilterFormContainer from '../containers/EnvFilterFormContainer';
+import EnvPropertyNameContainer from '../containers/EnvPropertyNameContainer';
+
 
 export default class Env extends React.Component {
 
@@ -29,7 +32,7 @@ export default class Env extends React.Component {
       propertiesGroup.properties.forEach(property => {
         const row = (
           <tr key={`PROP:${propertiesGroup.group}:${property.name}`}>
-            <td><code>{property.name}</code></td>
+            <td><EnvPropertyNameContainer name={property.name}/></td>
             <td><pre>{property.value}</pre></td>
           </tr>
         );
@@ -53,12 +56,23 @@ export default class Env extends React.Component {
     );
 
     return (
-      <Row>
-        <Column>
-          <h4>Env</h4>
-          {table}
-        </Column>
-      </Row>
+      <div>
+        <Row>
+          <Column>
+            <h4>Env</h4>
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <EnvFilterFormContainer />
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            {table}
+          </Column>
+        </Row>
+      </div>
     );
   }
 
