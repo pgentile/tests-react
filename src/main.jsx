@@ -13,7 +13,7 @@ import Perf from 'react-addons-perf';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { reducer as formReducer } from 'redux-form';
 
 import { todos, visibilityBrowserStorage, todoListBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
@@ -32,6 +32,7 @@ import { PaginationComponent } from './pagination/containers';
 import { SpringBootComponent } from './spring-boot/components/SpringBootComponent';
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 import SamplesComponent from './samples/components/SamplesComponent';
+import ReduxFormPage from './reduxform/components/ReduxFormPage';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
@@ -54,24 +55,17 @@ export const app = combineReducers({
   spotify,
   springBoot,
   routing: routerReducer,
+  form: formReducer,
 });
 
 
-let middlewares = [];
-
-if (process.env.NODE_ENV !== 'production') {
-  middlewares = middlewares.concat([
-    createLogger(),
-  ]);
-}
-
-middlewares = middlewares.concat([
+const middlewares = [
   routerMiddleware(browserHistory),
   thunkMiddleware,
   promiseMiddleware(),
   browserStorageMiddleware(visibilityBrowserStorage, state => state.todos.visibility),
   browserStorageMiddleware(todoListBrowserStorage, state => state.todos.list),
-]);
+];
 
 const initialState = {
   todos: {
@@ -107,6 +101,7 @@ ReactDOM.render(
           <Route path="pagination" component={PaginationComponent}/>
           <Route path="spring-boot" component={SpringBootComponent}/>
           <Route path="samples" component={SamplesComponent}/>
+          <Route path="reduxform" component={ReduxFormPage}/>
         </Route>
       </Router>
     </Provider>
