@@ -44,6 +44,14 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
+        include: /node_modules/,
+        use: [
+          'babel-loader?cacheDirectory&babelrc=false',
+        ],
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
         use: [
           'babel-loader?cacheDirectory',
         ],

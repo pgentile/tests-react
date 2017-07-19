@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { PageComponent } from '../page/components';
@@ -14,8 +15,8 @@ export function RedditComponent({params, children}) {
 }
 
 RedditComponent.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  children: React.PropTypes.element,
+  params: PropTypes.object.isRequired,
+  children: PropTypes.element,
 };
 
 
@@ -26,5 +27,5 @@ export function RedditListComponent({params}) {
 }
 
 RedditListComponent.propTypes = {
-  params: React.PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };

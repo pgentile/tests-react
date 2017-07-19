@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -15,10 +16,10 @@ export default function Tab({children, isActive}) {
 }
 
 Tab.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node.isRequired,
-  isActive: React.PropTypes.bool.isRequired,
-  onTitleClick: React.PropTypes.func,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onTitleClick: PropTypes.func,
 };
 
 Tab.defaultProps = {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ComponentStatus from './ComponentStatus';
@@ -35,5 +36,5 @@ export default function ComponentsHealth({components}) {
 }
 
 ComponentsHealth.propTypes = {
-  components: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  components: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

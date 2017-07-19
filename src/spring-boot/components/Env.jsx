@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -79,6 +80,6 @@ export default class Env extends React.Component {
 }
 
 Env.propTypes = {
-  env: React.PropTypes.object,
-  onLoad: React.PropTypes.func.isRequired,
+  env: PropTypes.object,
+  onLoad: PropTypes.func.isRequired,
 };

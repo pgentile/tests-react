@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -16,9 +17,9 @@ function ChangeTodoStateButton({done, onMarkDone, onMarkTodo}) {
 }
 
 ChangeTodoStateButton.propTypes = {
-  done: React.PropTypes.bool.isRequired,
-  onMarkDone: React.PropTypes.func.isRequired,
-  onMarkTodo: React.PropTypes.func.isRequired,
+  done: PropTypes.bool.isRequired,
+  onMarkDone: PropTypes.func.isRequired,
+  onMarkTodo: PropTypes.func.isRequired,
 };
 
 
@@ -81,10 +82,10 @@ export class Todo extends React.Component {
 }
 
 Todo.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  onDelete: React.PropTypes.func.isRequired,
-  onMarkDone: React.PropTypes.func.isRequired,
-  onMarkTodo: React.PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onMarkDone: PropTypes.func.isRequired,
+  onMarkTodo: PropTypes.func.isRequired,
 };
 
 
@@ -92,11 +93,11 @@ export function TodoList({list, onDeleteItem, onMarkItemDone, onMarkItemTodo}) {
 
   const todos = list.map(item => {
     return <Todo
-              key={item.id}
-              item={item}
-              onDelete={onDeleteItem}
-              onMarkDone={onMarkItemDone}
-              onMarkTodo={onMarkItemTodo} />;
+      key={item.id}
+      item={item}
+      onDelete={onDeleteItem}
+      onMarkDone={onMarkItemDone}
+      onMarkTodo={onMarkItemTodo} />;
   });
 
   if (list.size > 0) {
@@ -118,9 +119,9 @@ export function TodoList({list, onDeleteItem, onMarkItemDone, onMarkItemTodo}) {
 
 TodoList.propTypes = {
   list: ImmutablePropTypes.list.isRequired,
-  onDeleteItem: React.PropTypes.func.isRequired,
-  onMarkItemDone: React.PropTypes.func.isRequired,
-  onMarkItemTodo: React.PropTypes.func.isRequired,
+  onDeleteItem: PropTypes.func.isRequired,
+  onMarkItemDone: PropTypes.func.isRequired,
+  onMarkItemTodo: PropTypes.func.isRequired,
 };
 
 TodoList.defaultProps = {
@@ -164,11 +165,11 @@ export class AddTodoComponent extends React.Component {
             <InputGroup>
               <InputGroupField>
                 <input
-                    type="text"
-                    className="input-group-field"
-                    placeholder="Entrez votre texte ici"
-                    value={this.state.value}
-                    onChange={this.valueChanged}/>
+                  type="text"
+                  className="input-group-field"
+                  placeholder="Entrez votre texte ici"
+                  value={this.state.value}
+                  onChange={this.valueChanged}/>
               </InputGroupField>
               <div className="input-group-button">
                 <Button disabled={!this.state.value}>Add</Button>
@@ -183,7 +184,7 @@ export class AddTodoComponent extends React.Component {
 }
 
 AddTodoComponent.propTypes = {
-  onAddItem: React.PropTypes.func.isRequired,
+  onAddItem: PropTypes.func.isRequired,
 };
 
 
@@ -207,7 +208,7 @@ export function TodoVisibilityComponent({viewDone, doneTodosCount, onDoneChange}
 }
 
 TodoVisibilityComponent.propTypes = {
-  viewDone: React.PropTypes.bool.isRequired,
-  doneTodosCount: React.PropTypes.number.isRequired,
-  onDoneChange: React.PropTypes.func.isRequired,
+  viewDone: PropTypes.bool.isRequired,
+  doneTodosCount: PropTypes.number.isRequired,
+  onDoneChange: PropTypes.func.isRequired,
 };

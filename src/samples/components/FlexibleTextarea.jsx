@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -30,9 +31,9 @@ export default class FlexibleTextarea extends React.Component {
 }
 
 FlexibleTextarea.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  minRows: React.PropTypes.number,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  minRows: PropTypes.number,
 };
 
 

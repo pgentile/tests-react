@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -52,6 +53,6 @@ export default class HealthInfo extends React.Component {
 }
 
 HealthInfo.propTypes = {
-  health: React.PropTypes.object,
-  onLoad: React.PropTypes.func.isRequired,
+  health: PropTypes.object,
+  onLoad: PropTypes.func.isRequired,
 };

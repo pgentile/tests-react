@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -31,6 +32,6 @@ export default class EnvPropertyName extends React.PureComponent {
 }
 
 EnvPropertyName.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  envFilter: React.PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  envFilter: PropTypes.string.isRequired,
 };

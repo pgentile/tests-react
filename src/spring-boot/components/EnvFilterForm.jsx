@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -17,16 +18,16 @@ export default class EnvFilterForm extends React.PureComponent {
   render() {
     return (
       <input
-          type="text"
-          placeholder="Fiter by env property name"
-          value={this.props.envFilter}
-          onChange={this.onEnvFilterChange} />
+        type="text"
+        placeholder="Fiter by env property name"
+        value={this.props.envFilter}
+        onChange={this.onEnvFilterChange} />
     );
   }
 
 }
 
 EnvFilterForm.propTypes = {
-  envFilter: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
+  envFilter: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

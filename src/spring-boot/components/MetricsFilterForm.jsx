@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -17,16 +18,16 @@ export default class MetricsFilterForm extends React.PureComponent {
   render() {
     return (
       <input
-          type="text"
-          placeholder="Fiter by metric name"
-          value={this.props.metricNameFilter}
-          onChange={this.onMetricNameFilterChange} />
+        type="text"
+        placeholder="Fiter by metric name"
+        value={this.props.metricNameFilter}
+        onChange={this.onMetricNameFilterChange} />
     );
   }
 
 }
 
 MetricsFilterForm.propTypes = {
-  metricNameFilter: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired,
+  metricNameFilter: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

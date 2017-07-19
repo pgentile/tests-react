@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Tabs from '../../core/components/Tabs';
@@ -45,6 +46,6 @@ export default function ComponentTabs({currentTab, onTabClick}) {
 }
 
 ComponentTabs.propTypes = {
-  currentTab: React.PropTypes.string.isRequired,
-  onTabClick: React.PropTypes.func.isRequired,
+  currentTab: PropTypes.string.isRequired,
+  onTabClick: PropTypes.func.isRequired,
 };

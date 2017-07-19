@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Chart from 'chart.js';
 import { PageComponent } from '../page/components';
@@ -72,8 +73,8 @@ class BaseChartComponent extends React.Component {
 }
 
 BaseChartComponent.propTypes = {
-  data: React.PropTypes.object.isRequired,
-  options: React.PropTypes.object,
+  data: PropTypes.object.isRequired,
+  options: PropTypes.object,
 };
 
 
@@ -163,9 +164,9 @@ export function ChartsComponent({ data, displayLegend, onRefresh, onEnableLegend
 }
 
 ChartsComponent.propTypes = {
-  data: React.PropTypes.object.isRequired,
-  displayLegend: React.PropTypes.bool.isRequired,
-  onRefresh: React.PropTypes.func.isRequired,
-  onEnableLegend: React.PropTypes.func.isRequired,
-  onDisableLegend: React.PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  displayLegend: PropTypes.bool.isRequired,
+  onRefresh: PropTypes.func.isRequired,
+  onEnableLegend: PropTypes.func.isRequired,
+  onDisableLegend: PropTypes.func.isRequired,
 };

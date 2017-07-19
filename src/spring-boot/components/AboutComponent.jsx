@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -30,6 +31,6 @@ export default class AboutComponent extends React.Component {
 }
 
 AboutComponent.propTypes = {
-  loaded: React.PropTypes.bool.isRequired,
-  instanceName: React.PropTypes.string.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  instanceName: PropTypes.string.isRequired,
 };

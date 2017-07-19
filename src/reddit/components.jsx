@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import { Button, Row, Column } from 'react-foundation';
@@ -55,11 +56,11 @@ export class LoadTopicComponent extends React.Component {
             <InputGroup>
               <InputGroupField>
                 <input
-                    type="text"
-                    className="input-group-field"
-                    placeholder="Topic"
-                    value={this.state.topic}
-                    onChange={this.changeTopic}/>
+                  type="text"
+                  className="input-group-field"
+                  placeholder="Topic"
+                  value={this.state.topic}
+                  onChange={this.changeTopic}/>
               </InputGroupField>
               <div className="input-group-button">
                 <Button disabled={!this.state.topic}>Load topic</Button>
@@ -81,9 +82,9 @@ export class LoadTopicComponent extends React.Component {
 }
 
 LoadTopicComponent.propTypes = {
-  topic: React.PropTypes.string.isRequired,
-  sampleTopics: React.PropTypes.array.isRequired,
-  onLoadTopic: React.PropTypes.func.isRequired,
+  topic: PropTypes.string.isRequired,
+  sampleTopics: PropTypes.array.isRequired,
+  onLoadTopic: PropTypes.func.isRequired,
 };
 
 LoadTopicComponent.defaultProps = {
@@ -104,7 +105,7 @@ function RedditListItem({elem}) {
 }
 
 RedditListItem.propTypes = {
-  elem: React.PropTypes.object.isRequired,
+  elem: PropTypes.object.isRequired,
 };
 
 
@@ -137,8 +138,8 @@ export class RedditListComponent extends React.Component {
 }
 
 RedditListComponent.propTypes = {
-  topic: React.PropTypes.string.isRequired,
-  list: React.PropTypes.array.isRequired,
-  onLoadTopic: React.PropTypes.func.isRequired,
-  onUnloadTopic: React.PropTypes.func.isRequired,
+  topic: PropTypes.string.isRequired,
+  list: PropTypes.array.isRequired,
+  onLoadTopic: PropTypes.func.isRequired,
+  onUnloadTopic: PropTypes.func.isRequired,
 };

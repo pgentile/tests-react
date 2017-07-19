@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Callout, Colors } from 'react-foundation';
 
@@ -22,5 +23,5 @@ export default class GlobalHealth extends React.PureComponent {
 }
 
 GlobalHealth.propTypes = {
-  status: React.PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };

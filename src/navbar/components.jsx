@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
@@ -12,7 +13,7 @@ function NavbarLink({to, children}) {
 
 NavbarLink.propTypes = {
   to: Link.propTypes.to,
-  children: React.PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 };
 
 
@@ -32,7 +33,7 @@ function Navbar({children}) {
 }
 
 Navbar.propTypes = {
-  children: React.PropTypes.array.isRequired,
+  children: PropTypes.array.isRequired,
 };
 
 

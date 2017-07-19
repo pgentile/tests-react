@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Tab from './Tab';
@@ -42,5 +43,5 @@ export default function Tabs({children}) {
 }
 
 Tabs.propTypes = {
-  children: React.PropTypes.arrayOf(Tab),
+  children: PropTypes.arrayOf(Tab),
 };

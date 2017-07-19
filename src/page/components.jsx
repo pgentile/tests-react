@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -18,7 +19,7 @@ export function BasePageComponent({children}) {
 }
 
 BasePageComponent.propTypes = {
-  children: React.PropTypes.element,
+  children: PropTypes.element,
 };
 
 
@@ -27,14 +28,14 @@ export function PageComponent({title, children}) {
   return (
     <Row>
       <Column>
-          <h1>{title}</h1>
-          {children}
+        <h1>{title}</h1>
+        {children}
       </Column>
     </Row>
   );
 }
 
 PageComponent.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };

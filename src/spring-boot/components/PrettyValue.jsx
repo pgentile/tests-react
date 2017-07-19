@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -8,5 +9,5 @@ export default function PrettyValue({value}) {
 }
 
 PrettyValue.propTypes = {
-  value: React.PropTypes.any,
+  value: PropTypes.any,
 };

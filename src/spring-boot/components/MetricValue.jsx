@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Label, Colors } from 'react-foundation';
 
@@ -25,8 +26,8 @@ export default class MetricValue extends React.PureComponent {
 }
 
 MetricValue.propTypes = {
-  value: React.PropTypes.number.isRequired,
-  delta: React.PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+  delta: PropTypes.number.isRequired,
 };
 
 MetricValue.defaultProps = {

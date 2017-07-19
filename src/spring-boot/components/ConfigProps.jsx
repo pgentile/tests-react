@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -72,6 +73,6 @@ export default class ConfigProps extends React.Component {
 }
 
 ConfigProps.propTypes = {
-  configProps: React.PropTypes.array,
-  onLoad: React.PropTypes.func.isRequired,
+  configProps: PropTypes.array,
+  onLoad: PropTypes.func.isRequired,
 };

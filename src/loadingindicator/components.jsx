@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -58,7 +59,7 @@ export class LoadingIndicator extends React.PureComponent {
 }
 
 LoadingIndicator.propTypes = {
-  active: React.PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired,
 };
 
 LoadingIndicator.defaultProps = {

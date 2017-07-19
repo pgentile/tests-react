@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Row, Column, MediaObject, MediaObjectSection, Thumbnail, Badge } from 'react-foundation';
+import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import { PageComponent } from '../page/components';
@@ -42,7 +43,7 @@ function Artist({ artist }) {
 }
 
 Artist.propTypes = {
-  artist: React.PropTypes.object.isRequired,
+  artist: PropTypes.object.isRequired,
 };
 
 
@@ -72,8 +73,8 @@ export class Artists extends React.Component {
 
 
 Artists.propTypes = {
-  artists: React.PropTypes.array.isRequired,
-  onLoadArtists: React.PropTypes.func.isRequired,
+  artists: PropTypes.array.isRequired,
+  onLoadArtists: PropTypes.func.isRequired,
 };
 
 
@@ -121,9 +122,9 @@ export class SpotifyComponent extends React.Component {
 }
 
 SpotifyComponent.propTypes = {
-  profile: React.PropTypes.object,
-  children: React.PropTypes.element,
-  onLoadProfile: React.PropTypes.func.isRequired,
+  profile: PropTypes.object,
+  children: PropTypes.element,
+  onLoadProfile: PropTypes.func.isRequired,
 };
 
 
@@ -149,11 +150,11 @@ export function SpotifyWidget({ uri, view, theme, height, width }) {
 }
 
 SpotifyWidget.propTypes = {
-  uri: React.PropTypes.string.isRequired,
-  view: React.PropTypes.oneOf(['list', 'coverart']).isRequired,
-  theme: React.PropTypes.oneOf(['black', 'white']).isRequired,
-  height: React.PropTypes.number,
-  width: React.PropTypes.number,
+  uri: PropTypes.string.isRequired,
+  view: PropTypes.oneOf(['list', 'coverart']).isRequired,
+  theme: PropTypes.oneOf(['black', 'white']).isRequired,
+  height: PropTypes.number,
+  width: PropTypes.number,
 };
 
 SpotifyWidget.defaultProps = {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -43,5 +44,5 @@ export default class AppInfo extends React.Component {
 }
 
 AppInfo.propTypes = {
-  info: React.PropTypes.object,
+  info: PropTypes.object,
 };

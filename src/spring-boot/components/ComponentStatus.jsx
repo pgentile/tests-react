@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Label, Colors } from 'react-foundation';
 
@@ -18,5 +19,5 @@ export default class ComponentStatus extends React.PureComponent {
 }
 
 ComponentStatus.propTypes = {
-  status: React.PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };

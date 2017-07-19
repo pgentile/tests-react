@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column, Button } from 'react-foundation';
 
@@ -34,11 +35,11 @@ export default class TargetAppForm extends React.Component {
           <Column>
             <div className="input-group">
               <input
-                  type="url"
-                  className="input-group-field"
-                  placeholder="Spring Boot application URL"
-                  value={this.state.baseUrl}
-                  onChange={this.onUrlChange} />
+                type="url"
+                className="input-group-field"
+                placeholder="Spring Boot application URL"
+                value={this.state.baseUrl}
+                onChange={this.onUrlChange} />
               <div className="input-group-button">
                 <Button type="submit">Load</Button>
               </div>
@@ -52,6 +53,6 @@ export default class TargetAppForm extends React.Component {
 }
 
 TargetAppForm.propTypes = {
-  baseUrl: React.PropTypes.string.isRequired,
-  onUrlChange: React.PropTypes.func.isRequired,
+  baseUrl: PropTypes.string.isRequired,
+  onUrlChange: PropTypes.func.isRequired,
 };

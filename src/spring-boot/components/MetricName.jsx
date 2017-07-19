@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -31,6 +32,6 @@ export default class MetricName extends React.PureComponent {
 }
 
 MetricName.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  metricNameFilter: React.PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  metricNameFilter: PropTypes.string.isRequired,
 };

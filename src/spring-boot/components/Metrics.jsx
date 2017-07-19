@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Column } from 'react-foundation';
 
@@ -85,6 +86,6 @@ export default class Metrics extends React.Component {
 }
 
 Metrics.propTypes = {
-  metrics: React.PropTypes.array,
-  onLoad: React.PropTypes.func.isRequired,
+  metrics: PropTypes.array,
+  onLoad: PropTypes.func.isRequired,
 };

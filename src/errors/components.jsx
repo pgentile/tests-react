@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 
@@ -17,7 +18,7 @@ export function Error({lastMessage, errorCount, onDismiss}) {
 
   return (
     <div className="alert callout">
-      <h5>Une erreur s'est produite...</h5>
+      <h5>Une erreur s&apos;est produite...</h5>
       <p>{lastMessage ? lastMessage : 'Raison inconnue'}</p>
       {moreErrors}
 
@@ -29,7 +30,7 @@ export function Error({lastMessage, errorCount, onDismiss}) {
 }
 
 Error.propTypes = {
-  lastMessage: React.PropTypes.string,
-  errorCount: React.PropTypes.number.isRequired,
-  onDismiss: React.PropTypes.func.isRequired,
+  lastMessage: PropTypes.string,
+  errorCount: PropTypes.number.isRequired,
+  onDismiss: PropTypes.func.isRequired,
 };

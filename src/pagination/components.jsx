@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import { Pagination, PaginationItem, PaginationPrevious, PaginationNext } from 'react-foundation';
@@ -30,10 +31,10 @@ class PagerLink extends React.PureComponent {
 }
 
 PagerLink.propTypes = {
-  page: React.PropTypes.number.isRequired,
-  isDisabled: React.PropTypes.bool.isRequired,
-  onPageChange: React.PropTypes.func.isRequired,
-  children: React.PropTypes.node.isRequired,
+  page: PropTypes.number.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 
@@ -77,9 +78,9 @@ class Pager extends React.PureComponent {
 }
 
 Pager.propTypes = {
-  current: React.PropTypes.number.isRequired,
-  count: React.PropTypes.number.isRequired,
-  onPageChange: React.PropTypes.func.isRequired,
+  current: PropTypes.number.isRequired,
+  count: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 
@@ -135,11 +136,11 @@ class PaginatedList extends React.Component {
 }
 
 PaginatedList.propTypes = {
-  items: React.PropTypes.array.isRequired,
-  currentPage: React.PropTypes.number.isRequired,
-  maxPerPage: React.PropTypes.number.isRequired,
-  component: React.PropTypes.func.isRequired,
-  onPageChange: React.PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  maxPerPage: PropTypes.number.isRequired,
+  component: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 
@@ -169,7 +170,7 @@ function ListItems({items}) {
 }
 
 ListItems.propTypes = {
-  items: React.PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 
@@ -204,11 +205,11 @@ export class PaginationComponent extends React.Component {
     return (
       <PageComponent title="Pagination">
         <PaginatedList
-            items={this.state.items}
-            currentPage={this.state.currentPage}
-            maxPerPage={this.state.maxPerPage}
-            onPageChange={this.onPageChange}
-            component={ListItems}/>
+          items={this.state.items}
+          currentPage={this.state.currentPage}
+          maxPerPage={this.state.maxPerPage}
+          onPageChange={this.onPageChange}
+          component={ListItems}/>
       </PageComponent>
     );
   }
