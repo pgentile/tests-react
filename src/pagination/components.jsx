@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import { Pagination, PaginationItem, PaginationPrevious, PaginationNext } from 'react-foundation';
 
 import { PageComponent } from '../page/components';
@@ -84,7 +83,7 @@ Pager.propTypes = {
 };
 
 
-class PaginatedList extends React.Component {
+class PaginatedList extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -92,10 +91,6 @@ class PaginatedList extends React.Component {
     this.state = this.computeState(props);
 
     this.onPageChange = this.onPageChange.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillReceiveProps(nextProps) {

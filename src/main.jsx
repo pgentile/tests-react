@@ -9,7 +9,6 @@ import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import Perf from 'react-addons-perf';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
@@ -39,10 +38,6 @@ import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
 moment.locale('fr');
 
-
-if (process.env.NODE_ENV !== 'production') {
-  global.Perf = Perf;
-}
 
 // Combined reducers, create store
 

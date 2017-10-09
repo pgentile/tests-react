@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import Immutable from 'immutable';
 import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
@@ -23,17 +22,13 @@ ChangeTodoStateButton.propTypes = {
 };
 
 
-export class Todo extends React.Component {
+export class Todo extends React.PureComponent {
 
   constructor(props) {
     super(props);
     this.onMarkDone = this.onMarkDone.bind(this);
     this.onMarkTodo = this.onMarkTodo.bind(this);
     this.onDelete = this.onDelete.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   onMarkDone() {
