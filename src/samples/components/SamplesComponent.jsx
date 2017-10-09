@@ -52,11 +52,9 @@ export default class SamplesComponent extends React.Component {
         </div>
         <div>
           <h2>Google ReCaptcha</h2>
-          <p>
-            <ReCaptcha
-              siteKey="6LcpzDMUAAAAAD_A6gfUl30elxinl3uWkkLlVnmt"
-              onSuccess={this._onReCaptchaSuccess} />
-          </p>
+          <ReCaptcha
+            siteKey="6LcpzDMUAAAAAD_A6gfUl30elxinl3uWkkLlVnmt"
+            onSuccess={this._onReCaptchaSuccess} />
         </div>
       </PageComponent>
     );

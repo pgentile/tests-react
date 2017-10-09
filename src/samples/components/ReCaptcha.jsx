@@ -30,31 +30,66 @@ export default class ReCaptcha extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
     this.containerElement = null;
     this.id = null;
+    this.captchaApi = null;
+
+    this.state = {
+      loaded: false,
+    };
   }
 
   setContainerElement = element => {
     this.containerElement = element;
   }
 
+  cleanContainerElement() {
+    const range = document.createRange();
+    range.selectNodeContents(this.containerElement);
+    range.deleteContents();
+  }
+
+  addRenderingElement() {
+    const renderingElement = document.createElement('div');
+    this.containerElement.appendChild(renderingElement);
+    return renderingElement;
+  }
+
   componentDidMount() {
     reCaptchaLoadedPromise.then(captchaApi => {
+      this.captchaApi = captchaApi;
+
+      this.setState({
+        loaded: true,
+      });
+    });
+  }
+
+  componentDidUpdate() {
+    // This is an update: remove any previous captcha
+    this.cleanContainerElement();
+
+    // Render if the library is loaded
+    if (this.state.loaded) {
       const { siteKey, theme, size, onSuccess, onExpired } = this.props;
 
-      this.id = captchaApi.render(this.containerElement, {
+      // Render the Captcha in a new element each time.
+      // A new element is required each time. Otherwise, the captcha lib fails.
+      const renderingElement = this.addRenderingElement();
+      this.id = this.captchaApi.render(renderingElement, {
         sitekey: siteKey,
         theme,
         size,
         callback: onSuccess,
         'expired-callback': onExpired,
       });
-    });
+    }
   }
 
   render() {
     return (
-      <span ref={this.setContainerElement} />
+      <div ref={this.setContainerElement} />
     );
   }
 
