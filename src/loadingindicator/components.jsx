@@ -18,10 +18,6 @@ export class LoadingIndicator extends React.PureComponent {
     this.syncShowState();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.props.active !== nextProps.active || this.state.show !== nextState.show;
-  }
-
   componentDidUpdate() {
     this.syncShowState();
   }

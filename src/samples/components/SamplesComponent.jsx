@@ -3,6 +3,7 @@ import React from 'react';
 import { PageComponent } from '../../page/components';
 import RatingInput from './RatingInput';
 import FlexibleTextarea from './FlexibleTextarea';
+import ReCaptcha from './ReCaptcha';
 
 
 export default class SamplesComponent extends React.Component {
@@ -31,6 +32,10 @@ export default class SamplesComponent extends React.Component {
     });
   }
 
+  _onReCaptchaSuccess = token => {
+    console.log('Got token', token);
+  }
+
   render() {
     return (
       <PageComponent title="Exemples">
@@ -42,7 +47,15 @@ export default class SamplesComponent extends React.Component {
         <div>
           <h2>Flexible textarea</h2>
           <p>
-            <FlexibleTextarea value={this.state.textareaValue} onChange={this._onTextareaChange}/>
+            <FlexibleTextarea value={this.state.textareaValue} onChange={this._onTextareaChange} />
+          </p>
+        </div>
+        <div>
+          <h2>Google ReCaptcha</h2>
+          <p>
+            <ReCaptcha
+              siteKey="6LcpzDMUAAAAAD_A6gfUl30elxinl3uWkkLlVnmt"
+              onSuccess={this._onReCaptchaSuccess} />
           </p>
         </div>
       </PageComponent>
