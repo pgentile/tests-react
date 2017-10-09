@@ -33,7 +33,11 @@ export default class SamplesComponent extends React.Component {
   }
 
   _onReCaptchaSuccess = token => {
-    console.log('Got token', token);
+    console.log('Got captcha token', token);
+  }
+
+  _onReCaptchaExpire = () => {
+    console.log('Captcha token expired');
   }
 
   render() {
@@ -54,7 +58,8 @@ export default class SamplesComponent extends React.Component {
           <h2>Google ReCaptcha</h2>
           <ReCaptcha
             siteKey="6LcpzDMUAAAAAD_A6gfUl30elxinl3uWkkLlVnmt"
-            onSuccess={this._onReCaptchaSuccess} />
+            onSuccess={this._onReCaptchaSuccess}
+            onExpire={this._onReCaptchaExpire} />
         </div>
       </PageComponent>
     );
