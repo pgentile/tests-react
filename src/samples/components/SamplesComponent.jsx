@@ -11,22 +11,19 @@ export default class SamplesComponent extends React.Component {
   constructor() {
     super();
 
-    this._onRatingChange = this._onRatingChange.bind(this);
-    this._onTextareaChange = this._onTextareaChange.bind(this);
-
     this.state = {
       value: null,
       textareaValue: '',
     };
   }
 
-  _onRatingChange(value) {
+  _onRatingChange = (value) => {
     this.setState({
       value,
     });
   }
 
-  _onTextareaChange(event) {
+  _onTextareaChange = (event) => {
     this.setState({
       textareaValue: event.target.value,
     });
