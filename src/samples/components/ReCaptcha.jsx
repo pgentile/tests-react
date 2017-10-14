@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Don't forget to include the script at the end of the page!
-// <script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onReCaptchaLoadedV2"></script>
-
 
 // Resolve a Promise when the API is loaded
 // The callback is bound to the window object: onReCaptchaLoaded
@@ -11,6 +8,13 @@ const reCaptchaApiPromise = new Promise(resolve => {
   window.onReCaptchaLoadedV2 = () => {
     resolve(window.grecaptcha);
   };
+
+  // Add the reCaptcha script
+  document.addEventListener('DOMContentLoaded', () => {
+    const reCaptchaScript = document.createElement('script');
+    reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?render=explicit&onload=onReCaptchaLoadedV2';
+    document.getElementsByTagName('head')[0].appendChild(reCaptchaScript);
+  });
 });
 
 
@@ -21,6 +25,7 @@ export default class ReCaptcha extends React.PureComponent {
     theme: PropTypes.string.isRequired,
     size: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    badge: PropTypes.string.isRequired,
     onSuccess: PropTypes.func.isRequired,
     onExpire: PropTypes.func,
   };
@@ -29,15 +34,23 @@ export default class ReCaptcha extends React.PureComponent {
     theme: 'light',
     size: 'normal',
     type: 'image',
+    badge: 'bottomright',
   };
 
   containerElement = null;
   captchaApi = null;
   token = null;
+  widgetId = null;
 
   state = {
     loaded: false,
   };
+
+  execute() {
+    if (this.widgetId !== null) {
+      this.captchaApi.execute(this.widgetId);
+    }
+  }
 
   setContainerElement = element => {
     this.containerElement = element;
@@ -93,11 +106,12 @@ export default class ReCaptcha extends React.PureComponent {
       // Render the Captcha in a new element each time.
       // A new element is required each time. Otherwise, the captcha lib fails.
       const renderingElement = this.addRenderingElement();
-      this.captchaApi.render(renderingElement, {
+      this.widgetId = this.captchaApi.render(renderingElement, {
         sitekey: siteKey,
         type,
         theme,
         size,
+        badge: 'inline',
         callback: this.onSuccess,
         'expired-callback': this.onExpire,
       });
