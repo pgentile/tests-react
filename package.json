@@ -9,7 +9,8 @@
     "build": "webpack --progress --profile --colors",
     "test": "mocha --compilers js:babel-register --compilers jsx:babel-register --recursive",
     "lint": "eslint --ext .jsx,.js ./src/",
-    "fix": "eslint --fix --ext .jsx,.js ./src/"
+    "fix": "eslint --fix --ext .jsx,.js ./src/",
+    "stats": "webpack --profile --json -p >./build/stats.json"
   },
   "author": "Pierre Gentile",
   "license": "MIT",
