@@ -32,6 +32,7 @@ import { SpringBootComponent } from './spring-boot/components/SpringBootComponen
 import { handleCallback as handleSpotifyCallback } from './spotify/routed';
 import SamplesComponent from './samples/components/SamplesComponent';
 import ReduxFormPage from './reduxform/components/ReduxFormPage';
+import ErrorBoundaryPage from './errorboundary/components/ErrorBoundaryPage';
 
 import { createMiddleware as browserStorageMiddleware } from './browserstorage';
 
@@ -97,6 +98,7 @@ ReactDOM.render(
           <Route path="spring-boot" component={SpringBootComponent}/>
           <Route path="samples" component={SamplesComponent}/>
           <Route path="reduxform" component={ReduxFormPage}/>
+          <Route path="errorboundary" component={ErrorBoundaryPage}/>
         </Route>
       </Router>
     </Provider>

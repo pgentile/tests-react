@@ -5,6 +5,7 @@ import { Row, Column } from 'react-foundation';
 import { NavbarComponent } from '../navbar/components';
 import { LoadingIndicator } from '../loadingindicator/containers';
 import { Error } from '../errors/containers';
+import ErrorBoundary from '../core/components/ErrorBoundary';
 
 
 export function BasePageComponent({children}) {
@@ -13,7 +14,9 @@ export function BasePageComponent({children}) {
       <NavbarComponent/>
       <LoadingIndicator/>
       <Error/>
-      {children}
+      <ErrorBoundary>
+        {children}
+      </ErrorBoundary>
     </div>
   );
 }

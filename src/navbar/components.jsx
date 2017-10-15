@@ -48,6 +48,7 @@ export function NavbarComponent() {
       <NavbarLink to="/spring-boot">Spring Boot</NavbarLink>
       <NavbarLink to="/samples">Exemples</NavbarLink>
       <NavbarLink to="/reduxform">Redux form</NavbarLink>
+      <NavbarLink to="/errorboundary">Error boundary</NavbarLink>
     </Navbar>
   );
 }
