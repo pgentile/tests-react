@@ -5,43 +5,73 @@ import debounce from 'lodash/debounce';
 export default class DebouncedTextInput extends React.PureComponent {
 
   static propTypes = {
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    debounceTimeout: PropTypes.number.isRequired,
+  };
+
+  static defaultProps = {
+    value: '',
+    debounceTimeout: 200,
   };
 
   constructor(props) {
     super(props);
+
+    this.debouncedOnChange = null;
 
     this.state = {
       value: props.value,
     };
   }
 
-  componentWillReceiveProps({ value: newValue }) {
-    this.debouncedOnChange.cancel();
-    this.setState({
-      value: newValue,
-    });
+  updateDebouncedOnChange = () => {
+    const { debounceTimeout, onChange } = this.props;
+
+    console.debug('updateDebouncedOnChange...');
+
+    if (this.debouncedOnChange) {
+      this.debouncedOnChange.flush();
+    }
+
+    this.debouncedOnChange = debounce(event => {
+      if (onChange) {
+        onChange(event);
+      }
+    }, debounceTimeout);
+  }
+
+  componentDidMount() {
+    this.updateDebouncedOnChange();
+  }
+
+  componentWillReceiveProps({ value: newValue, onChange: newOnChange, debounceTimeout: newDebounceTimeout }) {
+    const { value, onChange, debounceTimeout } = this.props;
+
+    if (value !== newValue) {
+      console.info('Value prop changed, applying...');
+
+      this.debouncedOnChange.flush();
+      this.setState({
+        value: newValue,
+      });
+    }
+
+    if (onChange !== newOnChange || debounceTimeout !== newDebounceTimeout) {
+      this.updateDebouncedOnChange();
+    }
   }
 
   onChange = event => {
     const value = event.target.value;
-    if (value) {
-      event.persist();
-      this.debouncedOnChange(event);
-    } else {
-      this.debouncedOnChange.cancel();
-      this.props.onChange(event);
-    }
 
     this.setState({
       value,
     });
-  }
 
-  debouncedOnChange = debounce(event => {
-    this.props.onChange(event);
-  }, 200);
+    event.persist();
+    this.debouncedOnChange(event);
+  }
 
   render() {
     return (

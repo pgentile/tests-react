@@ -4,6 +4,7 @@ import { PageComponent } from '../../page/components';
 import RatingInput from './RatingInput';
 import FlexibleTextarea from './FlexibleTextarea';
 import ReCaptcha from './ReCaptcha';
+import DebouncedTextInput from './DebouncedTextInput';
 
 
 export default class SamplesComponent extends React.Component {
@@ -13,6 +14,7 @@ export default class SamplesComponent extends React.Component {
 
     this.state = {
       value: null,
+      debouncedValue: '',
       textareaValue: '',
     };
   }
@@ -37,6 +39,15 @@ export default class SamplesComponent extends React.Component {
     console.log('Captcha token expired');
   }
 
+  _onDebouncedValueChange = event => {
+    console.log('Debounced event:', event);
+    console.log('Debounced value:', event.target.value);
+
+    this.setState({
+      debouncedValue: event.target.value,
+    });
+  }
+
   render() {
     return (
       <PageComponent title="Exemples">
@@ -58,10 +69,12 @@ export default class SamplesComponent extends React.Component {
             onSuccess={this._onReCaptchaSuccess}
             onExpire={this._onReCaptchaExpire} />
         </div>
+        <div>
+          <h2>Debounced text input</h2>
+          <DebouncedTextInput debounceTimeout={1000} value={this.state.debouncedValue} onChange={this._onDebouncedValueChange} />
+        </div>
       </PageComponent>
     );
   }
 
 }
-
-SamplesComponent.propTypes = {};
