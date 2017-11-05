@@ -2,20 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-// Resolve a Promise when the API is loaded
-// The callback is bound to the window object: onReCaptchaLoaded
-const reCaptchaApiPromise = new Promise(resolve => {
-  window.onReCaptchaLoadedV2 = () => {
-    resolve(window.grecaptcha);
-  };
+class ReCaptchaLibLoader {
 
-  // Add the reCaptcha script
-  document.addEventListener('DOMContentLoaded', () => {
-    const reCaptchaScript = document.createElement('script');
-    reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?render=explicit&onload=onReCaptchaLoadedV2';
-    document.getElementsByTagName('head')[0].appendChild(reCaptchaScript);
-  });
-});
+  started = false;
+  lib = null;
+
+  async get() {
+    if (!this.started) {
+      this.started = true;
+
+      this.lib = new Promise(resolve => {
+        window.onReCaptchaLoadedV2 = () => {
+          delete window.onReCaptchaLoadedV2;
+          resolve(window.grecaptcha);
+        };
+      });
+
+      // Add the reCaptcha script
+      const reCaptchaScript = document.createElement('script');
+      reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?render=explicit&onload=onReCaptchaLoadedV2';
+      document.getElementsByTagName('head')[0].appendChild(reCaptchaScript);
+    }
+
+    return this.lib;
+  }
+
+}
+
+
+const reCaptchaLibLoader = new ReCaptchaLibLoader();
 
 
 export default class ReCaptcha extends React.PureComponent {
@@ -81,7 +96,7 @@ export default class ReCaptcha extends React.PureComponent {
   }
 
   componentDidMount() {
-    reCaptchaApiPromise.then(captchaApi => {
+    reCaptchaLibLoader.get().then(captchaApi => {
       this.captchaApi = captchaApi;
 
       this.setState({
