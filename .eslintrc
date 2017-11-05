@@ -15,9 +15,6 @@
       "jsx": true
     }
   },
-  "globals": {
-    "configuration": true
-  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
