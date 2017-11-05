@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Chart from 'chart.js';
-import { PageComponent } from '../page/components';
 import { Row, Column, Button } from 'react-foundation';
+import cloneDeep from 'lodash/cloneDeep';
+
+import { PageComponent } from '../page/components';
 
 
 class BaseChartComponent extends React.Component {
 
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+    options: PropTypes.object,
+  };
+
   constructor(type, props) {
     super(props);
-    this.setCanvas = this.setCanvas.bind(this);
     this.type = type;
     this.canvas = null;
     this.chart = null;
@@ -35,21 +41,26 @@ class BaseChartComponent extends React.Component {
 
   render() {
     return (
-      <canvas ref={this.setCanvas} width={400} height={250}></canvas>
+      <canvas ref={this.setCanvas} width={400} height={250} />
     );
   }
 
-  setCanvas(canvas) {
+  setCanvas = (canvas) => {
     this.canvas = canvas;
-  }
+  };
 
   initChart() {
     this.destroyChart();
 
+    // Charts.js alters our objects, we must clone...
+    let { data, options } = this.props;
+    data = cloneDeep(data);
+    options = options ? cloneDeep(options) : undefined;
+
     this.chart = new Chart(this.canvas, {
       type: this.type,
-      data: this.props.data,
-      options: this.props.options,
+      data,
+      options,
     });
   }
 
@@ -71,12 +82,6 @@ class BaseChartComponent extends React.Component {
   }
 
 }
-
-BaseChartComponent.propTypes = {
-  data: PropTypes.object.isRequired,
-  options: PropTypes.object,
-};
-
 
 export class PieChart extends BaseChartComponent {
 
@@ -139,18 +144,18 @@ export function ChartsComponent({ data, displayLegend, onRefresh, onEnableLegend
     <PageComponent title="Charts">
       <Row>
         <Column large={6}>
-          <PieChart data={data} options={options}/>
+          <PieChart data={data} options={options} />
         </Column>
         <Column large={6}>
-          <BarChart data={data} options={options}/>
+          <BarChart data={data} options={options} />
         </Column>
       </Row>
       <Row>
         <Column large={6}>
-          <BarChart data={data} options={options}/>
+          <BarChart data={data} options={options} />
         </Column>
         <Column large={6}>
-          <PolarChart data={data} options={options}/>
+          <PolarChart data={data} options={options} />
         </Column>
       </Row>
       <Row>
