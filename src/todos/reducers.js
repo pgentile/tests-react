@@ -1,5 +1,4 @@
 import moment from 'moment';
-import Immutable from 'immutable';
 import { combineReducers } from 'redux';
 
 import * as actions from './actions';
@@ -11,7 +10,7 @@ import { BrowserLocalStorage } from '../browserstorage';
 
 export const todoListBrowserStorage = new BrowserLocalStorage({
   entryName: 'todoList',
-  defaultState: () => Immutable.List(),
+  defaultState: () => [],
   beforeSerialize: list => {
     return list.map(item => {
       return {
@@ -19,31 +18,35 @@ export const todoListBrowserStorage = new BrowserLocalStorage({
         createdAt: item.createdAt.format(),
         modifiedAt: item.modifiedAt.format(),
       };
-    }).toArray();
+    });
   },
   afterDeserialize: list => {
-    return Immutable.List(list).map(item => {
+    return list.map(item => {
       return {
         ...item,
-        createdAt: Object.freeze(moment(item.createdAt)),
-        modifiedAt: Object.freeze(moment(item.modifiedAt)),
+        createdAt: moment(item.createdAt),
+        modifiedAt: moment(item.modifiedAt),
       };
     });
   },
 })
 
 
-function list(state = Immutable.List(), action) {
+function list(state = [], action) {
   switch (action.type) {
 
   case actions.ADD_TODO:
-    return state.push({
+  {
+    const newTodo = {
       id: action.id,
       content: action.content,
       done: false,
       createdAt: action.date,
       modifiedAt: action.date,
-    });
+    };
+
+    return [...state, newTodo];
+  }
 
   case actions.MARK_DONE:
     return state.map(todo => {

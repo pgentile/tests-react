@@ -28,7 +28,7 @@ const selectTodosByVisibility = createSelector(
 const selectDoneTodosCount = createSelector(
   state => state.todos.list,
   todos => {
-    return todos.filter(todo => todo.done).size;
+    return todos.filter(todo => todo.done).length;
   },
 );
 

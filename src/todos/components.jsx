@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import Immutable from 'immutable';
 import { Menu, MenuItem, Button, Sizes, Row, Column } from 'react-foundation';
 
 import { InputGroup, InputGroupField } from '../core/components';
@@ -95,7 +93,7 @@ export function TodoList({list, onDeleteItem, onMarkItemDone, onMarkItemTodo}) {
       onMarkTodo={onMarkItemTodo} />;
   });
 
-  if (list.size > 0) {
+  if (list.length > 0) {
     return (
       <Column>
         <Menu isVertical>
@@ -113,14 +111,14 @@ export function TodoList({list, onDeleteItem, onMarkItemDone, onMarkItemTodo}) {
 }
 
 TodoList.propTypes = {
-  list: ImmutablePropTypes.list.isRequired,
+  list: PropTypes.array.isRequired,
   onDeleteItem: PropTypes.func.isRequired,
   onMarkItemDone: PropTypes.func.isRequired,
   onMarkItemTodo: PropTypes.func.isRequired,
 };
 
 TodoList.defaultProps = {
-  list: Immutable.List(),
+  list: [],
 };
 
 

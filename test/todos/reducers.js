@@ -1,5 +1,4 @@
 import expect from 'expect';
-import Immutable from 'immutable';
 
 import * as actions from '../../src/todos/actions';
 import * as reducers from '../../src/todos/reducers';
@@ -28,7 +27,7 @@ describe('Todo reducer', () => {
       const state = reducers.todos(undefined, {});
 
       // then
-      expect(state).toEqual(Immutable.List());
+      expect(state).toEqual([]);
     });
 
     it('should append new todo items on addTodo action', () => {
@@ -44,7 +43,7 @@ describe('Todo reducer', () => {
       });
 
       // then
-      expect(state.size).toEqual(items.length);
+      expect(state.length).toEqual(items.length);
 
       items.forEach((item, index) => {
         expect(state.get(index)).toMatch({
@@ -85,7 +84,7 @@ describe('Todo reducer', () => {
       const newState = reducers.todos(initialState, deleteTodoAction);
 
       // then
-      expect(newState.size).toEqual(initialState.size - 1);
+      expect(newState.length).toEqual(initialState.length - 1);
 
       newState.forEach((item) => {
         expect(item.id).toNotEqual(itemToDeleteId);
