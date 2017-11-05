@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import expect from 'expect';
 
 import { LoadingIndicator } from '../../src/loadingindicator/components';

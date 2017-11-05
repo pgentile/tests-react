@@ -22,7 +22,6 @@ module.exports = {
       'node_modules',
     ],
     alias: {
-      'jquery': 'jquery/src/jquery',
       'chart.js': 'chart.js/src/chart.js',
     },
     extensions: ['.js', '.jsx', '.scss', '.css'],
@@ -32,7 +31,6 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/static/',
   },
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -44,23 +42,23 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        include: /node_modules/,
-        use: [
-          'babel-loader?cacheDirectory&babelrc=false',
-        ],
-      },
-      {
-        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [
           'babel-loader?cacheDirectory',
         ],
       },
       {
+        test: /\.jsx?$/,
+        include: /node_modules/,
+        use: [
+          'babel-loader?cacheDirectory&babelrc=false',
+        ],
+      },
+      {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           use: [
-            'css-loader?sourceMap',
+            'css-loader',
           ],
         }),
       },
@@ -68,30 +66,53 @@ module.exports = {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
-            'css-loader?sourceMap',
-            'sass-loader?sourceMap',
+            'css-loader',
+            'sass-loader',
           ],
         }),
       },
       {
-        test: /\.(ttf|eot|woff2?|svg|png|jpg|gif)$/,
+        test: /\.(ttf|eot|woff2?|svg|png|jpg|jpe|jpeg|gif|webp)$/,
         use: [
-          'url-loader?limit=100000',
+          'file-loader',
         ],
       },
     ],
   },
   plugins: [
+    // Optimize module concatenation
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-    }),
+
+    // Add an explicit name to each module
+    new webpack.NamedModulesPlugin(),
+
+    // fetch as standard API
     new webpack.ProvidePlugin({
-      '$': 'jquery',
-      'jQuery': 'jquery',
       'fetch': 'isomorphic-fetch',
     }),
+
+    // All dependencies found in node_modules in the vendor file
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        return module.context && module.context.includes('node_modules');
+      },
+    }),
+
+    // CSS in its own file
     new ExtractTextPlugin('[name].css'),
+
+    // Don't import all locales from moment.js
+    // See https://webpack.js.org/plugins/context-replacement-plugin/
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|fr/),
+
+    // Replace lodash-es imports by equivalent lodash imports.
+    // Otherwise, same lodash functions can be loaded twice !
+    new webpack.NormalModuleReplacementPlugin(
+      /lodash-es/,
+      resource => {
+        resource.request = resource.request.replace('lodash-es', 'lodash');
+      }
+    ),
   ],
 };

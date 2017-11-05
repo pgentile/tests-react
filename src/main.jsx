@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import 'jquery';
 import 'foundation-sites/js/foundation.core';
 
 import moment from 'moment';
