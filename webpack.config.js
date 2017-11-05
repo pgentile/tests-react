@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
 // Load packages names
@@ -10,11 +10,11 @@ const vendorLibs = Object.keys(packageContent.dependencies);
 
 module.exports = {
   entry: {
-      app: [
-        './src/main.jsx',
-        './src/main.scss',
-      ],
-      vendor: vendorLibs,
+    app: [
+      './src/main.jsx',
+      './src/main.scss',
+    ],
+    vendor: vendorLibs,
   },
   resolve: {
     modules: [
@@ -22,8 +22,8 @@ module.exports = {
       'node_modules',
     ],
     alias: {
-        'jquery': 'jquery/src/jquery',
-        'chart.js': 'chart.js/src/chart.js',
+      'jquery': 'jquery/src/jquery',
+      'chart.js': 'chart.js/src/chart.js',
     },
     extensions: ['.js', '.jsx', '.scss', '.css'],
   },
@@ -82,17 +82,6 @@ module.exports = {
     ],
   },
   plugins: [
-    /*
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      mangle: true
-    }),
-    */
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
