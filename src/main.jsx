@@ -12,6 +12,7 @@ import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-rou
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
+import freezeMiddleware from 'redux-freeze';
 
 import { todos, visibilityBrowserStorage, todoListBrowserStorage } from './todos/reducers';
 import { reddit } from './reddit/reducers';
@@ -61,6 +62,12 @@ const middlewares = [
   browserStorageMiddleware(visibilityBrowserStorage, state => state.todos.visibility),
   browserStorageMiddleware(todoListBrowserStorage, state => state.todos.list),
 ];
+
+// eslint-disable-next-line no-undef
+if (process.env.NODE_ENV !== 'production') {
+  console.warn('Using the freeze middleware')
+  middlewares.push(freezeMiddleware);
+}
 
 const initialState = {
   todos: {
