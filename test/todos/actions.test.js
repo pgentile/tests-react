@@ -1,4 +1,4 @@
-import expect from 'expect';
+import { expect } from 'chai';
 
 import * as actions from '../../src/todos/actions';
 
@@ -15,10 +15,11 @@ describe('Todo actions', () => {
       const action = actions.addTodo(content);
 
       // then
-      expect(action).toEqual({
+      expect(action).to.include({
         type: actions.ADD_TODO,
         content: content,
       });
+
     });
 
   });

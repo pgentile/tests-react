@@ -1,10 +1,18 @@
-import expect from 'expect';
+import { JSDOM } from 'jsdom';
+import { expect } from 'chai';
 
 import * as actions from '../../src/todos/actions';
 import * as reducers from '../../src/todos/reducers';
 
-
 describe('Todo reducer', () => {
+
+  before(() => {
+    const dom = new JSDOM('<!doctype html><html><body></body></html>');
+
+    // Non recommandé, mais bon, il faut avancer...
+    global.document = dom.document;
+    global.window = dom.window;
+  });
 
   describe('state', () => {
 
@@ -27,7 +35,7 @@ describe('Todo reducer', () => {
       const state = reducers.todos(undefined, {});
 
       // then
-      expect(state).toEqual([]);
+      expect(state).to.be.empty();
     });
 
     it('should append new todo items on addTodo action', () => {
@@ -43,10 +51,10 @@ describe('Todo reducer', () => {
       });
 
       // then
-      expect(state.length).toEqual(items.length);
+      expect(state.length).to.equal(items.length);
 
       items.forEach((item, index) => {
-        expect(state.get(index)).toMatch({
+        expect(state.get(index)).to.match({
           id: /^[a-z0-9-]+$/,
           content: item,
           done: false,
@@ -67,7 +75,7 @@ describe('Todo reducer', () => {
       expect(newState.length).toEqual(initialState.length);
 
       newState.forEach((item, index) => {
-        expect(item).toMatch({
+        expect(item).to.match({
           done: (index === itemIndex),
         });
       });
@@ -84,10 +92,10 @@ describe('Todo reducer', () => {
       const newState = reducers.todos(initialState, deleteTodoAction);
 
       // then
-      expect(newState.length).toEqual(initialState.length - 1);
+      expect(newState.length).to.equal(initialState.length - 1);
 
       newState.forEach((item) => {
-        expect(item.id).toNotEqual(itemToDeleteId);
+        expect(item.id).to.not.equal(itemToDeleteId);
       });
     });
 

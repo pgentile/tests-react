@@ -34,24 +34,36 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
         enforce: 'pre',
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
         use: [
           'eslint-loader',
         ],
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          'babel-loader?cacheDirectory',
-        ],
-      },
-      {
-        test: /\.jsx?$/,
-        include: /node_modules/,
-        use: [
-          'babel-loader?cacheDirectory&babelrc=false',
+        oneOf: [
+          // Apply Babel on all source files
+          {
+            exclude: /node_modules/,
+            use: [
+              'babel-loader?cacheDirectory',
+            ],
+          },
+          // Apply Babel on Foundation Sites: it doesn't provide a compiled version
+          {
+            include: /node_modules\/(foundation-sites)/,
+            use: [
+              'babel-loader?cacheDirectory',
+            ],
+          },
+          // Load files, but disable their .babelrc config
+          {
+            use: [
+              'babel-loader?cacheDirectory&babelrc=false',
+            ],
+          },
         ],
       },
       {
