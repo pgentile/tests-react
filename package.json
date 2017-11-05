@@ -49,6 +49,7 @@
     "invariant": "^2.2.2",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
+    "mark.js": "^8.11.0",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",

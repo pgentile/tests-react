@@ -5,6 +5,7 @@ import RatingInput from './RatingInput';
 import FlexibleTextarea from './FlexibleTextarea';
 import ReCaptcha from './ReCaptcha';
 import DebouncedTextInput from './DebouncedTextInput';
+import TermHighlighter from './TermHighlighter';
 
 
 export default class SamplesComponent extends React.Component {
@@ -72,6 +73,12 @@ export default class SamplesComponent extends React.Component {
         <div>
           <h2>Debounced text input</h2>
           <DebouncedTextInput debounceTimeout={1000} value={this.state.debouncedValue} onChange={this._onDebouncedValueChange} />
+        </div>
+        <div>
+          <h2>Term highlighter</h2>
+          <TermHighlighter terms="cooper the cat">
+            <p>Cooper is a big <b>cat</b>!</p>
+          </TermHighlighter>
         </div>
       </PageComponent>
     );
