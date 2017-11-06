@@ -3,38 +3,42 @@ import PropTypes from 'prop-types';
 import Mark from 'mark.js';
 
 
-export default class TermHighlighter extends React.Component {
+export default class TermHighlighter extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
     terms: PropTypes.string,
   }
 
-  componentDidMount() {
-    this.mark(false, this.props.terms);
-  }
-
-  componentDidUpdate() {
-    this.mark(true, this.props.terms);
-  }
-
-  mark(unmark = false, terms = null) {
-    this.lastMarkOp = this.lastMarkOp.then(() => {
-      const markContext = new Mark(this.rootElement);
-      if (unmark) {
-        markContext.unmark();
-      }
-      if (terms) {
-        markContext.mark(terms);
-      }
-    });
-  }
-
-  rootElement = null;
+  markContext = null;
 
   lastMarkOp = new Promise(resolve => resolve(null));
 
+  componentDidMount() {
+    const { terms } = this.props;
+    this.lastMarkOp = this.lastMarkOp.then(() => {
+      this.markContext.mark(terms);
+    });
+  }
+
+  componentWillUpdate() {
+    this.scheduleMarkOp(() => {
+      this.markContext.unmark();
+    });
+  }
+
+  componentDidUpdate() {
+    const { terms } = this.props;
+    this.scheduleMarkOp(() => {
+      this.markContext.mark(terms);
+    });
+  }
+
   setRootElement = (element) => {
-    this.rootElement = element;
+    this.markContext = new Mark(element);
+  }
+
+  scheduleMarkOp(f) {
+    this.lastMarkOp = this.lastMarkOp.then(() => f());
   }
 
   render() {

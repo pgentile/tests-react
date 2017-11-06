@@ -17,6 +17,7 @@ export default class SamplesComponent extends React.Component {
       value: null,
       debouncedValue: '',
       textareaValue: '',
+      terms: 'cooper the cat',
     };
   }
 
@@ -49,6 +50,12 @@ export default class SamplesComponent extends React.Component {
     });
   }
 
+  _onChangeTerms = event => {
+    this.setState({
+      terms: event.target.value,
+    });
+  }
+
   render() {
     return (
       <PageComponent title="Exemples">
@@ -76,7 +83,10 @@ export default class SamplesComponent extends React.Component {
         </div>
         <div>
           <h2>Term highlighter</h2>
-          <TermHighlighter terms="cooper the cat">
+          <p>
+            <input value={this.state.terms} onChange={this._onChangeTerms} />
+          </p>
+          <TermHighlighter terms={this.state.terms}>
             <p>Cooper is a big <b>cat</b>!</p>
           </TermHighlighter>
         </div>
