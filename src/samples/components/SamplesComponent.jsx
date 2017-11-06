@@ -17,7 +17,6 @@ export default class SamplesComponent extends React.Component {
       value: null,
       debouncedValue: '',
       textareaValue: '',
-      terms: 'cooper the cat',
     };
   }
 
@@ -50,12 +49,6 @@ export default class SamplesComponent extends React.Component {
     });
   }
 
-  _onChangeTerms = event => {
-    this.setState({
-      terms: event.target.value,
-    });
-  }
-
   render() {
     return (
       <PageComponent title="Exemples">
@@ -81,16 +74,39 @@ export default class SamplesComponent extends React.Component {
           <h2>Debounced text input</h2>
           <DebouncedTextInput debounceTimeout={1000} value={this.state.debouncedValue} onChange={this._onDebouncedValueChange} />
         </div>
-        <div>
-          <h2>Term highlighter</h2>
-          <p>
-            <input value={this.state.terms} onChange={this._onChangeTerms} />
-          </p>
-          <TermHighlighter terms={this.state.terms}>
-            <p>Cooper is a big <b>cat</b>!</p>
-          </TermHighlighter>
-        </div>
+
+        <TermHighlighterSample />
+
       </PageComponent>
+    );
+  }
+
+}
+
+
+class TermHighlighterSample extends React.PureComponent {
+
+  state = {
+    terms: 'cooper the cat',
+  };
+
+  _onChangeTerms = event => {
+    this.setState({
+      terms: event.target.value,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>Term highlighter</h2>
+        <p>
+          <input value={this.state.terms} onChange={this._onChangeTerms} />
+        </p>
+        <TermHighlighter terms={this.state.terms}>
+          <p>Cooper is a big <b>cat</b>!</p>
+        </TermHighlighter>
+      </div>
     );
   }
 
