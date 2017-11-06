@@ -1,10 +1,10 @@
-import _ from 'lodash';
+import range from 'lodash/range';
 
 import * as actions from './actions';
 
 
 function generateRainbowColors(size, saturation = 1, lightness = 0.5) {
-  return _.range(size).map(i => {
+  return range(size).map(i => {
     const hue = Math.round(360 * (i / size)) % 360;
     return `hsl(${hue}, ${saturation * 100}%, ${lightness * 100}%)`;
   });
@@ -14,10 +14,10 @@ function generateRainbowColors(size, saturation = 1, lightness = 0.5) {
 function generateData() {
   const generateNumber = () => Math.round(Math.random() * 100);
   const count = 10;
-  const generateData = () => _.range(count).map(() => generateNumber());
+  const generateData = () => range(count).map(() => generateNumber());
   const generateBackgroundColors = (saturation, lightness) => generateRainbowColors(count, saturation, lightness);
 
-  const labels = _.range(count).map(i => `Label ${i}`);
+  const labels = range(count).map(i => `Label ${i}`);
 
   const graphData = {
     labels,

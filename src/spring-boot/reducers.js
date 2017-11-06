@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import * as actions from './actions';
 
 
@@ -127,7 +125,7 @@ export function springBoot(state = APPLICATION_DEFAULT_STATE, action) {
 function computeMetricsDelta(oldMetrics, newMetrics) {
   if (oldMetrics) {
     newMetrics.forEach(newMetric => {
-      const oldMetricIndex = _.findIndex(oldMetrics, metric => metric.name === newMetric.name);
+      const oldMetricIndex = oldMetrics.findIndex(metric => metric.name === newMetric.name);
       if (oldMetricIndex >= 0) {
         const oldMetric = oldMetrics[oldMetricIndex];
         const delta = newMetric.value - oldMetric.value;

@@ -3,18 +3,12 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
-// Load packages names
-const packageContent = require('./package.json');
-const vendorLibs = Object.keys(packageContent.dependencies);
-
-
 module.exports = {
   entry: {
     app: [
       './src/main.jsx',
       './src/main.scss',
     ],
-    vendor: vendorLibs,
   },
   resolve: {
     modules: [
@@ -96,6 +90,7 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
 
     // Add an explicit name to each module
+    // Should be removed in prod mode
     new webpack.NamedModulesPlugin(),
 
     // fetch as standard API

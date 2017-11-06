@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import range from 'lodash/range';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Pagination, PaginationItem, PaginationPrevious, PaginationNext } from 'react-foundation';
@@ -42,7 +42,7 @@ class Pager extends React.PureComponent {
   render() {
     const { current, count, onPageChange } = this.props;
 
-    const items = _.range(count).map(index => {
+    const items = range(count).map(index => {
       const page = index + 1;
       const isCurrentPage = (page === current);
       return (
@@ -174,7 +174,7 @@ export class PaginationComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    const items = _.range(103).map(index => {
+    const items = range(103).map(index => {
       return {
         index,
         title: `Content at index ${index}`,

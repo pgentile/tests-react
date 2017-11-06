@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-import _ from 'lodash';
+import toString from 'lodash/toString';
 
 import * as actions from './actions';
 
@@ -17,7 +17,7 @@ export function errors(state = DEFAULT_STATE, action) {
     return state;
   }
 
-  const errorMessage = _.toString(action.payload);
+  const errorMessage = toString(action.payload);
   return {
     errors: state.errors.concat([errorMessage]),
   };

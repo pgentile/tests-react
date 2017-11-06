@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import _ from 'lodash';
+import range from 'lodash/range';
 
 import css from './RatingInput.css';
 
@@ -17,7 +17,7 @@ export default class RatingInput extends React.PureComponent {
   render() {
     const { max, value, onChange } = this.props;
 
-    const stars = _.range(max).map(index => {
+    const stars = range(max).map(index => {
       const className = value !== null && index < value ? css['rating-input-selected'] : css['rating-input'];
 
       const onClick = newValue => {

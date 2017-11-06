@@ -1,5 +1,9 @@
 import uuid from 'uuid';
-import _ from 'lodash';
+import sortBy from 'lodash/sortBy';
+import forOwn from 'lodash/forOwn';
+import pickBy from 'lodash/pickBy';
+import toPairs from 'lodash/toPairs';
+import round from 'lodash/round';
 
 
 export function getHealth(baseUrl) {
@@ -7,8 +11,8 @@ export function getHealth(baseUrl) {
     .then(response => response.json())
     .then(data => {
 
-      let components = _.pickBy(data, (value, key) => key !== 'status');
-      components = _.toPairs(components).map(entry => {
+      let components = pickBy(data, (value, key) => key !== 'status');
+      components = toPairs(components).map(entry => {
         return {
           ...entry[1],
           name: entry[0],
@@ -48,17 +52,17 @@ export function getConfigProps(baseUrl) {
     .then(data => {
       const configProps = [];
 
-      _.forOwn(data, (value, group) => {
+      forOwn(data, (value, group) => {
         let properties = [];
 
-        _.forOwn(value.properties, (value, name) => {
+        forOwn(value.properties, (value, name) => {
           properties.push({
             name,
             value,
           });
         });
 
-        properties = _.sortBy(properties, property => property.name);
+        properties = sortBy(properties, property => property.name);
 
         const configProp = {
           group,
@@ -68,7 +72,7 @@ export function getConfigProps(baseUrl) {
         configProps.push(configProp);
       });
 
-      return _.sortBy(configProps, configProp => configProp.prefix);
+      return sortBy(configProps, configProp => configProp.prefix);
     });
 }
 
@@ -84,14 +88,14 @@ export function getMetrics(baseUrl) {
     .then(data => {
       let metrics = [];
 
-      _.forOwn(data, (value, name) => {
+      forOwn(data, (value, name) => {
         metrics.push({
           name,
-          value: _.round(value, 3),
+          value: round(value, 3),
         });
       });
 
-      metrics = _.sortBy(metrics, property => property.name);
+      metrics = sortBy(metrics, property => property.name);
 
       return metrics;
     });
@@ -112,21 +116,21 @@ export function getEnv(baseUrl) {
         properties: [],
       };
 
-      _.forOwn(data, (value, name) => {
+      forOwn(data, (value, name) => {
         if (name !== 'profiles') {
           const propertiesGroup = {
             group: name,
             properties: [],
           };
 
-          _.forOwn(value, (subValue, subName) => {
+          forOwn(value, (subValue, subName) => {
             propertiesGroup.properties.push({
               name: subName,
               value: subValue,
             });
           });
 
-          propertiesGroup.properties = _.sortBy(propertiesGroup.properties, property => property.name);
+          propertiesGroup.properties = sortBy(propertiesGroup.properties, property => property.name);
 
           env.properties.push(propertiesGroup);
         }
