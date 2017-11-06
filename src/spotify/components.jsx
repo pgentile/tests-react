@@ -5,6 +5,44 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import { PageComponent } from '../page/components';
+import withIntersectionObserver, { IntersectionObserverAdapter } from './withIntersectionObserver';
+
+
+const adapter = new IntersectionObserverAdapter();
+
+
+const LazyLoadingThumbnail = withIntersectionObserver(adapter)(class MyThumbnail extends React.Component {
+
+  static propTypes = {
+    intersectionRatio: PropTypes.number,
+  };
+
+  state = {
+    loaded: false,
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const { intersectionRatio } = nextProps;
+    if (intersectionRatio !== null && intersectionRatio > 0) {
+      this.setState(prevState => {
+        if (prevState.loaded) {
+          return null;
+        }
+        return {
+          loaded: true,
+        };
+      });
+    }
+  }
+
+  render() {
+    const { intersectionRatio, ...otherProps } = this.props;
+    const { loaded } = this.state;
+    console.info('intersectionRatio for', this, 'is', intersectionRatio);
+    return loaded ? <Thumbnail {...otherProps} /> : null;
+  }
+
+});
 
 
 function Artist({ artist }) {
@@ -12,7 +50,7 @@ function Artist({ artist }) {
   if (artist.image) {
     image = (
       <MediaObjectSection>
-        <Thumbnail src={artist.image} width={150}/>
+        <LazyLoadingThumbnail src={artist.image} width={200}/>
       </MediaObjectSection>
     );
   }
