@@ -111,7 +111,7 @@ module.exports = {
 
     // Don't import all locales from moment.js
     // See https://webpack.js.org/plugins/context-replacement-plugin/
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|fr/),
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr\.js/),
 
     // Replace lodash-es imports by equivalent lodash imports.
     // Otherwise, same lodash functions can be loaded twice !
