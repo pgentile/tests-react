@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
 import { PageComponent } from '../page/components';
-import withIntersectionObserver, { IntersectionObserverAdapter } from './withIntersectionObserver';
+import withIntersectionObserver, { IntersectionObserverAdapter, intersectionObserverPropTypes } from './withIntersectionObserver';
 
 
 const adapter = new IntersectionObserverAdapter();
 
 
-const LazyLoadingThumbnail = withIntersectionObserver(adapter)(class MyThumbnail extends React.Component {
+const LazyLoadingThumbnail = withIntersectionObserver(adapter)(class MyThumbnail extends React.PureComponent {
 
   static propTypes = {
-    intersectionRatio: PropTypes.number,
+    ...intersectionObserverPropTypes,
   };
 
   state = {
@@ -35,10 +35,19 @@ const LazyLoadingThumbnail = withIntersectionObserver(adapter)(class MyThumbnail
     }
   }
 
-  render() {
-    const { intersectionRatio, ...otherProps } = this.props;
+  componentDidUpdate() {
+    const { unregisterFromIntersectionObserver } = this.props;
     const { loaded } = this.state;
-    console.info('intersectionRatio for', this, 'is', intersectionRatio);
+
+    if (loaded) {
+      unregisterFromIntersectionObserver();
+    }
+  }
+
+  render() {
+    // eslint-disable-next-line no-unused-vars
+    const { intersectionRatio, unregisterFromIntersectionObserver, ...otherProps } = this.props;
+    const { loaded } = this.state;
     return loaded ? <Thumbnail {...otherProps} /> : null;
   }
 

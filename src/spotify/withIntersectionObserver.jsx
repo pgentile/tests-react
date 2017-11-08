@@ -1,5 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { getDisplayName } from 'recompose';
+
+
+export const intersectionObserverPropTypes = {
+  intersectionRatio: PropTypes.number,
+  unregisterFromIntersectionObserver: PropTypes.func.isRequired,
+};
 
 
 export class IntersectionObserverAdapter {
@@ -7,7 +14,7 @@ export class IntersectionObserverAdapter {
   registry = new Map();
 
   constructor(options = {}) {
-    this.observer = new IntersectionObserver(this._onThreshold, options)
+    this.observer = new IntersectionObserver(this._onThreshold, options);
   }
 
   register(domElement, reactElement) {
@@ -24,7 +31,7 @@ export class IntersectionObserverAdapter {
     entries.forEach(entry => {
       const reactElement = this.registry.get(entry.target);
       if (reactElement) {
-        reactElement._onThreshold({
+        reactElement.onThreshold({
           intersectionRatio: entry.intersectionRatio,
         });
       }
@@ -49,6 +56,24 @@ export default function withIntersectionObserver(adapter, wrapperElement = 'div'
         intersectionRatio: null,
       };
 
+      onThreshold({ intersectionRatio }) {
+        this.setState({
+          intersectionRatio,
+        });
+      }
+
+      unregisterFromIntersectionObserver = () => {
+        adapter.unregister(this.wrapperInstance);
+
+        // Not observed ? Use a ratio of 1
+        this.setState({
+          intersectionRatio: 1,
+        });
+
+        // Remove the unregister function: it should not update the child element
+        this.unregisterFromIntersectionObserver = noop;
+      }
+
       componentDidMount() {
         adapter.register(this.wrapperInstance, this);
       }
@@ -61,21 +86,21 @@ export default function withIntersectionObserver(adapter, wrapperElement = 'div'
         const { intersectionRatio } = this.state;
         return (
           <WrapperElement ref={this._setWrapperInstance}>
-            <Component {...this.props} intersectionRatio={intersectionRatio} />
+            <Component
+              {...this.props}
+              intersectionRatio={intersectionRatio}
+              unregisterFromIntersectionObserver={this.unregisterFromIntersectionObserver} />
           </WrapperElement>
         );
       }
 
       _setWrapperInstance = wrapperInstance => {
         this.wrapperInstance = wrapperInstance;
-      }
-
-      _onThreshold({ intersectionRatio }) {
-        this.setState({
-          intersectionRatio,
-        });
-      }
+      };
 
     };
   };
 }
+
+
+const noop = () => {};
