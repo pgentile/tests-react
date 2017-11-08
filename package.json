@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -fr ./build/",
-    "dev": "webpack-dev-server --inline --debug --progress --port 9000 --open --history-api-fallback",
+    "start": "webpack-dev-server --inline --debug --progress --port 9000 --open --history-api-fallback",
     "build": "webpack --progress --profile --colors -p",
     "test": "env BABEL_ENV=test mocha --require babel-register --require ./mocha.setup --recursive",
     "lint": "eslint --ext .jsx,.js ./src/",
