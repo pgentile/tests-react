@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Chart from 'chart.js';
 import { Row, Column, Button } from 'react-foundation';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 
 import { PageComponent } from '../page/components';
 

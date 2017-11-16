@@ -17,6 +17,7 @@ module.exports = {
     ],
     alias: {
       'chart.js': 'chart.js/src/chart.js',
+      'lodash': 'lodash-es',
     },
     extensions: ['.js', '.jsx', '.scss', '.css'],
   },
@@ -112,14 +113,5 @@ module.exports = {
     // Don't import all locales from moment.js
     // See https://webpack.js.org/plugins/context-replacement-plugin/
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr\.js/),
-
-    // Replace lodash-es imports by equivalent lodash imports.
-    // Otherwise, same lodash functions can be loaded twice !
-    new webpack.NormalModuleReplacementPlugin(
-      /lodash-es/,
-      resource => {
-        resource.request = resource.request.replace('lodash-es', 'lodash');
-      }
-    ),
   ],
 };

@@ -1,4 +1,4 @@
-import range from 'lodash/range';
+import { range } from 'lodash-es';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Pagination, PaginationItem, PaginationPrevious, PaginationNext } from 'react-foundation';

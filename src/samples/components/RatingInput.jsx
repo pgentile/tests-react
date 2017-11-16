@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import range from 'lodash/range';
+import { range } from 'lodash-es';
 
 import css from './RatingInput.css';
 

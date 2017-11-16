@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-import toString from 'lodash/toString';
+import { toString } from 'lodash-es';
 
 import * as actions from './actions';
 

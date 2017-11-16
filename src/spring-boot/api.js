@@ -1,9 +1,5 @@
 import uuid from 'uuid';
-import sortBy from 'lodash/sortBy';
-import forOwn from 'lodash/forOwn';
-import pickBy from 'lodash/pickBy';
-import toPairs from 'lodash/toPairs';
-import round from 'lodash/round';
+import { sortBy, forOwn, pickBy, toPairs, round } from 'lodash-es';
 
 
 export function getHealth(baseUrl) {
