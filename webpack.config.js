@@ -16,7 +16,6 @@ module.exports = {
       'node_modules',
     ],
     alias: {
-      'chart.js': 'chart.js/src/chart.js',
       'lodash': 'lodash-es',
     },
     extensions: ['.js', '.jsx', '.scss', '.css'],
