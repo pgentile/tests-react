@@ -119,19 +119,26 @@ export class PolarChart extends BaseChartComponent {
 }
 
 
-export function ChartsComponent({ data, displayLegend, onRefresh, onEnableLegend, onDisableLegend }) {
-  const options = {
-    legend: {
-      display: displayLegend,
-    },
+export class ChartsComponent extends React.Component {
+
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+    displayLegend: PropTypes.bool.isRequired,
+    onRefresh: PropTypes.func.isRequired,
+    onEnableLegend: PropTypes.func.isRequired,
+    onDisableLegend: PropTypes.func.isRequired,
   };
 
-  const onRefreshClick = event => {
+  onRefreshClick = event => {
+    const { onRefresh } = this.props;
+
     event.preventDefault();
     onRefresh();
   };
 
-  const onToggleLegendClick = event => {
+  onToggleLegendClick = event => {
+    const { displayLegend, onEnableLegend, onDisableLegend } = this.props;
+
     event.preventDefault();
     if (displayLegend) {
       onDisableLegend();
@@ -140,38 +147,41 @@ export function ChartsComponent({ data, displayLegend, onRefresh, onEnableLegend
     }
   };
 
-  return (
-    <PageComponent title="Charts">
-      <Row>
-        <Column large={6}>
-          <PieChart data={data} options={options} />
-        </Column>
-        <Column large={6}>
-          <BarChart data={data} options={options} />
-        </Column>
-      </Row>
-      <Row>
-        <Column large={6}>
-          <BarChart data={data} options={options} />
-        </Column>
-        <Column large={6}>
-          <PolarChart data={data} options={options} />
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Button onClick={onRefreshClick}>Refresh data</Button>
-          <Button onClick={onToggleLegendClick}>Toggle legend</Button>
-        </Column>
-      </Row>
-    </PageComponent>
-  );
-}
+  render() {
+    const { data, displayLegend } = this.props;
 
-ChartsComponent.propTypes = {
-  data: PropTypes.object.isRequired,
-  displayLegend: PropTypes.bool.isRequired,
-  onRefresh: PropTypes.func.isRequired,
-  onEnableLegend: PropTypes.func.isRequired,
-  onDisableLegend: PropTypes.func.isRequired,
-};
+    const options = {
+      legend: {
+        display: displayLegend,
+      },
+    };
+
+    return (
+      <PageComponent title="Charts">
+        <Row>
+          <Column large={6}>
+            <PieChart data={data} options={options} />
+          </Column>
+          <Column large={6}>
+            <BarChart data={data} options={options} />
+          </Column>
+        </Row>
+        <Row>
+          <Column large={6}>
+            <BarChart data={data} options={options} />
+          </Column>
+          <Column large={6}>
+            <PolarChart data={data} options={options} />
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <Button onClick={this.onRefreshClick}>Refresh data</Button>
+            <Button onClick={this.onToggleLegendClick}>Toggle legend</Button>
+          </Column>
+        </Row>
+      </PageComponent>
+    );
+  }
+
+}

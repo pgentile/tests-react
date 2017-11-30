@@ -8,8 +8,22 @@ import { PageComponent } from '../page/components';
 
 class PagerLink extends React.PureComponent {
 
+  static propTypes = {
+    page: PropTypes.number.isRequired,
+    isDisabled: PropTypes.bool.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+  };
+
+  goToPage = event => {
+    const { page, onPageChange } = this.props;
+
+    event.preventDefault();
+    onPageChange(page);
+  };
+
   render() {
-    const {page, isDisabled, onPageChange, children} = this.props;
+    const { isDisabled, children } = this.props;
 
     if (isDisabled) {
       return (
@@ -17,27 +31,20 @@ class PagerLink extends React.PureComponent {
       );
     }
 
-    const goToPage = event => {
-      event.preventDefault();
-      onPageChange(page);
-    };
-
     return (
-      <a onClick={goToPage}>{children}</a>
+      <a onClick={this.goToPage}>{children}</a>
     );
   }
 
 }
 
-PagerLink.propTypes = {
-  page: PropTypes.number.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
-
 class Pager extends React.PureComponent {
+
+  static propTypes = {
+    current: PropTypes.number.isRequired,
+    count: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+  };
 
   render() {
     const { current, count, onPageChange } = this.props;
@@ -76,14 +83,16 @@ class Pager extends React.PureComponent {
 
 }
 
-Pager.propTypes = {
-  current: PropTypes.number.isRequired,
-  count: PropTypes.number.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-};
-
 
 class PaginatedList extends React.PureComponent {
+
+  static propTypes = {
+    items: PropTypes.array.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    maxPerPage: PropTypes.number.isRequired,
+    component: PropTypes.func.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -130,16 +139,8 @@ class PaginatedList extends React.PureComponent {
 
 }
 
-PaginatedList.propTypes = {
-  items: PropTypes.array.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  maxPerPage: PropTypes.number.isRequired,
-  component: PropTypes.func.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-};
 
-
-function ListItems({items}) {
+function ListItems({ items }) {
   const content = items.map(item => {
     return (
       <tr key={item.index}>
@@ -204,7 +205,7 @@ export class PaginationComponent extends React.Component {
           currentPage={this.state.currentPage}
           maxPerPage={this.state.maxPerPage}
           onPageChange={this.onPageChange}
-          component={ListItems}/>
+          component={ListItems} />
       </PageComponent>
     );
   }
